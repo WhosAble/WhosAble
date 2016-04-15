@@ -11,7 +11,7 @@ To start your Phoenix app:
   * Install Node.js dependencies with `npm install`
   * Start Phoenix endpoint with `iex -S mix phoenix.server`
 
-Now you can visit [`localhost:3001`](http://localhost:3001) from your browser.
+Now you can visit [`localhost:4001`](http://localhost:4001) from your browser.
 
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
