@@ -29,6 +29,8 @@ defmodule Api.ConnCase do
 
       # The default endpoint for testing
       @endpoint Api.Endpoint
+
+      import Api.Factory
     end
   end
 
