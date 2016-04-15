@@ -7,7 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :api, Api.Endpoint,
-  http: [port: 4000],
+  http: [port: 3001],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -32,11 +32,8 @@ config :logger, :console, format: "[$level] $message\n"
 # and calculating stacktraces is usually expensive.
 config :phoenix, :stacktrace_depth, 20
 
-# Configure your database
-config :api, Api.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "api_dev",
-  hostname: "localhost",
-  pool_size: 10
+# import the config/dev.secret.exs
+# which is versioned separately so
+# people can use their own database
+# configurations.
+import_config "dev.secret.exs"

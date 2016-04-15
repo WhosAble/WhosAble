@@ -9,11 +9,8 @@ config :api, Api.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# Configure your database
-config :api, Api.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "api_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+# import the config/dev.secret.exs
+# which is versioned separately so
+# people can use their own database
+# configurations.
+import_config "test.secret.exs"
