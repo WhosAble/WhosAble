@@ -14,13 +14,14 @@ defmodule Api.Router do
   end
 
   scope "/", Api do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Api do
-  #   pipe_through :api
-  # end
+  scope "/", Api do
+    pipe_through :api
+
+    post "/signup", UserController, :create
+  end
 end
