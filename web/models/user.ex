@@ -11,6 +11,8 @@ defmodule Api.User do
     field :first_name
     field :last_name
 
+    belongs_to :account, Api.Account
+
     timestamps
   end
 
@@ -20,7 +22,7 @@ defmodule Api.User do
 
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(first_name last_name email password), [])
+    |> cast(params, ~w(account_id first_name last_name email password), [])
     |> validate_format(:email, ~r/\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\Z/)
     |> unique_constraint(:email)
     |> validate_length(:password, min: 8, max: 100)
