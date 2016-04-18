@@ -6,7 +6,8 @@ defmodule Api.Factory do
       first_name: sequence(:first_name, &"User#{&1}"),
       last_name: sequence(:last_name, &"User#{&1}"),
       email: sequence(:email, &"test#{&1}@test.com"),
-      password: "password"
+      password: "password",
+      password_hash: Comeonin.Bcrypt.hashpwsalt("password")
     }
   end
 end

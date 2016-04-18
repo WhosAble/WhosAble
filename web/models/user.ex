@@ -5,8 +5,12 @@ defmodule Api.User do
     field :email
     field :password, :string, virtual: true
     field :password_hash
+    field :token_hash
+    field :last_login, Ecto.DateTime
+
     field :first_name
     field :last_name
+
     timestamps
   end
 
