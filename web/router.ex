@@ -19,6 +19,8 @@ defmodule Api.Router do
       pipe_through :authenticated
 
       get "/account/settings", AccountSettingController, :show
+
+      get "/locations", LocationController, :index
     end
   end
 end

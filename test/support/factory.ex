@@ -5,6 +5,17 @@ defmodule Api.Factory do
     %Api.Account{}
   end
 
+  def factory(:location) do
+    %Api.Location{
+      account_id: create(:account).id,
+      name: sequence(:name, &"Name #{&1}"),
+      address: "123 Sesame street",
+      city: "New York",
+      state: "NY",
+      zip: "12345"
+    }
+  end
+
   def factory(:user) do
     %Api.User{
       account_id: create(:account).id,
