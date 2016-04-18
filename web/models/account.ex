@@ -3,6 +3,7 @@ defmodule Api.Account do
 
   schema "accounts" do
     has_many :users, Api.User
+    has_many :locations, Api.Location
 
     timestamps
   end
