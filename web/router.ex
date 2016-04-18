@@ -9,5 +9,6 @@ defmodule Api.Router do
     pipe_through :api
 
     post "/signup", UserController, :create
+    post "/login", LoginController, :login
   end
 end
