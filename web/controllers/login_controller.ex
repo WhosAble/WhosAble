@@ -1,6 +1,6 @@
 defmodule Api.LoginController do
   use Api.Web, :controller
-  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import Comeonin.Bcrypt, only: [checkpw: 2]
 
   alias Api.User
 
@@ -31,7 +31,7 @@ defmodule Api.LoginController do
   defp assign_login_token(%{assigns: %{user: user}} = conn) do
     token = generate_token
 
-    case Repo.update(Ecto.Changeset.change(user, %{login_token: hash_token(token), last_login: Ecto.DateTime.utc})) do
+    case Repo.update(Ecto.Changeset.change(user, %{token_hash: hash_token(token), last_login: Ecto.DateTime.utc})) do
       {:ok, _} -> conn |> assign(:token, token)
       _ -> conn
     end
