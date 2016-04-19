@@ -61,7 +61,7 @@ config :logger, level: :info
 #
 #     config :api, Api.Endpoint, root: "."
 
-config :rocket_nanny, Api.Repo,
+config :api, Api.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   pool_size: 20,
