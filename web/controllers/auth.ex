@@ -10,6 +10,7 @@ defmodule Api.Auth do
 
     conn
     |> assign_user(credentials.user_id)
+    |> assign_account
     |> authenticate_user(credentials.token)
   end
 
@@ -23,6 +24,11 @@ defmodule Api.Auth do
       user -> conn |> assign(:current_user, user)
     end
   end
+
+  defp assign_account(%{assigns: %{user: user}} = conn) do
+    conn |> assign(:account, Repo.get(Api.Account, user.account_id))
+  end
+  defp assign_account(conn), do: conn
 
   defp authenticate_user(%{assigns: %{current_user: user}} = conn, token) do
     case checkpw(token, user.token_hash) do

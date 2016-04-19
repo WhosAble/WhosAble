@@ -1,11 +1,12 @@
 defmodule Api.LoginView do
   use Api.Web, :view
 
-  def render("login.json", %{user: user, token: token}) do
+  def render("login.json", %{user: user, token: token, jwt: jwt}) do
     %{
       status: "success",
       user_id: user.id,
-      token: token
+      token: token,
+      jwt: jwt
     }
   end
   def render("login.json", _) do

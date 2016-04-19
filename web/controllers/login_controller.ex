@@ -1,6 +1,7 @@
 defmodule Api.LoginController do
   use Api.Web, :controller
   import Comeonin.Bcrypt, only: [checkpw: 2]
+  import Joken
 
   alias Api.User
 
@@ -11,6 +12,7 @@ defmodule Api.LoginController do
     conn
     |> check_password(email, password)
     |> assign_login_token
+    |> assign_firebase_token
     |> render("login.json")
   end
   def login(conn, _) do
@@ -28,6 +30,11 @@ defmodule Api.LoginController do
     end
   end
 
+  defp assign_firebase_token(%{assigns: %{user: user}} = conn) do
+    conn |> assign(:jwt, generate_jwt(user))
+  end
+  defp assign_firebase_token(conn), do: conn
+
   defp assign_login_token(%{assigns: %{user: user}} = conn) do
     token = generate_token
 
@@ -39,6 +46,14 @@ defmodule Api.LoginController do
   defp assign_login_token(conn), do: conn
 
   defp generate_token, do: :crypto.strong_rand_bytes(64) |> Base.url_encode64 |> binary_part(0, 64)
+
+  defp generate_jwt(user) do
+    %{v: "1.0", iat: Ecto.DateTime.utc, d: %{uid: user.account_id}}
+    |> token
+    |> with_signer(hs256("my_secret"))
+    |> sign
+    |> get_compact
+  end
 
   defp hash_token(token), do: Comeonin.Bcrypt.hashpwsalt(token)
 end
