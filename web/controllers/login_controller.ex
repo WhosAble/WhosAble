@@ -1,7 +1,6 @@
 defmodule Api.LoginController do
   use Api.Web, :controller
   import Comeonin.Bcrypt, only: [checkpw: 2]
-  import Joken
 
   alias Api.User
 
@@ -11,8 +10,8 @@ defmodule Api.LoginController do
 
     conn
     |> check_password(email, password)
-    |> assign_login_token
-    |> assign_firebase_token
+    |> assign_account
+    |> assign_token
     |> render("login.json")
   end
   def login(conn, _) do
@@ -20,6 +19,15 @@ defmodule Api.LoginController do
     |> assign(:error, %{code: "invalid", message: "Email and password are required fields"})
     |> render("error.json")
   end
+
+  ###
+  ### PRIVATE
+  ###
+
+  defp assign_account(%{assigns: %{user: user}} = conn) do
+    conn |> assign(:account, Repo.get(Api.Account, user.account_id))
+  end
+  defp assign_account(conn), do: conn
 
   defp check_password(conn, email, password) do
     user = Repo.get_by(User, email: email)
@@ -30,30 +38,8 @@ defmodule Api.LoginController do
     end
   end
 
-  defp assign_firebase_token(%{assigns: %{user: user}} = conn) do
-    conn |> assign(:jwt, generate_jwt(user))
+  defp assign_token(%{assigns: %{account: account, user: user}} = conn) do
+    conn |> assign(:token, Phoenix.Token.sign(conn, "account socket", %{account_id: account.id, user_id: user.id}))
   end
-  defp assign_firebase_token(conn), do: conn
-
-  defp assign_login_token(%{assigns: %{user: user}} = conn) do
-    token = generate_token
-
-    case Repo.update(Ecto.Changeset.change(user, %{token_hash: hash_token(token), last_login: Ecto.DateTime.utc})) do
-      {:ok, _} -> conn |> assign(:token, token)
-      _ -> conn
-    end
-  end
-  defp assign_login_token(conn), do: conn
-
-  defp generate_token, do: :crypto.strong_rand_bytes(64) |> Base.url_encode64 |> binary_part(0, 64)
-
-  defp generate_jwt(user) do
-    %{v: "1.0", iat: Ecto.DateTime.utc, d: %{uid: user.account_id}}
-    |> token
-    |> with_signer(hs256("my_secret"))
-    |> sign
-    |> get_compact
-  end
-
-  defp hash_token(token), do: Comeonin.Bcrypt.hashpwsalt(token)
+  defp assign_token(conn), do: conn
 end

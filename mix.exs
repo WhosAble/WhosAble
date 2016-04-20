@@ -37,8 +37,6 @@ defmodule Api.Mixfile do
       {:gettext, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 2.3"},
-      {:exfirebase, "~> 0.4.0"},
-      {:joken, "~> 1.2"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:ex_machina, "~> 0.6.1", only: :test}
     ]

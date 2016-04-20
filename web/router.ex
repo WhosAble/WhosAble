@@ -18,9 +18,11 @@ defmodule Api.Router do
     scope "/", nil do
       pipe_through :authenticated
 
-      get "/account/settings", AccountSettingController, :show
+#       get "/account/settings", AccountSettingController, :show
 
-      get "/locations", LocationController, :index
+#       post "/location", LocationController, :create
+#       put "/location/:location_id", LocationController, :update
+#       delete "/location/:location_id", LocationController, :destroy
     end
   end
 end
