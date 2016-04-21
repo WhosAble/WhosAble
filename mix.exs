@@ -37,6 +37,7 @@ defmodule Api.Mixfile do
       {:gettext, "~> 0.9"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 2.3"},
+      {:plug_cors, "~> 0.7.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:ex_machina, "~> 0.6.1", only: :test}
     ]

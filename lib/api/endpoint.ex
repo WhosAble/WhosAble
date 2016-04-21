@@ -1,7 +1,7 @@
 defmodule Api.Endpoint do
   use Phoenix.Endpoint, otp_app: :api
 
-  socket "/socket", Api.UserSocket
+  socket "/account_socket", Api.AccountSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -35,5 +35,6 @@ defmodule Api.Endpoint do
     key: "_api_key",
     signing_salt: "DSZZQV8Y"
 
+  plug PlugCors, origins: ["*"]
   plug Api.Router
 end
