@@ -35,5 +35,6 @@ defmodule Api.Endpoint do
     key: "_api_key",
     signing_salt: "DSZZQV8Y"
 
+  plug PlugCors, origins: ["*"]
   plug Api.Router
 end
