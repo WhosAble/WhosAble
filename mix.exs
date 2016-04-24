@@ -4,7 +4,7 @@ defmodule Api.Mixfile do
   def project do
     [app: :api,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.2.3",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -30,14 +30,15 @@ defmodule Api.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:comeonin, "~> 2.3"},
+      {:cowboy, "~> 1.0"},
+      {:gettext, "~> 0.9"},
+      {:exrm, "~> 1.0"},
       {:phoenix, "~> 1.1.4"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_ecto, "~> 2.0"},
       {:phoenix_html, "~> 2.4"},
-      {:gettext, "~> 0.9"},
-      {:cowboy, "~> 1.0"},
-      {:comeonin, "~> 2.3"},
       {:plug_cors, "~> 0.7.3"},
+      {:postgrex, ">= 0.0.0"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:ex_machina, "~> 0.6.1", only: :test}
     ]
