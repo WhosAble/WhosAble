@@ -1,5 +1,5 @@
-# defmodule Api.AccountSettingController do
-#   use Api.Web, :controller
+# defmodule WhosAble.AccountSettingController do
+#   use WhosAble.Web, :controller
 # 
 #   def show(conn, _) do
 #     conn |> render("show.json")

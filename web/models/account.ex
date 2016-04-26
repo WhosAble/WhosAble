@@ -1,9 +1,9 @@
-defmodule Api.Account do
-  use Api.Web, :model
+defmodule WhosAble.Account do
+  use WhosAble.Web, :model
 
   schema "accounts" do
-    has_many :users, Api.User
-    has_many :locations, Api.Location
+    has_many :users, WhosAble.User
+    has_many :locations, WhosAble.Location
 
     timestamps
   end

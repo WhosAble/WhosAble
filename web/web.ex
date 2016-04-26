@@ -1,12 +1,12 @@
-defmodule Api.Web do
+defmodule WhosAble.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Api.Web, :controller
-      use Api.Web, :view
+      use WhosAble.Web, :controller
+      use WhosAble.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,12 +30,12 @@ defmodule Api.Web do
     quote do
       use Phoenix.Controller
 
-      alias Api.Repo
+      alias WhosAble.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
 
-      import Api.Router.Helpers
-      import Api.Gettext
+      import WhosAble.Router.Helpers
+      import WhosAble.Gettext
     end
   end
 
@@ -49,9 +49,9 @@ defmodule Api.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Api.Router.Helpers
-      import Api.ErrorHelpers
-      import Api.Gettext
+      import WhosAble.Router.Helpers
+      import WhosAble.ErrorHelpers
+      import WhosAble.Gettext
     end
   end
 
@@ -65,10 +65,10 @@ defmodule Api.Web do
     quote do
       use Phoenix.Channel
 
-      alias Api.Repo
+      alias WhosAble.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
-      import Api.Gettext
+      import WhosAble.Gettext
     end
   end
 

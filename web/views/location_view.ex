@@ -1,5 +1,5 @@
-# defmodule Api.LocationView do
-#   use Api.Web, :view
+# defmodule WhosAble.LocationView do
+#   use WhosAble.Web, :view
 # 
 #   def render("success.json", %{location: location}) do
 #     %{

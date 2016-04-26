@@ -6,12 +6,12 @@
 use Mix.Config
 
 # Configures the endpoint
-config :api, Api.Endpoint,
+config :whos_able, WhosAble.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "LJpTmUanKBlUHqdU/GzP73TaCqHCzfDAjq2PW2QHaCz+Za2fM776MWdXlET7xZWl",
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Api.PubSub,
+  pubsub: [name: WhosAble.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

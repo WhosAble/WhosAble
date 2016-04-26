@@ -1,3 +1,3 @@
-defmodule Api.LayoutViewTest do
-  use Api.ConnCase, async: true
+defmodule WhosAble.LayoutViewTest do
+  use WhosAble.ConnCase, async: true
 end

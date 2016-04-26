@@ -1,14 +1,14 @@
-defmodule Api.Endpoint do
-  use Phoenix.Endpoint, otp_app: :api
+defmodule WhosAble.Endpoint do
+  use Phoenix.Endpoint, otp_app: :whos_able
 
-  socket "/account_socket", Api.AccountSocket
+  socket "/account_socket", WhosAble.AccountSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :api, gzip: false,
+    at: "/", from: :whos_able, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -32,9 +32,9 @@ defmodule Api.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    key: "_api_key",
+    key: "_whos_able_key",
     signing_salt: "DSZZQV8Y"
 
   plug PlugCors, origins: ["*"]
-  plug Api.Router
+  plug WhosAble.Router
 end

@@ -1,4 +1,4 @@
-defmodule Api.Repo.Migrations.Locations do
+defmodule WhosAble.Repo.Migrations.Locations do
   use Ecto.Migration
 
   def change do

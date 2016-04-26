@@ -1,5 +1,5 @@
-defmodule Api.Location do
-  use Api.Web, :model
+defmodule WhosAble.Location do
+  use WhosAble.Web, :model
 
   schema "locations" do
     field :name
@@ -8,7 +8,7 @@ defmodule Api.Location do
     field :state
     field :zip
 
-    belongs_to :account, Api.Account
+    belongs_to :account, WhosAble.Account
 
     timestamps
   end

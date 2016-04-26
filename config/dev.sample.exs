@@ -1,10 +1,10 @@
 use Mix.Config
 
 # Configure your database
-config :api, Api.Repo,
+config :whos_able, WhosAble.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "api_dev",
+  database: "whos_able_dev",
   hostname: "localhost",
   pool_size: 10

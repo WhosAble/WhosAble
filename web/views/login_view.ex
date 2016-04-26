@@ -1,5 +1,5 @@
-defmodule Api.LoginView do
-  use Api.Web, :view
+defmodule WhosAble.LoginView do
+  use WhosAble.Web, :view
 
   def render("login.json", %{user: user, account: account, token: token}) do
     %{

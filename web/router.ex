@@ -1,15 +1,23 @@
-defmodule Api.Router do
-  use Api.Web, :router
+defmodule WhosAble.Router do
+  use WhosAble.Web, :router
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   pipeline :authenticated do
-    plug Api.Auth
+    plug WhosAble.Auth
   end
 
-  scope "/", Api do
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+  scope "/", Whosable do
     pipe_through :api
 
     post "/signup", UserController, :create
@@ -23,6 +31,12 @@ defmodule Api.Router do
 #       post "/location", LocationController, :create
 #       put "/location/:location_id", LocationController, :update
 #       delete "/location/:location_id", LocationController, :destroy
+    end
+
+    scope "/", WhosAble do
+      pipe_through :browser
+
+      get "/", PageController, :load_page
     end
   end
 end

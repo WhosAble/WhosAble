@@ -1,3 +1,3 @@
-defmodule Api.LayoutView do
-  use Api.Web, :view
+defmodule WhosAble.LayoutView do
+  use WhosAble.Web, :view
 end

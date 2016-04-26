@@ -1,8 +1,8 @@
-defmodule Api.UserControllerTest do
-  use Api.ConnCase
+defmodule WhosAble.UserControllerTest do
+  use WhosAble.ConnCase
 
-  alias Api.Account
-  alias Api.User
+  alias WhosAble.Account
+  alias WhosAble.User
 
   test "create with no params", context do
     starting_users_count = user_count

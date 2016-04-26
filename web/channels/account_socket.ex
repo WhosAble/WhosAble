@@ -1,8 +1,8 @@
-defmodule Api.AccountSocket do
+defmodule WhosAble.AccountSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "account:*", Api.AccountChannel
+  channel "account:*", WhosAble.AccountChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -28,7 +28,7 @@ defmodule Api.AccountSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given account:
   #
-  #     Api.Endpoint.broadcast("accounts_socket:#{account.id}", "disconnect", %{})
+  #     WhosAble.Endpoint.broadcast("accounts_socket:#{account.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   def id(_socket), do: nil

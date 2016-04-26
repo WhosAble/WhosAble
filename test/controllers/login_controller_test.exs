@@ -1,5 +1,5 @@
-defmodule Api.LoginControllerTest do
-  use Api.ConnCase
+defmodule WhosAble.LoginControllerTest do
+  use WhosAble.ConnCase
 
   test "missing email and password", context do
     conn = context.conn |> post("/login")

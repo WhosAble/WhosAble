@@ -1,5 +1,5 @@
-# defmodule Api.AccountSettingView do
-#   use Api.Web, :view
+# defmodule WhosAble.AccountSettingView do
+#   use WhosAble.Web, :view
 # 
 #   def render("show.json", _) do
 #     %{
