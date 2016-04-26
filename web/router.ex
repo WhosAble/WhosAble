@@ -37,6 +37,6 @@ defmodule WhosAble.Router do
   scope "/", WhosAble do
     pipe_through :browser
 
-    get "/", PageController, :load_page
+    get "*path", PageController, :load_page
   end
 end
