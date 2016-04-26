@@ -17,7 +17,7 @@ defmodule WhosAble.Router do
     plug :put_secure_browser_headers
   end
 
-  scope "/", Whosable do
+  scope "/api", WhosAble do
     pipe_through :api
 
     post "/signup", UserController, :create
@@ -32,11 +32,11 @@ defmodule WhosAble.Router do
 #       put "/location/:location_id", LocationController, :update
 #       delete "/location/:location_id", LocationController, :destroy
     end
+  end
 
-    scope "/", WhosAble do
-      pipe_through :browser
+  scope "/", WhosAble do
+    pipe_through :browser
 
-      get "/", PageController, :load_page
-    end
+    get "/", PageController, :load_page
   end
 end
