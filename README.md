@@ -31,7 +31,6 @@ This API repository is written in [`Elixir`](http://elixir-lang.org/). There are
 * [`Ecto`](https://github.com/elixir-lang/ecto) is our database query tool
 * [`ComeOnIn`](https://github.com/elixircnx/comeonin) is a password hashing library
 * [`ExMachina`](https://github.com/thoughtbot/ex_machina) builds objects for the test framework
-* [`PlugCors`](https://github.com/bryanjos/plug_cors) manages HTTP access control to the api from 3rd party front-ends
 
 This web site has only 2 REST based api endpoints. All other traffic goes through web sockets.
 
@@ -108,9 +107,9 @@ sudo npm install -g npm
 sudo -u postgres psql
 ```
 ``` postgres
-CREATE USER rocket_nanny WITH PASSWORD 'password';
-CREATE DATABASE rocket_nanny;
-GRANT ALL PRIVILEGES ON DATABASE rocket_nanny to rocket_nanny;
+CREATE USER whosable WITH PASSWORD 'password';
+CREATE DATABASE whosable;
+GRANT ALL PRIVILEGES ON DATABASE whosable to whosable;
 ```
 5) Create a release
 ``` sh

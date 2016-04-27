@@ -35,6 +35,5 @@ defmodule WhosAble.Endpoint do
     key: "_whos_able_key",
     signing_salt: "DSZZQV8Y"
 
-  plug PlugCors, origins: ["*"]
   plug WhosAble.Router
 end
