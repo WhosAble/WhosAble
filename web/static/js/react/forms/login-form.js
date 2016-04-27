@@ -1,12 +1,14 @@
 var PasswordField = require("./password-field");
 var TextField = require("./text-field");
+var LoadingEllipsis = require("../loading-ellipsis");
 
 var LoginForm = React.createClass({
   getInitialState() {
     return {
       email: null,
       password: null,
-      errors: []
+      errors: [],
+      loading: false
     };
   },
 
@@ -19,15 +21,18 @@ var LoginForm = React.createClass({
   login(e) {
     e.preventDefault();
     var self = this;
+    if(this.state.loading == false) {
+      this.setState({loading: true});
 
-    var response = window.Dispatcher.login(this.state.email, this.state.password)
-      .done(function(response) {
-        if(response.status == "failure") {
-          self.setState({errors: response.errors});
-        }
-      }).error(function() {
-        self.setState({errors: [{message: "Authentication failed!", field: "password"}]});
-      });
+      var response = window.Dispatcher.login(this.state.email, this.state.password)
+        .done(function(response) {
+          if(response.status == "failure") {
+            self.setState({loading: false, errors: response.errors});
+          }
+        }).error(function() {
+          self.setState({loading: false, errors: [{message: "Authentication failed!", field: "password"}]});
+        });
+    }
   },
 
   parseErrors(field) {
@@ -38,13 +43,25 @@ var LoginForm = React.createClass({
     });
   },
 
+  renderBtn() {
+    if(this.state.loading) {
+      return(
+        <button type="submit" className="btn">
+          <LoadingEllipsis>Logging In</LoadingEllipsis>
+        </button>
+      );
+    } else {
+      return(<button type="submit" className="btn btn-primary" onClick={ this.login }>Login</button>);
+    }
+  },
+
   render() {
     return(
       <form onSubmit={ this.login }>
         <h1>Login Form</h1>
         <TextField label="Email" value={ this.state.email } errors={ this.parseErrors("email") } onChange={ this.handleFieldChange.bind(this, "email") }/>
         <PasswordField label="Password" value={ this.state.password } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "password") }/>
-        <button type="submit" className="btn btn-primary" onClick={ this.login }>Login</button>
+        { this.renderBtn() }
       </form>
     );
   }
