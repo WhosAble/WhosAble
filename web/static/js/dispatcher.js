@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 var Dispatcher = {
   login(email, password) {
     return $.ajax({
@@ -7,12 +9,14 @@ var Dispatcher = {
     }).done(function(response) {
       if(response["status"] == "success") {
         window.AuthStore.setSession(response);
+        browserHistory.push("/app");
       }
     });
   },
 
   logout() {
     window.AuthStore.clearSession();
+    browserHistory.push("/login");
   },
 
   signup(firstName, lastName, email, password) {

@@ -1,3 +1,5 @@
+import {Link} from 'react-router'
+
 var NavBar = React.createClass({
   propTypes: {
   },
@@ -33,9 +35,9 @@ var NavBar = React.createClass({
   renderLogo() {
     return(
       <li>
-        <a href="/#">
+        <Link to="/">
           <img src="/images/logo.png" alt="WhosAble"/>
-        </a>
+        </Link>
       </li>
     );
   },
@@ -56,7 +58,9 @@ var NavBar = React.createClass({
         <ul id="nav-bar">
           { this.renderLogo() }
           <li><a href="javascript:;" onClick={ this.handleLogout }>Logout</a></li>
-          <li><a href="/#/app">Dashboard</a></li>
+          <li>
+            <Link to="/app">Dashboard</Link>
+          </li>
           { this.renderMenuBtn() }
         </ul>
       );
@@ -64,8 +68,12 @@ var NavBar = React.createClass({
       return(
         <ul id="nav-bar">
           { this.renderLogo() }
-          <li><a href="/#/signup">Signup</a></li>
-          <li><a href="/#/login">Login</a></li>
+          <li>
+            <Link to="/signup">Signup</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
           { this.renderMenuBtn() }
         </ul>
       );
