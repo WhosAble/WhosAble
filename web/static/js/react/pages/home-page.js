@@ -37,6 +37,7 @@ var HomePage = React.createClass({
         <NavBar isLoggedIn={ this.state.isLoggedIn }/>
         <div className="container">
           <main role="main">
+            <div>Home Page Placeholder</div>
             { this.renderSignupForm() }
           </main>
         </div>
