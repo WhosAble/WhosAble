@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>RocketNanny</title>
+    <title>WhosAble</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>

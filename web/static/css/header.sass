@@ -1,32 +1,54 @@
-header
-  ul
-    position: fixed
-    top: 0
-    width: 100%
-    height: 55px
-    list-style-type: none
-    margin: 0px
-    padding: 0px
-    overflow: hidden
-    background-color: #000033
+@import "variables"
 
-    li
-      float: left
-      border-right: 2px solid #bbb
+ul#nav-bar
+  position: fixed
+  top: 0
+  width: 100%
+  height: $header-height
+  list-style-type: none
+  margin: 0px
+  padding: 0px
+  overflow: hidden
+  background-color: $midnight
+
+  li
+    float: left
+    border-right: 2px solid $silver
+    width: $header-height * 2
+    line-height: $header-height
+
+    a
+      display: block
+      color: white
+      text-align: center
+      text-decoration: none
+
+      .fa
+        line-height: $header-height
+
+      &:hover
+        background-color: $silver
+        color: $midnight
+        font-weight: bold
+
+      &.active
+        background-color: $midnight
+
+    &:first-child
+      background: $silver
+      font-weight: normal
+      width: $header-height
+      text-align: center
+      border-right: none
 
       a
-        display: block
-        color: white
-        text-align: center
-        padding: 15px 16px
-        text-decoration: none
-
+        img
+          height: 40px
 
         &:hover
-          background-color: #C0C0C0
+          font-weight: normal
 
-        &.active
-          background-color: #0000FF
-
-      &:last-child
-        float: right
+    &:last-child
+      float: right
+      border-right: none
+      width: $header-height
