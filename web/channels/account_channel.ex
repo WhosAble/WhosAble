@@ -1,4 +1,4 @@
-defmodule Api.AccountChannel do
+defmodule WhosAble.AccountChannel do
   use Phoenix.Channel
 
   def join("account:" <> account_id, %{"token" => token}, socket) do

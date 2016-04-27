@@ -1,4 +1,4 @@
-defmodule Api.Repo.Migrations.RemoveHashToken do
+defmodule WhosAble.Repo.Migrations.RemoveHashToken do
   use Ecto.Migration
 
   def change do

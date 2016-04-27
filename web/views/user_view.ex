@@ -1,5 +1,5 @@
-defmodule Api.UserView do
-  use Api.Web, :view
+defmodule WhosAble.UserView do
+  use WhosAble.Web, :view
 
   def render("create.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn {field, message} ->

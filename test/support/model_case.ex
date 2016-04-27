@@ -1,4 +1,4 @@
-defmodule Api.ModelCase do
+defmodule WhosAble.ModelCase do
   @moduledoc """
   This module defines the test case to be used by
   model tests.
@@ -16,18 +16,18 @@ defmodule Api.ModelCase do
 
   using do
     quote do
-      alias Api.Repo
+      alias WhosAble.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
-      import Api.ModelCase
+      import WhosAble.ModelCase
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Api.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(WhosAble.Repo, [])
     end
 
     :ok

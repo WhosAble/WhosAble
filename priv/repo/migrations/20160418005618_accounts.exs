@@ -1,4 +1,4 @@
-defmodule Api.Repo.Migrations.Accounts do
+defmodule WhosAble.Repo.Migrations.Accounts do
   use Ecto.Migration
 
   def change do

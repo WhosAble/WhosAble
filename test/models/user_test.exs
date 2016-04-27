@@ -1,6 +1,6 @@
-defmodule Api.UserTest do
-  use Api.ModelCase
-  alias Api.User
+defmodule WhosAble.UserTest do
+  use WhosAble.ModelCase
+  alias WhosAble.User
 
   defp errors_on(model \\ %User{}, params) do
     model.__struct__.changeset(model, params).errors

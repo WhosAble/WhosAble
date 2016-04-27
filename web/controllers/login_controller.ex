@@ -1,8 +1,8 @@
-defmodule Api.LoginController do
-  use Api.Web, :controller
+defmodule WhosAble.LoginController do
+  use WhosAble.Web, :controller
   import Comeonin.Bcrypt, only: [checkpw: 2]
 
-  alias Api.User
+  alias WhosAble.User
 
   def login(conn, %{"email" => _, "password" => _}) do
     email = scrub_params(conn, "email").params["email"] || ""
@@ -25,7 +25,7 @@ defmodule Api.LoginController do
   ###
 
   defp assign_account(%{assigns: %{user: user}} = conn) do
-    conn |> assign(:account, Repo.get(Api.Account, user.account_id))
+    conn |> assign(:account, Repo.get(WhosAble.Account, user.account_id))
   end
   defp assign_account(conn), do: conn
 

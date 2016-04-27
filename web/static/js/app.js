@@ -1,14 +1,20 @@
-// Brunch automatically concatenates all files in your
-// watched paths. Those paths can be configured at
-// config.paths.watched in "brunch-config.js".
-//
-// However, those files will only be executed if
-// explicitly imported. The only exception are files
-// in vendor, which are never wrapped in imports and
-// therefore are always executed.
-
-// Import dependencies
-//
-// If you no longer want to use a dependency, remember
-// to also remove its path from "config.paths.watched".
 import "phoenix_html"
+
+window.React = require("react");
+window.ReactDOM = require("react-dom");
+window.Dispatcher = require("./dispatcher");
+
+var Router = require("./react/router");
+window.AuthStore = require("./stores/auth-store");
+window.AuthStore.connectSocket();
+
+// Split location into `/` separated parts, then render `Application` with it
+function handleNewHash() {
+  var hashLocation = window.location.hash.replace(/^#\/?|\/$/g, '').split('/');
+  var router = <Router location={hashLocation}/>;
+  ReactDOM.render(router, document.getElementById('react-component'));
+}
+
+// Handle the initial route and browser navigation events
+handleNewHash();
+window.addEventListener('hashchange', handleNewHash, false);

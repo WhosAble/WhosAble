@@ -1,7 +1,7 @@
-# defmodule Api.LocationController do
-#   use Api.Web, :controller
+# defmodule WhosAble.LocationController do
+#   use WhosAble.Web, :controller
 # 
-#   alias Api.Location
+#   alias WhosAble.Location
 # 
 #   plug :scrub_params, "location" when action in [:create, :update]
 # 
@@ -10,9 +10,9 @@
 # 
 #     case Repo.insert(changeset) do
 #       {:ok, location} ->
-# #         Api.Fort.put("accounts", ["abc", "def"])
+# #         WhosAble.Fort.put("accounts", ["abc", "def"])
 # #         Location.create_firebase(location)
-#         Api.Fort.put("accounts/0/locations", [%{"test" => "result"}])
+#         WhosAble.Fort.put("accounts/0/locations", [%{"test" => "result"}])
 # 
 #         conn
 #         |> assign(:location, location)
@@ -30,7 +30,7 @@
 # 
 #     case Repo.update(changeset) do
 #       {:ok, location} ->
-#         Api.Fort
+#         WhosAble.Fort
 #         conn
 #         |> assign(:location, location)
 #         |> render("success.json")

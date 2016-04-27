@@ -1,5 +1,5 @@
-# defmodule Api.LocationControllerTest do
-#   use Api.ConnCase
+# defmodule WhosAble.LocationControllerTest do
+#   use WhosAble.ConnCase
 # 
 #   @token "test"
 # 

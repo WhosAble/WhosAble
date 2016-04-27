@@ -1,5 +1,5 @@
-# defmodule Api.AccountSettingControllerTest do
-#   use Api.ConnCase
+# defmodule WhosAble.AccountSettingControllerTest do
+#   use WhosAble.ConnCase
 # 
 #   @token "test"
 # 

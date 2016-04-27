@@ -1,14 +1,14 @@
-defmodule Api.UserControllerTest do
-  use Api.ConnCase
+defmodule WhosAble.UserControllerTest do
+  use WhosAble.ConnCase
 
-  alias Api.Account
-  alias Api.User
+  alias WhosAble.Account
+  alias WhosAble.User
 
   test "create with no params", context do
     starting_users_count = user_count
     starting_accounts_count = account_count
 
-    conn = context.conn |> post("/signup")
+    conn = context.conn |> post("/api/signup")
 
     # Should have errors
     assert json_response(conn, 200) == %{"errors" => [%{"code" => "invalid", "message" => "No user provided"}], "status" => "failure"}
@@ -23,7 +23,7 @@ defmodule Api.UserControllerTest do
     starting_accounts_count = account_count
 
     params = generate_user(%{email: "test@test.a"})
-    conn = context.conn |> post("/signup", %{user: params})
+    conn = context.conn |> post("/api/signup", %{user: params})
 
     # Should have errors
     assert json_response(conn, 200)["errors"] == [%{"field" => "email", "message" => "has invalid format"}]
@@ -39,7 +39,7 @@ defmodule Api.UserControllerTest do
     starting_accounts_count = account_count
 
     params = generate_user(%{email: "test@test.com"})
-    conn = context.conn |> post("/signup", %{user: params})
+    conn = context.conn |> post("/api/signup", %{user: params})
 
     # Should have errors
     assert json_response(conn, 200)["errors"] != nil
@@ -54,7 +54,7 @@ defmodule Api.UserControllerTest do
     starting_accounts_count = account_count
 
     params = generate_user(%{password: "test"})
-    conn = context.conn |> post("/signup", %{user: params})
+    conn = context.conn |> post("/api/signup", %{user: params})
 
     # Should have errors
     assert json_response(conn, 200)["errors"] != nil
@@ -68,7 +68,7 @@ defmodule Api.UserControllerTest do
     starting_users_count = user_count
     starting_accounts_count = account_count
 
-    conn = context.conn |> post("/signup", %{user: generate_user(%{})})
+    conn = context.conn |> post("/api/signup", %{user: generate_user(%{})})
 
     # Should be successful
     assert json_response(conn, 200)["status"] == "success"

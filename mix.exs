@@ -1,8 +1,8 @@
-defmodule Api.Mixfile do
+defmodule WhosAble.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :api,
+    [app: :whos_able,
      version: "0.0.1",
      elixir: "~> 1.2.3",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -17,7 +17,7 @@ defmodule Api.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Api, []},
+    [mod: {WhosAble, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :phoenix_ecto, :postgrex, :comeonin]]
   end
 

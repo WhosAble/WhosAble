@@ -1,12 +1,12 @@
-defmodule Api.Factory do
-  use ExMachina.Ecto, repo: Api.Repo
+defmodule WhosAble.Factory do
+  use ExMachina.Ecto, repo: WhosAble.Repo
 
   def factory(:account) do
-    %Api.Account{}
+    %WhosAble.Account{}
   end
 
   def factory(:location) do
-    %Api.Location{
+    %WhosAble.Location{
       account_id: create(:account).id,
       name: sequence(:name, &"Name #{&1}"),
       address: "123 Sesame street",
@@ -17,7 +17,7 @@ defmodule Api.Factory do
   end
 
   def factory(:user) do
-    %Api.User{
+    %WhosAble.User{
       account_id: create(:account).id,
       first_name: sequence(:first_name, &"User#{&1}"),
       last_name: sequence(:last_name, &"User#{&1}"),

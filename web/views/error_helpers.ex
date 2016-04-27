@@ -1,4 +1,4 @@
-defmodule Api.ErrorHelpers do
+defmodule WhosAble.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -26,10 +26,10 @@ defmodule Api.ErrorHelpers do
     #
     #     dngettext "errors", "1 file", "%{count} files", count
     #
-    Gettext.dngettext(Api.Gettext, "errors", msg, msg, opts[:count], opts)
+    Gettext.dngettext(WhosAble.Gettext, "errors", msg, msg, opts[:count], opts)
   end
 
   def translate_error(msg) do
-    Gettext.dgettext(Api.Gettext, "errors", msg)
+    Gettext.dgettext(WhosAble.Gettext, "errors", msg)
   end
 end

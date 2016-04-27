@@ -1,3 +1,3 @@
-defmodule Api.PageViewTest do
-  use Api.ConnCase, async: true
+defmodule WhosAble.PageViewTest do
+  use WhosAble.ConnCase, async: true
 end

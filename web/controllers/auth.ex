@@ -1,4 +1,4 @@
-defmodule Api.Auth do
+defmodule WhosAble.Auth do
   import Plug.Conn
   import Comeonin.Bcrypt, only: [checkpw: 2]
 
@@ -19,14 +19,14 @@ defmodule Api.Auth do
   ###
 
   defp assign_user(conn, user_id) do
-    case Api.Repo.get(Api.User, user_id) do
+    case WhosAble.Repo.get(WhosAble.User, user_id) do
       nil -> conn
       user -> conn |> assign(:current_user, user)
     end
   end
 
   defp assign_account(%{assigns: %{current_user: user}} = conn) do
-    conn |> assign(:current_account, Api.Repo.get(Api.Account, user.account_id))
+    conn |> assign(:current_account, WhosAble.Repo.get(WhosAble.Account, user.account_id))
   end
   defp assign_account(conn), do: conn
 

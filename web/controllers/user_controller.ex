@@ -1,8 +1,8 @@
-defmodule Api.UserController do
-  use Api.Web, :controller
+defmodule WhosAble.UserController do
+  use WhosAble.Web, :controller
 
-  alias Api.Account
-  alias Api.User
+  alias WhosAble.Account
+  alias WhosAble.User
 
   def create(conn, %{"user" => _}) do
     user_params = scrub_params(conn, "user").params["user"]

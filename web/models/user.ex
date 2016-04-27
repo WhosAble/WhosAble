@@ -1,5 +1,5 @@
-defmodule Api.User do
-  use Api.Web, :model
+defmodule WhosAble.User do
+  use WhosAble.Web, :model
 
   schema "users" do
     field :email
@@ -9,7 +9,7 @@ defmodule Api.User do
     field :first_name
     field :last_name
 
-    belongs_to :account, Api.Account
+    belongs_to :account, WhosAble.Account
 
     timestamps
   end
