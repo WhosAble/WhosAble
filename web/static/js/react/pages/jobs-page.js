@@ -1,7 +1,7 @@
 var CreateJobBtn = require("../create-job-btn");
 var NavBar = require("../nav-bar");
 
-var DashboardPage = React.createClass({
+var JobsPage = React.createClass({
   render() {
     return(
       <div>
@@ -16,4 +16,4 @@ var DashboardPage = React.createClass({
   }
 });
 
-module.exports = DashboardPage;
+module.exports = JobsPage;

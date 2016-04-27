@@ -9,9 +9,10 @@ window.AuthStore = require("./stores/auth-store");
 window.AuthStore.connectSocket();
 
 var HomePage = require("./react/pages/home-page");
-var DashboardPage = require("./react/pages/dashboard-page");
 var LoginPage = require("./react/pages/login-page");
 var SignupPage = require("./react/pages/signup-page");
+var DashboardPage = require("./react/pages/dashboard-page");
+var JobsPage = require("./react/pages/jobs-page");
 var NotFoundPage = require("./react/pages/not-found-page");
 
 function ensureAuthenticated() {
@@ -36,6 +37,7 @@ ReactDOM.render(
     <Route path="/login" component={LoginPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/signup" component={SignupPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/app" component={DashboardPage} onEnter={ensureAuthenticated}>
+      <Route path="jobs" component={JobsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
   </Router>
