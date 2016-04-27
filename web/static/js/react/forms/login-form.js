@@ -27,7 +27,7 @@ var LoginForm = React.createClass({
       var response = window.Dispatcher.login(this.state.email, this.state.password)
         .done(function(response) {
           if(response.status == "failure") {
-            self.setState({loading: false, errors: response.errors});
+            self.setState({loading: false, errors: [{message: "Authentication failed!", field: "password"}]});
           }
         }).error(function() {
           self.setState({loading: false, errors: [{message: "Authentication failed!", field: "password"}]});
