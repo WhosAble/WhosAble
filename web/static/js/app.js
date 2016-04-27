@@ -16,13 +16,17 @@ var NotFoundPage = require("./react/pages/not-found-page");
 
 function ensureAuthenticated() {
   if(window.AuthStore.isLoggedIn() == false) {
-    browserHistory.push("/login")
+    setTimeout(function() {
+      browserHistory.push("/login")
+    }, 100);
   }
 }
 
 function ensureNotAuthenticated() {
   if(window.AuthStore.isLoggedIn() == true) {
-    browserHistory.push("/app")
+    setTimeout(function() {
+      browserHistory.push("/app")
+    }, 100);
   }
 }
 
