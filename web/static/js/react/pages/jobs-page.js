@@ -2,7 +2,7 @@ var CreateBtn = require("../create-btn");
 var NavBar = require("../nav-bar");
 import {browserHistory} from 'react-router';
 
-var DashboardPage = React.createClass({
+var JobsPage = React.createClass({
   handleCreate() {
     browserHistory.push("/app/jobs/new")
   },
@@ -21,4 +21,4 @@ var DashboardPage = React.createClass({
   }
 });
 
-module.exports = DashboardPage;
+module.exports = JobsPage;

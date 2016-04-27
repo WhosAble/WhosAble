@@ -2,9 +2,9 @@ var CreateBtn = require("../create-btn");
 var NavBar = require("../nav-bar");
 import {browserHistory} from 'react-router';
 
-var DashboardPage = React.createClass({
+var ContactsPage = React.createClass({
   handleCreate() {
-    browserHistory.push("/app/jobs/new")
+    browserHistory.push("/app/contacts/new")
   },
 
   render() {
@@ -13,7 +13,7 @@ var DashboardPage = React.createClass({
         <NavBar/>
         <div className="container">
           <main role="main">
-            <CreateBtn title="Create a new Job" onCreate={ this.handleCreate }/>
+            <CreateBtn title="Create a new Contact" onCreate={ this.handleCreate }/>
           </main>
         </div>
       </div>
@@ -21,4 +21,4 @@ var DashboardPage = React.createClass({
   }
 });
 
-module.exports = DashboardPage;
+module.exports = ContactsPage;

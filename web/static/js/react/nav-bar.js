@@ -6,7 +6,8 @@ var NavBar = React.createClass({
 
   getInitialState() {
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      menuOpen: false
     };
   },
 
@@ -19,13 +20,11 @@ var NavBar = React.createClass({
   },
 
   receiveState(isLoggedIn, userID, accountID) {
-    this.setState({
-      isLoggedIn: isLoggedIn
-    });
+    this.setState({isLoggedIn: isLoggedIn});
   },
 
   openMenu() {
-    console.log("opening menu");
+    this.setState({menuOpen: !this.state.menuOpen});
   },
 
   handleLogout() {
@@ -43,41 +42,79 @@ var NavBar = React.createClass({
   },
 
   renderMenuBtn() {
+    var menuClass = "";
+    if(this.state.menuOpen) { menuClass = "open"; }
+
     return(
       <li>
-        <a onClick={ this.openMenu }>
-          <i className="fa fa-bars fa-2x"/>
-        </a>
+        <div id="menu-btn" className={ menuClass } onClick={ this.openMenu }>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </li>
     );
   },
 
-  render() {
+  renderMenu() {
+    var menuClass = "";
+    if(this.state.menuOpen) { menuClass = "open"; }
+    if(this.state.isLoggedIn) { menuClass += " app-menu"; }
+
     if(this.state.isLoggedIn) {
       return(
-        <ul id="nav-bar">
-          { this.renderLogo() }
-          <li><a href="javascript:;" onClick={ this.handleLogout }>Logout</a></li>
+        <ul id="menu" className={ menuClass }>
           <li>
-            <Link to="/app">Dashboard</Link>
+            <Link to="/app">
+              <i className="fa fa-tachometer"/>Dashboard
+            </Link>
           </li>
-          { this.renderMenuBtn() }
+          <li>
+            <Link to="/app/jobs">
+              <i className="fa fa-briefcase"/>Jobs
+            </Link>
+          </li>
+          <li>
+            <Link to="/app/contacts">
+              <i className="fa fa-users"/>Contacts
+            </Link>
+          </li>
+          <li>
+            <a href="javascript:;" onClick={ this.handleLogout }>
+              <i className="fa fa-sign-out"/>Logout
+            </a>
+          </li>
         </ul>
       );
     } else {
       return(
-        <ul id="nav-bar">
-          { this.renderLogo() }
+        <ul id="menu" className={ menuClass }>
           <li>
-            <Link to="/signup">Signup</Link>
+            <Link to="/signup">
+              <i className="fa fa-plus"/>Signup
+            </Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/login">
+              <i className="fa fa-sign-in"/>Login
+            </Link>
           </li>
-          { this.renderMenuBtn() }
         </ul>
       );
     }
+  },
+
+  render() {
+    return(
+      <div id="nav-bar">
+        <ul id="nav-bar-items">
+          { this.renderLogo() }
+          { this.renderMenuBtn() }
+        </ul>
+        { this.renderMenu() }
+      </div>
+    );
   }
 });
 
