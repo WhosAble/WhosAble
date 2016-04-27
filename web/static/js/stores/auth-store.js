@@ -58,7 +58,7 @@ module.exports = {
 
   connectSocket() {
     if(window.AuthStore.isLoggedIn() && !window.AuthStore.socket) {
-      window.AuthStore.socket = new Socket(window.SOCKET_URL + "/account_socket", {params: {token: window.AuthStore.token}})
+      window.AuthStore.socket = new Socket("/account_socket", {params: {token: window.AuthStore.token}})
       window.AuthStore.socket.connect()
 
       window.AuthStore.channel = window.AuthStore.socket.channel("account:" + window.AuthStore.accountID, {token: window.AuthStore.token})

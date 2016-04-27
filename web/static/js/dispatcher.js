@@ -2,7 +2,7 @@ var Dispatcher = {
   login(email, password) {
     return $.ajax({
       method: "POST",
-      url: window.API_URL + "/login",
+      url: "/api/login",
       data: {email: email, password: password}
     }).done(function(response) {
       if(response["status"] == "success") {
@@ -18,12 +18,8 @@ var Dispatcher = {
   signup(firstName, lastName, email, password) {
     return $.ajax({
       method: "POST",
-      url: window.API_URL + "/signup",
+      url: "/api/signup",
       data: {user: {first_name: firstName, last_name: lastName, email: email, password: password}}
-    }).done(function(response) {
-      if(response["status"] == "success") {
-        login(email, password);
-      }
     });
   }
 };

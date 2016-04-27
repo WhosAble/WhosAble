@@ -25,7 +25,7 @@ var TextField = React.createClass({
     return(
       <div className="form-group">
         <label className="control-label">{ this.props.label }</label>
-        <input type="text" className="form-control" value={ this.props.value } onChange={ this.handleChange }/>
+        <input type="password" className="form-control" value={ this.props.value } onChange={ this.handleChange }/>
         <div className="errors">{ this.renderErrors() }</div>
       </div>
     );

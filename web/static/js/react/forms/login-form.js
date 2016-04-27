@@ -1,3 +1,4 @@
+var PasswordField = require("./password-field");
 var TextField = require("./text-field");
 
 var LoginForm = React.createClass({
@@ -7,6 +8,12 @@ var LoginForm = React.createClass({
       password: null,
       errors: []
     };
+  },
+
+  handleFieldChange(field, val) {
+    var obj = {};
+    obj[field] = val;
+    this.setState(obj);
   },
 
   login(e) {
@@ -19,30 +26,24 @@ var LoginForm = React.createClass({
           self.setState({errors: response.errors});
         }
       }).error(function() {
-        self.setState({errors: [{message: "Authentication failed!"}]});
+        self.setState({errors: [{message: "Authentication failed!", field: "password"}]});
       });
   },
 
-  handleFieldChange(field, val) {
-    var obj = {};
-    obj[field] = val;
-    this.setState(obj);
-  },
+  parseErrors(field) {
+    if(this.state.errors.length == 0) { return []; }
 
-  renderErrors() {
-    if(this.state.errors.length > 0) {
-      return this.state.errors.map(function(error) {
-        return(<div className="error">{ error.message }</div>);
-      });
-    }
+    return this.state.errors.map(function(error) {
+      if(error.field == field) { return error; }
+    });
   },
 
   render() {
     return(
       <form onSubmit={ this.login }>
-        { this.renderErrors() }
-        <TextField label="Email" type="text" value={ this.state.email } onChange={ this.handleFieldChange.bind(this, "email") }/>
-        <TextField label="Password" type="password" value={ this.state.password } onChange={ this.handleFieldChange.bind(this, "password") }/>
+        <h1>Login Form</h1>
+        <TextField label="Email" value={ this.state.email } errors={ this.parseErrors("email") } onChange={ this.handleFieldChange.bind(this, "email") }/>
+        <PasswordField label="Password" value={ this.state.password } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "password") }/>
         <button type="submit" className="btn btn-primary" onClick={ this.login }>Login</button>
       </form>
     );

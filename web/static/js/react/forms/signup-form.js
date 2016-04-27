@@ -1,3 +1,4 @@
+var PasswordField = require("./password-field");
 var TextField = require("./text-field");
 
 var SignupForm = React.createClass({
@@ -12,18 +13,6 @@ var SignupForm = React.createClass({
     };
   },
 
-  signup(e) {
-    e.preventDefault();
-    var self = this;
-
-    var response = window.Dispatcher.signup(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
-      .done(function(response) {
-        if(response.status == "failure") {
-          self.setState({errors: response.errors});
-        }
-      });
-  },
-
   handleFieldChange(field, val) {
     var obj = {};
     obj[field] = val;
@@ -31,14 +20,30 @@ var SignupForm = React.createClass({
   },
 
   parseErrors(field) {
-    if(this.state.errors.length == 0) {
-      return [];
+    if(this.state.errors.length == 0) { return []; }
+
+    return this.state.errors.map(function(error) {
+      if(error.field == field) { return error; }
+    });
+  },
+
+  signup(e) {
+    e.preventDefault();
+    var self = this;
+
+    if(this.state.password == this.state.confirmPassword) {
+      var response = window.Dispatcher.signup(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
+        .done(function(response) {
+          if(response.status == "failure") {
+            self.setState({errors: response.errors});
+          } else if(response["status"] == "success") {
+            window.Dispatcher.login(self.state.email, self.state.password);
+          }
+        }).error(function() {
+          self.setState({errors: [{message: "Signup failed!", field: "email"}]});
+        });
     } else {
-      return this.state.errors.map(function(error) {
-        if(error.field == field) {
-          return error;
-        }
-      });
+      this.setState({errors: [{message:"don't match", field:"password"}]});
     }
   },
 
@@ -46,27 +51,12 @@ var SignupForm = React.createClass({
     return(
       <form onSubmit={ this.signup }>
         <h1>Signup Form</h1>
-        <TextField label="First Name" type="text" errors={ this.parseErrors("first_name") } value={ this.state.firstName } onChange={ this.handleFieldChange.bind(this, "firstName") }/>
-        <fieldset className="form-group">
-          <label htmlFor="formGroupInput">First Name  </label>
-          <input type="text" className="form-control" id="formGroupInput" placeholder="First Name"/>
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="formGroupInput2">Last Name  </label>
-          <input type="text" className="form-control" id="formGroupInput2" placeholder="Last Name"/>
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="InputEmail">Email address  </label>
-          <input type="email" className="form-control" id="InputEmail" placeholder="Enter email"/>
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="InputPassword">Password  </label>
-          <input type="password" className="form-control" id="InputPassword" placeholder="Password"/>
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="InputPassword2">Confirm Password  </label>
-          <input type="password" className="form-control" id="InputPassword2" placeholder="ConfirmPassword"/>
-        </fieldset>
+        <TextField label="First Name" value={ this.state.firstName } errors={ this.parseErrors("first_name") } onChange={ this.handleFieldChange.bind(this, "firstName") }/>
+        <TextField label="Last Name" value={ this.state.lastName } errors={ this.parseErrors("last_name") } onChange={ this.handleFieldChange.bind(this, "lastName") }/>
+        <TextField label="Email" value={ this.state.email } errors={ this.parseErrors("email") } onChange={ this.handleFieldChange.bind(this, "email") }/>
+        <PasswordField label="Password" value={ this.state.password } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "password") }/>
+        <PasswordField label="Confirm Password" value={ this.state.confirmPassword } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "confirmPassword") }/>
+
         <button type="submit" className="btn btn-primary" onClick={ this.signup }>Submit</button>
       </form>
     );

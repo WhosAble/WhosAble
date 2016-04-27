@@ -1,6 +1,6 @@
 import {Socket} from "phoenix"
 
-let socket = new Socket("ws://127.0.0.1:4001/account_socket", {params: {token: window.userToken}})
+let socket = new Socket("/account_socket", {params: {token: window.userToken}})
 
 socket.connect()
 
