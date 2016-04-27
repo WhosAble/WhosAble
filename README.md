@@ -1,5 +1,5 @@
-![WhosAble Logo](https://cloud.githubusercontent.com/assets/1529103/14503871/327e377e-016f-11e6-915b-e015aeaa5184.png)
-[![Circle CI](https://circleci.com/gh/WhosAble/API.svg?style=svg)](https://circleci.com/gh/WhosAble/API)
+![WhosAble Logo](https://raw.githubusercontent.com/WhosAble/WhosAble/master/web/static/assets/images/logo.png)
+[![Circle CI](https://circleci.com/gh/WhosAble/WhosAble.svg?style=svg)](https://circleci.com/gh/WhosAble/WhosAble)
 
 # WhosAble
 
