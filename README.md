@@ -1,6 +1,6 @@
 ![WhosAble Logo](https://raw.githubusercontent.com/WhosAble/WhosAble/master/web/static/assets/images/logo.png)
 [![Circle CI](https://circleci.com/gh/WhosAble/WhosAble.svg?style=svg)](https://circleci.com/gh/WhosAble/WhosAble)
-
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](http://stackshare.io/mahcloud/whosable)
 # WhosAble
 
 To start your Phoenix app:
