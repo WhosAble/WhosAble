@@ -6,6 +6,7 @@ import {Router, Route, browserHistory} from 'react-router';
 window.Dispatcher = require("./dispatcher");
 
 window.AuthStore = require("./stores/auth-store");
+window.ServiceStore = require("./stores/service-store");
 window.AuthStore.connectSocket();
 
 var HomePage = require("./react/pages/home-page");

@@ -1,5 +1,5 @@
 defmodule WhosAble.AccountChannel do
-  use Phoenix.Channel
+  use WhosAble.Web, :channel
 
   def join("account:" <> account_id, %{"token" => token}, socket) do
     case Phoenix.Token.verify(socket, "account socket", token) do
@@ -14,9 +14,36 @@ defmodule WhosAble.AccountChannel do
     {:error, %{reason: "unauthorized"}}
   end
 
+  def handle_in("create_service", msg, socket) do
+    account = get_account(socket)
+    params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
+    case WhosAble.Repo.insert(WhosAble.Service.changeset(%WhosAble.Service{}, params)) do
+      {:ok, service} ->
+        WhosAble.AccountChannel.Service.new_service(service, socket)
+        {:reply, {:ok, %{service_id: service.id}}, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
+    end
+  end
+  def handle_in("request_services", _, socket) do
+    WhosAble.AccountChannel.Service.all_services(socket)
+    {:noreply, socket}
+  end
+
+  def get_account(socket), do: WhosAble.Repo.get(WhosAble.Account, parse_topic(socket))
+
   ###
   ### PRIVATE
   ###
+
+  defp errors_json(changeset) do
+    Enum.map(changeset.errors, fn {field, message} ->
+      %{
+        field: field,
+        message: render_message(message)
+      }
+    end)
+  end
 
   defp parse_account_id(account_id) do
     case Integer.parse(account_id) do
@@ -24,4 +51,21 @@ defmodule WhosAble.AccountChannel do
       _ -> nil
     end
   end
+
+  defp parse_int(str) do
+    case Integer.parse(str) do
+      {int, _} -> int
+      _ -> nil
+    end
+  end
+
+  def parse_topic(%{topic: "account:" <> account_id}), do: parse_int(account_id)
+  def parse_topic(_), do: nil
+
+  defp render_message({message, values}) do
+    Enum.reduce values, message, fn {k, v}, acc ->
+      String.replace(acc, "%{#{k}}", to_string(v))
+    end
+  end
+  defp render_message(message), do: message
 end

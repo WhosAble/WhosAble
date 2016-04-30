@@ -61,7 +61,7 @@ var SignupForm = React.createClass({
         </button>
       );
     } else {
-      return(<button type="submit" className="btn btn-primary" onClick={ this.signup }>Submit</button>);
+      return(<button type="submit" className="btn btn-primary" onClick={ this.signup }>Signup</button>);
     }
   },
 
