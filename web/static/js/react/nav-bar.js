@@ -19,8 +19,10 @@ var NavBar = React.createClass({
     window.AuthStore.unsubscribe(this.receiveState);
   },
 
-  receiveState(isLoggedIn, userID, accountID) {
-    this.setState({isLoggedIn: isLoggedIn});
+  receiveState(authState) {
+    this.setState({
+      isLoggedIn: authState.isLoggedIn
+    });
   },
 
   openMenu() {

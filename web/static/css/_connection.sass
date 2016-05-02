@@ -1,0 +1,54 @@
+@import "variables"
+
+#connection-status-overlay
+  position: absolute
+  top: 0px
+  left: 0px
+  width: 100%
+  height: 100%
+  background: rgba(44, 62, 80, 0.8)
+  z-index: 9999
+
+  #connection-status-content
+    background: rgba(236, 240, 241, 0.8)
+    color: $midnight
+    position: absolute
+    top: $header-height + 25px
+    left: calc(50% - 150px)
+    width: 300px
+    padding: 0px 15px 15px
+    border-radius: 5px
+    border: 2px solid $orange
+
+    .flex-container
+      display: -webkit-box
+      display: -moz-box
+      display: -ms-flexbox
+      display: -webkit-flex
+      display: flex
+
+      .flex-left
+        width: 85px
+
+        i
+          font-size: 56px
+          text-align: center
+          position: absolute
+          top: calc(50% - 30px)
+
+      .flex-right
+        width: calc(100% - 85px)
+
+        h3
+          margin-bottom: 0px
+
+        p, h3, h4
+          text-align: center
+
+        p.description
+          font-size: 12px
+          line-height: 14px
+
+        #cta
+          color: $peter
+          cursor: pointer
