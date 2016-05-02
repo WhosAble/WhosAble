@@ -19,9 +19,9 @@ var HomePage = React.createClass({
     window.AuthStore.unsubscribe(this.receiveState);
   },
 
-  receiveState(isLoggedIn, userID, accountID) {
+  receiveState(authState) {
     this.setState({
-      isLoggedIn: isLoggedIn
+      isLoggedIn: authState.isLoggedIn
     });
   },
 
