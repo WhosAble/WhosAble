@@ -162,8 +162,10 @@ window.ReactDOM = require("react-dom");
 window.Dispatcher = require("./dispatcher");
 
 window.AuthStore = require("./stores/auth-store");
+window.ServiceStore = require("./stores/service-store");
 window.AuthStore.connectSocket();
 
+var ConnectionStatus = require("./react/pages/connection-status");
 var HomePage = require("./react/pages/home-page");
 var LoginPage = require("./react/pages/login-page");
 var SignupPage = require("./react/pages/signup-page");
@@ -196,11 +198,15 @@ ReactDOM.render(React.createElement(
   React.createElement(_reactRouter.Route, { path: "/", component: HomePage }),
   React.createElement(_reactRouter.Route, { path: "/login", component: LoginPage, onEnter: ensureNotAuthenticated }),
   React.createElement(_reactRouter.Route, { path: "/signup", component: SignupPage, onEnter: ensureNotAuthenticated }),
-  React.createElement(_reactRouter.Route, { path: "/app", component: DashboardPage, onEnter: ensureAuthenticated }),
-  React.createElement(_reactRouter.Route, { path: "/app/contacts", component: ContactsPage, onEnter: ensureAuthenticated }),
-  React.createElement(_reactRouter.Route, { path: "/app/contacts/new", component: NewContactPage, onEnter: ensureAuthenticated }),
-  React.createElement(_reactRouter.Route, { path: "/app/jobs", component: JobsPage, onEnter: ensureAuthenticated }),
-  React.createElement(_reactRouter.Route, { path: "/app/jobs/new", component: NewJobPage, onEnter: ensureAuthenticated }),
+  React.createElement(
+    _reactRouter.Route,
+    { path: "/app", component: ConnectionStatus, onEnter: ensureAuthenticated },
+    React.createElement(_reactRouter.IndexRoute, { component: DashboardPage }),
+    React.createElement(_reactRouter.Route, { path: "contacts", component: ContactsPage }),
+    React.createElement(_reactRouter.Route, { path: "contacts/new", component: NewContactPage }),
+    React.createElement(_reactRouter.Route, { path: "jobs", component: JobsPage }),
+    React.createElement(_reactRouter.Route, { path: "jobs/new", component: NewJobPage })
+  ),
   React.createElement(_reactRouter.Route, { path: "*", component: NotFoundPage })
 ), document.getElementById('react-component'));
 });
@@ -211,6 +217,12 @@ require.register("web/static/js/dispatcher.js", function(exports, require, modul
 var _reactRouter = require("react-router");
 
 var Dispatcher = {
+  createService: function createService(name) {
+    return window.AuthStore.channel.push("create_service", { name: name });
+    /*  .receive("ok", (resp) => {
+      }).receive("error", (resp) => {
+      });*/
+  },
   login: function login(email, password) {
     return $.ajax({
       method: "POST",
@@ -383,6 +395,7 @@ require.register("web/static/js/react/forms/login-form.js", function(exports, re
 
 var PasswordField = require("./password-field");
 var TextField = require("./text-field");
+var LoadingEllipsis = require("../loading-ellipsis");
 
 var LoginForm = React.createClass({
   displayName: "LoginForm",
@@ -390,7 +403,8 @@ var LoginForm = React.createClass({
     return {
       email: null,
       password: null,
-      errors: []
+      errors: [],
+      loading: false
     };
   },
   handleFieldChange: function handleFieldChange(field, val) {
@@ -401,14 +415,17 @@ var LoginForm = React.createClass({
   login: function login(e) {
     e.preventDefault();
     var self = this;
+    if (this.state.loading == false) {
+      this.setState({ loading: true });
 
-    var response = window.Dispatcher.login(this.state.email, this.state.password).done(function (response) {
-      if (response.status == "failure") {
-        self.setState({ errors: response.errors });
-      }
-    }).error(function () {
-      self.setState({ errors: [{ message: "Authentication failed!", field: "password" }] });
-    });
+      var response = window.Dispatcher.login(this.state.email, this.state.password).done(function (response) {
+        if (response.status == "failure") {
+          self.setState({ loading: false, errors: [{ message: "Authentication failed!", field: "password" }] });
+        }
+      }).error(function () {
+        self.setState({ loading: false, errors: [{ message: "Authentication failed!", field: "password" }] });
+      });
+    }
   },
   parseErrors: function parseErrors(field) {
     if (this.state.errors.length == 0) {
@@ -421,6 +438,25 @@ var LoginForm = React.createClass({
       }
     });
   },
+  renderBtn: function renderBtn() {
+    if (this.state.loading) {
+      return React.createElement(
+        "button",
+        { type: "submit", className: "btn" },
+        React.createElement(
+          LoadingEllipsis,
+          null,
+          "Logging In"
+        )
+      );
+    } else {
+      return React.createElement(
+        "button",
+        { type: "submit", className: "btn btn-primary", onClick: this.login },
+        "Login"
+      );
+    }
+  },
   render: function render() {
     return React.createElement(
       "form",
@@ -432,11 +468,7 @@ var LoginForm = React.createClass({
       ),
       React.createElement(TextField, { label: "Email", value: this.state.email, errors: this.parseErrors("email"), onChange: this.handleFieldChange.bind(this, "email") }),
       React.createElement(PasswordField, { label: "Password", value: this.state.password, errors: this.parseErrors("password"), onChange: this.handleFieldChange.bind(this, "password") }),
-      React.createElement(
-        "button",
-        { type: "submit", className: "btn btn-primary", onClick: this.login },
-        "Login"
-      )
+      this.renderBtn()
     );
   }
 });
@@ -501,6 +533,7 @@ require.register("web/static/js/react/forms/signup-form.js", function(exports, r
 
 var PasswordField = require("./password-field");
 var TextField = require("./text-field");
+var LoadingEllipsis = require("../loading-ellipsis");
 
 var SignupForm = React.createClass({
   displayName: "SignupForm",
@@ -511,7 +544,8 @@ var SignupForm = React.createClass({
       email: null,
       password: null,
       confirmPassword: null,
-      errors: []
+      errors: [],
+      loading: false
     };
   },
   handleFieldChange: function handleFieldChange(field, val) {
@@ -534,18 +568,41 @@ var SignupForm = React.createClass({
     e.preventDefault();
     var self = this;
 
-    if (this.state.password == this.state.confirmPassword) {
-      var response = window.Dispatcher.signup(this.state.firstName, this.state.lastName, this.state.email, this.state.password).done(function (response) {
-        if (response.status == "failure") {
-          self.setState({ errors: response.errors });
-        } else if (response["status"] == "success") {
-          window.Dispatcher.login(self.state.email, self.state.password);
-        }
-      }).error(function () {
-        self.setState({ errors: [{ message: "Signup failed!", field: "email" }] });
-      });
+    if (this.state.loading == false) {
+      this.setState({ loading: true });
+
+      if (this.state.password == this.state.confirmPassword) {
+        var response = window.Dispatcher.signup(this.state.firstName, this.state.lastName, this.state.email, this.state.password).done(function (response) {
+          if (response.status == "failure") {
+            self.setState({ loading: false, errors: response.errors });
+          } else if (response["status"] == "success") {
+            window.Dispatcher.login(self.state.email, self.state.password);
+          }
+        }).error(function () {
+          self.setState({ loading: false, errors: [{ message: "Signup failed!", field: "email" }] });
+        });
+      } else {
+        this.setState({ loading: false, errors: [{ message: "don't match", field: "password" }] });
+      }
+    }
+  },
+  renderBtn: function renderBtn() {
+    if (this.state.loading) {
+      return React.createElement(
+        "button",
+        { type: "submit", className: "btn" },
+        React.createElement(
+          LoadingEllipsis,
+          null,
+          "Signing Up"
+        )
+      );
     } else {
-      this.setState({ errors: [{ message: "don't match", field: "password" }] });
+      return React.createElement(
+        "button",
+        { type: "submit", className: "btn btn-primary", onClick: this.signup },
+        "Signup"
+      );
     }
   },
   render: function render() {
@@ -562,11 +619,7 @@ var SignupForm = React.createClass({
       React.createElement(TextField, { label: "Email", value: this.state.email, errors: this.parseErrors("email"), onChange: this.handleFieldChange.bind(this, "email") }),
       React.createElement(PasswordField, { label: "Password", value: this.state.password, errors: this.parseErrors("password"), onChange: this.handleFieldChange.bind(this, "password") }),
       React.createElement(PasswordField, { label: "Confirm Password", value: this.state.confirmPassword, errors: this.parseErrors("password"), onChange: this.handleFieldChange.bind(this, "confirmPassword") }),
-      React.createElement(
-        "button",
-        { type: "submit", className: "btn btn-primary", onClick: this.signup },
-        "Submit"
-      )
+      this.renderBtn()
     );
   }
 });
@@ -626,6 +679,58 @@ var TextField = React.createClass({
 module.exports = TextField;
 });
 
+require.register("web/static/js/react/loading-ellipsis.js", function(exports, require, module) {
+"use strict";
+
+var LoadingEllipsis = React.createClass({
+  displayName: "LoadingEllipsis",
+
+  dotInterval: null,
+
+  getInitialState: function getInitialState() {
+    return {
+      dotCount: 0,
+      dots: ''
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    this.dotInterval = setInterval(this.updateDots, 500);
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    clearInterval(this.dotInterval);
+  },
+  updateDots: function updateDots() {
+    var count = this.state.dotCount + 1;
+    if (count >= 4) count = 0;
+    var dots = ".".repeat(count);
+    this.setState({ dotCount: count, dots: dots });
+  },
+  render: function render() {
+    return React.createElement(
+      "span",
+      { className: "loading-ellipsis" },
+      this.props.children || 'loading',
+      React.createElement(
+        "span",
+        { className: "dot-holder" },
+        React.createElement(
+          "span",
+          { className: "invisi-dots" },
+          "..."
+        ),
+        React.createElement(
+          "span",
+          { className: "dots" },
+          this.state.dots
+        )
+      )
+    );
+  }
+});
+
+module.exports = LoadingEllipsis;
+});
+
 require.register("web/static/js/react/nav-bar.js", function(exports, require, module) {
 "use strict";
 
@@ -648,8 +753,10 @@ var NavBar = React.createClass({
   componentWillUnmount: function componentWillUnmount() {
     window.AuthStore.unsubscribe(this.receiveState);
   },
-  receiveState: function receiveState(isLoggedIn, userID, accountID) {
-    this.setState({ isLoggedIn: isLoggedIn });
+  receiveState: function receiveState(authState) {
+    this.setState({
+      isLoggedIn: authState.isLoggedIn
+    });
   },
   openMenu: function openMenu() {
     this.setState({ menuOpen: !this.state.menuOpen });
@@ -786,6 +893,100 @@ var NavBar = React.createClass({
 module.exports = NavBar;
 });
 
+require.register("web/static/js/react/pages/connection-status.js", function(exports, require, module) {
+"use strict";
+
+var NavBar = require("../nav-bar");
+
+var ConnectionStatus = React.createClass({
+  displayName: "ConnectionStatus",
+  getInitialState: function getInitialState() {
+    return {
+      connected: false,
+      pollingAttempts: 0
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    window.AuthStore.subscribe(this.receiveState);
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    window.AuthStore.unsubscribe(this.receiveState);
+  },
+  receiveState: function receiveState(authState) {
+    this.setState({
+      connected: authState.connected,
+      pollingAttempts: authState.pollingAttempts
+    });
+  },
+  handleLogin: function handleLogin() {
+    window.Dispatcher.logout();
+    window.location.href = "/login";
+  },
+  renderFailure: function renderFailure() {
+    if (!this.state.connected && this.state.pollingAttempts > 4) {
+      return React.createElement(
+        "div",
+        { id: "connection-status-overlay" },
+        React.createElement(
+          "div",
+          { id: "connection-status-content" },
+          React.createElement(
+            "div",
+            { className: "flex-container" },
+            React.createElement(
+              "div",
+              { className: "flex-left" },
+              React.createElement("i", { className: "fa fa-plug" })
+            ),
+            React.createElement(
+              "div",
+              { className: "flex-right" },
+              React.createElement(
+                "h3",
+                null,
+                "Sorry!"
+              ),
+              React.createElement(
+                "p",
+                { className: "description" },
+                "Your connection was lost.",
+                React.createElement("br", null),
+                "I wonder how that happened..."
+              ),
+              React.createElement(
+                "p",
+                null,
+                "Wait"
+              ),
+              React.createElement(
+                "h4",
+                null,
+                "OR"
+              ),
+              React.createElement(
+                "p",
+                { id: "cta", onClick: this.handleLogin },
+                "Login again"
+              )
+            )
+          )
+        )
+      );
+    }
+  },
+  render: function render() {
+    return React.createElement(
+      "div",
+      { id: "connection-status-wrapper" },
+      this.renderFailure(),
+      this.props.children
+    );
+  }
+});
+
+module.exports = ConnectionStatus;
+});
+
 require.register("web/static/js/react/pages/contacts-page.js", function(exports, require, module) {
 "use strict";
 
@@ -832,8 +1033,22 @@ var NavBar = require("../nav-bar");
 
 var DashboardPage = React.createClass({
   displayName: "DashboardPage",
+  getInitialState: function getInitialState() {
+    return {
+      services: null
+    };
+  },
   handleCreate: function handleCreate() {
     _reactRouter.browserHistory.push("/app/jobs/new");
+  },
+  componentDidMount: function componentDidMount() {
+    window.ServiceStore.subscribe(this.receiveState);
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    window.ServiceStore.unsubscribe(this.receiveState);
+  },
+  receiveState: function receiveState(services) {
+    this.setState({ services: services });
   },
   render: function render() {
     return React.createElement(
@@ -878,9 +1093,9 @@ var HomePage = React.createClass({
   componentWillUnmount: function componentWillUnmount() {
     window.AuthStore.unsubscribe(this.receiveState);
   },
-  receiveState: function receiveState(isLoggedIn, userID, accountID) {
+  receiveState: function receiveState(authState) {
     this.setState({
-      isLoggedIn: isLoggedIn
+      isLoggedIn: authState.isLoggedIn
     });
   },
   renderSignupForm: function renderSignupForm() {
@@ -1144,6 +1359,8 @@ module.exports = {
   hashLocation: null,
   socket: null,
   channel: null,
+  pollingInterval: null,
+  pollingAttempts: 0,
   callBacks: [],
 
   subscribe: function subscribe(callBack) {
@@ -1164,7 +1381,13 @@ module.exports = {
     });
   },
   sendCallBack: function sendCallBack(callBack) {
-    callBack(window.AuthStore.isLoggedIn(), window.AuthStore.userID, window.AuthStore.accountID);
+    callBack({
+      isLoggedIn: window.AuthStore.isLoggedIn(),
+      userID: window.AuthStore.userID,
+      accountID: window.AuthStore.accountID,
+      isSocketConnected: window.AuthStore.isSocketConnected(),
+      pollingAttempts: window.AuthStore.pollingAttempts
+    });
   },
   isLoggedIn: function isLoggedIn() {
     return !!window.AuthStore.token && !!window.AuthStore.accountID && !!window.AuthStore.userID;
@@ -1176,6 +1399,7 @@ module.exports = {
     window.AuthStore.token = loginResponse.token;
     window.AuthStore.userID = loginResponse.user_id;
     window.AuthStore.accountID = loginResponse.account_id;
+    window.AuthStore.connectSocket();
     window.AuthStore.sendCallBacks();
   },
   clearSession: function clearSession() {
@@ -1186,8 +1410,21 @@ module.exports = {
     window.AuthStore.accountID = null;
     window.AuthStore.sendCallBacks();
   },
+  isSocketConnected: function isSocketConnected() {
+    return window.AuthStore.socket && window.AuthStore.socket.isConnected();
+  },
+  pollConnection: function pollConnection() {
+    if (window.AuthStore.isSocketConnected()) {
+      clearInterval(window.AuthStore.pollingInterval);
+    } else {
+      window.AuthStore.pollingAttempts++;
+    }
+    window.AuthStore.sendCallBacks();
+  },
   connectSocket: function connectSocket() {
     if (window.AuthStore.isLoggedIn() && !window.AuthStore.socket) {
+      window.AuthStore.pollingInterval = setInterval(window.AuthStore.pollConnection, 500);
+
       window.AuthStore.socket = new _phoenix.Socket("/account_socket", { params: { token: window.AuthStore.token } });
       window.AuthStore.socket.connect();
 
@@ -1197,6 +1434,62 @@ module.exports = {
       }).receive("error", function (resp) {
         console.log("Unable to join", resp);
       });
+    }
+  }
+};
+});
+
+require.register("web/static/js/stores/service-store.js", function(exports, require, module) {
+"use strict";
+
+var _phoenix = require("phoenix");
+
+module.exports = {
+  services: {},
+  callBacks: [],
+
+  subscribe: function subscribe(callBack) {
+    window.ServiceStore.connectToChannel();
+    window.ServiceStore.callBacks.push(callBack);
+    window.ServiceStore.sendCallBack(callBack);
+  },
+  unsubscribe: function unsubscribe(callBack) {
+    var i = window.ServiceStore.callBacks.indexOf(callBack);
+    if (i != -1) {
+      window.ServiceStore.callBacks.splice(i, 1);
+    }
+  },
+  sendCallBacks: function sendCallBacks() {
+    window.ServiceStore.callBacks.forEach(function (callBack) {
+      if (callBack && typeof callBack === "function") {
+        window.ServiceStore.sendCallBack(callBack);
+      }
+    });
+  },
+  sendCallBack: function sendCallBack(callBack) {
+    callBack(window.ServiceStore.services);
+  },
+  addNewService: function addNewService(service) {
+    window.ServiceStore.services[service.id] = service;
+    window.ServiceStore.sendCallBacks();
+  },
+  refreshServices: function refreshServices(services) {
+    var newServices = {};
+    services.forEach(function (service) {
+      newServices[service.id] = service;
+    });
+    window.ServiceStore.services = newServices;
+    window.ServiceStore.sendCallBacks();
+  },
+  connectToChannel: function connectToChannel() {
+    if (window.AuthStore.isLoggedIn() && window.AuthStore.channel && Object.keys(window.ServiceStore.services).length === 0) {
+      window.AuthStore.channel.on("new_service", function (service) {
+        window.ServiceStore.addNewService(service);
+      });
+      window.AuthStore.channel.on("all_services", function (response) {
+        window.ServiceStore.refreshServices(response.services);
+      });
+      window.AuthStore.channel.push("request_services", {});
     }
   }
 };

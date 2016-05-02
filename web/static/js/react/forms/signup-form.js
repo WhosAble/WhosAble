@@ -1,5 +1,6 @@
 var PasswordField = require("./password-field");
 var TextField = require("./text-field");
+var LoadingEllipsis = require("../loading-ellipsis");
 
 var SignupForm = React.createClass({
   getInitialState() {
@@ -9,7 +10,8 @@ var SignupForm = React.createClass({
       email: null,
       password: null,
       confirmPassword: null,
-      errors: []
+      errors: [],
+      loading: false
     };
   },
 
@@ -31,19 +33,35 @@ var SignupForm = React.createClass({
     e.preventDefault();
     var self = this;
 
-    if(this.state.password == this.state.confirmPassword) {
-      var response = window.Dispatcher.signup(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
-        .done(function(response) {
-          if(response.status == "failure") {
-            self.setState({errors: response.errors});
-          } else if(response["status"] == "success") {
-            window.Dispatcher.login(self.state.email, self.state.password);
-          }
-        }).error(function() {
-          self.setState({errors: [{message: "Signup failed!", field: "email"}]});
-        });
+    if(this.state.loading == false) {
+      this.setState({loading: true});
+
+      if(this.state.password == this.state.confirmPassword) {
+        var response = window.Dispatcher.signup(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
+          .done(function(response) {
+            if(response.status == "failure") {
+              self.setState({loading: false, errors: response.errors});
+            } else if(response["status"] == "success") {
+              window.Dispatcher.login(self.state.email, self.state.password);
+            }
+          }).error(function() {
+            self.setState({loading: false, errors: [{message: "Signup failed!", field: "email"}]});
+          });
+      } else {
+        this.setState({loading: false, errors: [{message:"don't match", field:"password"}]});
+      }
+    }
+  },
+
+  renderBtn() {
+    if(this.state.loading) {
+      return(
+        <button type="submit" className="btn">
+          <LoadingEllipsis>Signing Up</LoadingEllipsis>
+        </button>
+      );
     } else {
-      this.setState({errors: [{message:"don't match", field:"password"}]});
+      return(<button type="submit" className="btn btn-primary" onClick={ this.signup }>Signup</button>);
     }
   },
 
@@ -56,8 +74,7 @@ var SignupForm = React.createClass({
         <TextField label="Email" value={ this.state.email } errors={ this.parseErrors("email") } onChange={ this.handleFieldChange.bind(this, "email") }/>
         <PasswordField label="Password" value={ this.state.password } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "password") }/>
         <PasswordField label="Confirm Password" value={ this.state.confirmPassword } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "confirmPassword") }/>
-
-        <button type="submit" className="btn btn-primary" onClick={ this.signup }>Submit</button>
+        { this.renderBtn() }
       </form>
     );
   }

@@ -7,6 +7,8 @@ module.exports = {
   hashLocation: null,
   socket: null,
   channel: null,
+  pollingInterval: null,
+  pollingAttempts: 0,
   callBacks: [],
 
   subscribe(callBack) {
@@ -30,7 +32,13 @@ module.exports = {
   },
 
   sendCallBack(callBack) {
-    callBack(window.AuthStore.isLoggedIn(), window.AuthStore.userID, window.AuthStore.accountID);
+    callBack({
+      isLoggedIn: window.AuthStore.isLoggedIn(),
+      userID: window.AuthStore.userID,
+      accountID: window.AuthStore.accountID,
+      isSocketConnected: window.AuthStore.isSocketConnected(),
+      pollingAttempts: window.AuthStore.pollingAttempts
+    });
   },
 
   isLoggedIn() {
@@ -44,6 +52,7 @@ module.exports = {
     window.AuthStore.token = loginResponse.token;
     window.AuthStore.userID = loginResponse.user_id;
     window.AuthStore.accountID = loginResponse.account_id;
+    window.AuthStore.connectSocket();
     window.AuthStore.sendCallBacks();
   },
 
@@ -56,15 +65,30 @@ module.exports = {
     window.AuthStore.sendCallBacks();
   },
 
+  isSocketConnected() {
+    return window.AuthStore.socket && window.AuthStore.socket.isConnected();
+  },
+
+  pollConnection() {
+    if(window.AuthStore.isSocketConnected()) {
+      clearInterval(window.AuthStore.pollingInterval);
+    } else {
+      window.AuthStore.pollingAttempts++;
+    }
+    window.AuthStore.sendCallBacks();
+  },
+
   connectSocket() {
     if(window.AuthStore.isLoggedIn() && !window.AuthStore.socket) {
+      window.AuthStore.pollingInterval = setInterval(window.AuthStore.pollConnection, 500);
+
       window.AuthStore.socket = new Socket("/account_socket", {params: {token: window.AuthStore.token}})
       window.AuthStore.socket.connect()
 
       window.AuthStore.channel = window.AuthStore.socket.channel("account:" + window.AuthStore.accountID, {token: window.AuthStore.token})
       window.AuthStore.channel.join()
-        .receive("ok", resp => { console.log("Joined successfully", resp) })
-        .receive("error", resp => { console.log("Unable to join", resp) })
+        .receive("ok", (resp) => { console.log("Joined successfully", resp); })
+        .receive("error", (resp) => { console.log("Unable to join", resp); });
     }
   },
 };

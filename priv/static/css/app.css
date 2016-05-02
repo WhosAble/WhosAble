@@ -9,9 +9,9 @@
   width: 250px;
   max-height: 0;
   overflow: hidden;
-  -webkit-transition: max-height 0.8s;
-  -moz-transition: max-height 0.8s;
-  transition: max-height 0.8s; }
+  -webkit-transition: max-height 0.25s;
+  -moz-transition: max-height 0.25s;
+  transition: max-height 0.25s; }
   #nav-bar ul#menu.open {
     max-height: 110px; }
     #nav-bar ul#menu.open.app-menu {
@@ -133,6 +133,62 @@
 
 form .errors .error {
   color: #C0392B; }
+
+.loading-ellipsis {
+  opacity: 0.75;
+  font-style: italic; }
+  .loading-ellipsis .dot-holder {
+    position: relative; }
+    .loading-ellipsis .dot-holder .invisi-dots {
+      opacity: 0; }
+    .loading-ellipsis .dot-holder .dots {
+      position: absolute;
+      top: 0;
+      left: 0; }
+
+#connection-status-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(44, 62, 80, 0.8);
+  z-index: 9999; }
+  #connection-status-overlay #connection-status-content {
+    background: rgba(236, 240, 241, 0.8);
+    color: #2C3E50;
+    position: absolute;
+    top: 80px;
+    left: calc(50% - 150px);
+    width: 300px;
+    padding: 0px 15px 15px;
+    border-radius: 5px;
+    border: 2px solid #F39C12; }
+    #connection-status-overlay #connection-status-content .flex-container {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex; }
+      #connection-status-overlay #connection-status-content .flex-container .flex-left {
+        width: 85px; }
+        #connection-status-overlay #connection-status-content .flex-container .flex-left i {
+          font-size: 56px;
+          text-align: center;
+          position: absolute;
+          top: calc(50% - 30px); }
+      #connection-status-overlay #connection-status-content .flex-container .flex-right {
+        width: calc(100% - 85px); }
+        #connection-status-overlay #connection-status-content .flex-container .flex-right h3 {
+          margin-bottom: 0px; }
+        #connection-status-overlay #connection-status-content .flex-container .flex-right p, #connection-status-overlay #connection-status-content .flex-container .flex-right h3, #connection-status-overlay #connection-status-content .flex-container .flex-right h4 {
+          text-align: center; }
+        #connection-status-overlay #connection-status-content .flex-container .flex-right p.description {
+          font-size: 12px;
+          line-height: 14px; }
+        #connection-status-overlay #connection-status-content .flex-container .flex-right #cta {
+          color: #3498DB;
+          cursor: pointer; }
 
 .container {
   margin-bottom: 15px; }
@@ -168,9 +224,9 @@ form .errors .error {
   width: 250px;
   max-height: 0;
   overflow: hidden;
-  -webkit-transition: max-height 0.8s;
-  -moz-transition: max-height 0.8s;
-  transition: max-height 0.8s; }
+  -webkit-transition: max-height 0.25s;
+  -moz-transition: max-height 0.25s;
+  transition: max-height 0.25s; }
   #nav-bar ul#menu.open {
     max-height: 110px; }
     #nav-bar ul#menu.open.app-menu {
@@ -289,6 +345,18 @@ form .errors .error {
               top: 12px;
               width: 0%;
               left: 50%; }
+
+.loading-ellipsis {
+  opacity: 0.75;
+  font-style: italic; }
+  .loading-ellipsis .dot-holder {
+    position: relative; }
+    .loading-ellipsis .dot-holder .invisi-dots {
+      opacity: 0; }
+    .loading-ellipsis .dot-holder .dots {
+      position: absolute;
+      top: 0;
+      left: 0; }
 
 
 
