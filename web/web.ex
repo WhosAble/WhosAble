@@ -69,6 +69,7 @@ defmodule WhosAble.Web do
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
       import WhosAble.Gettext
+      import WhosAble.Util, only: [scrub_params: 1]
     end
   end
 

@@ -1,6 +1,13 @@
 import { browserHistory } from 'react-router';
 
 var Dispatcher = {
+  createService(name) {
+    return window.AuthStore.channel.push("create_service", {name: name})
+    /*  .receive("ok", (resp) => {
+      }).receive("error", (resp) => {
+      });*/
+  },
+
   login(email, password) {
     return $.ajax({
       method: "POST",

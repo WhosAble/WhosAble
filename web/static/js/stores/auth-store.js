@@ -63,8 +63,8 @@ module.exports = {
 
       window.AuthStore.channel = window.AuthStore.socket.channel("account:" + window.AuthStore.accountID, {token: window.AuthStore.token})
       window.AuthStore.channel.join()
-        .receive("ok", resp => { console.log("Joined successfully", resp) })
-        .receive("error", resp => { console.log("Unable to join", resp) })
+        .receive("ok", (resp) => { console.log("Joined successfully", resp); })
+        .receive("error", (resp) => { console.log("Unable to join", resp); });
     }
   },
 };
