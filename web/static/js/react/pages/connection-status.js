@@ -18,7 +18,7 @@ var ConnectionStatus = React.createClass({
 
   receiveState(authState) {
     this.setState({
-      connected: authState.connected,
+      connected: authState.isSocketConnected,
       pollingAttempts: authState.pollingAttempts
     });
   },
