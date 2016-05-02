@@ -27,11 +27,9 @@ var JobForm = React.createClass({
       Describe the job:
       <br/>
       <br/>
-      Service Type
-      <select name="Choose One">
-        <option value="example">Example</option>
 
-      </select>
+      <div className="btn btn-primary" onClick={this.props.onformchange}>Service Type</div>
+
       <br/>
       <br/>
       <textarea name="startlocation" rows="4" cols="20">
