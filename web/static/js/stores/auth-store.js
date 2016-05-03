@@ -9,6 +9,7 @@ module.exports = {
   channel: null,
   pollingInterval: null,
   pollingAttempts: 0,
+  pollingConnected: false,
   callBacks: [],
 
   subscribe(callBack) {
@@ -71,11 +72,15 @@ module.exports = {
 
   pollConnection() {
     if(window.AuthStore.isSocketConnected()) {
-      clearInterval(window.AuthStore.pollingInterval);
+      if(!window.AuthStore.pollingConnected) {
+        window.AuthStore.pollingConnected = true;
+        window.AuthStore.sendCallBacks();
+      }
     } else {
+      window.AuthStore.pollingConnected = false;
       window.AuthStore.pollingAttempts++;
+      window.AuthStore.sendCallBacks();
     }
-    window.AuthStore.sendCallBacks();
   },
 
   connectSocket() {
