@@ -22,6 +22,17 @@ if(this.state.form == "job"){
 }
 },
 
+componentDidMount() {
+  window.ServiceStore.subscribe(this.receiveState);
+},
+
+componentWillUnmount() {
+  window.ServiceStore.unsubscribe(this.receiveState);
+},
+
+receiveState(services) {
+  this.setState({services: services});
+},
   render() {
     return(
       <div>

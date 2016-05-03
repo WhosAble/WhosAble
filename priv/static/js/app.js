@@ -360,6 +360,15 @@ require.register("web/static/js/react/forms/jobtype.js", function(exports, requi
 
 var JobType = React.createClass({
   displayName: "JobType",
+  handleCreate: function handleCreate() {
+    var _this = this;
+
+    window.Dispatcher.createService(this.state.servicetype).receive("ok", function (resp) {
+      _this.setState({ serviceID: resp.service_id });
+    }).receive("error", function (resp) {
+      _this.setState({ errors: resp.errors });
+    });
+  },
   render: function render() {
     return React.createElement(
       "div",
@@ -370,11 +379,7 @@ var JobType = React.createClass({
       React.createElement(
         "form",
         null,
-        React.createElement(
-          "textarea",
-          { name: "message", rows: "5", cols: "15" },
-          "Example: Dinner Server"
-        )
+        React.createElement("input", { type: "text", placeholder: "Example: Dinner Server" })
       ),
       React.createElement("br", null),
       React.createElement("br", null),
@@ -1243,6 +1248,15 @@ var NewJobPage = React.createClass({
       return React.createElement(JobType, { onformchange: this.handlesavetypeform });
     }
   },
+  componentDidMount: function componentDidMount() {
+    window.ServiceStore.subscribe(this.receiveState);
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    window.ServiceStore.unsubscribe(this.receiveState);
+  },
+  receiveState: function receiveState(services) {
+    this.setState({ services: services });
+  },
   render: function render() {
     return React.createElement(
       "div",
@@ -1495,10 +1509,10 @@ module.exports = {
 };
 });
 
-require.alias("react-router/lib/index.js", "react-router");
-require.alias("phoenix_html/priv/static/phoenix_html.js", "phoenix_html");
 require.alias("phoenix/priv/static/phoenix.js", "phoenix");
 require.alias("react/react.js", "react");
+require.alias("react-router/lib/index.js", "react-router");
+require.alias("phoenix_html/priv/static/phoenix_html.js", "phoenix_html");
 require.alias("invariant/browser.js", "invariant");
 require.alias("warning/browser.js", "warning");
 require.alias("history/lib/index.js", "history");
