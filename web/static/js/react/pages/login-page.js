@@ -1,3 +1,4 @@
+import {Link} from 'react-router'
 var NavBar = require("../nav-bar");
 var LoginForm = require("../forms/login-form");
 
@@ -13,6 +14,11 @@ var LoginPage = React.createClass({
           <main role="main">
             <LoginForm/>
           </main>
+          <div>
+        <Link to="/signup">
+          <i className="fa fa-plus"/>Signup
+        </Link>
+          </div>
         </div>
       </div>
     );

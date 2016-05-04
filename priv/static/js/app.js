@@ -919,7 +919,7 @@ var ConnectionStatus = React.createClass({
   },
   receiveState: function receiveState(authState) {
     this.setState({
-      connected: authState.connected,
+      connected: authState.isSocketConnected,
       pollingAttempts: authState.pollingAttempts
     });
   },
@@ -1172,6 +1172,8 @@ module.exports = JobsPage;
 require.register("web/static/js/react/pages/login-page.js", function(exports, require, module) {
 "use strict";
 
+var _reactRouter = require("react-router");
+
 var NavBar = require("../nav-bar");
 var LoginForm = require("../forms/login-form");
 
@@ -1192,6 +1194,16 @@ var LoginPage = React.createClass({
           "main",
           { role: "main" },
           React.createElement(LoginForm, null)
+        ),
+        React.createElement(
+          "div",
+          null,
+          React.createElement(
+            _reactRouter.Link,
+            { to: "/signup" },
+            React.createElement("i", { className: "fa fa-plus" }),
+            "Signup"
+          )
         )
       )
     );
@@ -1308,6 +1320,8 @@ module.exports = NotFoundPage;
 require.register("web/static/js/react/pages/signup-page.js", function(exports, require, module) {
 "use strict";
 
+var _reactRouter = require("react-router");
+
 var NavBar = require("../nav-bar");
 var SignupForm = require("../forms/signup-form");
 
@@ -1328,6 +1342,16 @@ var SignupPage = React.createClass({
           "main",
           { role: "main" },
           React.createElement(SignupForm, null)
+        ),
+        React.createElement(
+          "div",
+          null,
+          React.createElement(
+            _reactRouter.Link,
+            { to: "/login" },
+            React.createElement("i", { className: "fa fa-sign-in" }),
+            "Login"
+          )
         )
       )
     );
@@ -1375,6 +1399,7 @@ module.exports = {
   channel: null,
   pollingInterval: null,
   pollingAttempts: 0,
+  pollingConnected: false,
   callBacks: [],
 
   subscribe: function subscribe(callBack) {
@@ -1429,11 +1454,15 @@ module.exports = {
   },
   pollConnection: function pollConnection() {
     if (window.AuthStore.isSocketConnected()) {
-      clearInterval(window.AuthStore.pollingInterval);
+      if (!window.AuthStore.pollingConnected) {
+        window.AuthStore.pollingConnected = true;
+        window.AuthStore.sendCallBacks();
+      }
     } else {
+      window.AuthStore.pollingConnected = false;
       window.AuthStore.pollingAttempts++;
+      window.AuthStore.sendCallBacks();
     }
-    window.AuthStore.sendCallBacks();
   },
   connectSocket: function connectSocket() {
     if (window.AuthStore.isLoggedIn() && !window.AuthStore.socket) {
@@ -1509,10 +1538,10 @@ module.exports = {
 };
 });
 
+require.alias("phoenix_html/priv/static/phoenix_html.js", "phoenix_html");
+require.alias("react-router/lib/index.js", "react-router");
 require.alias("phoenix/priv/static/phoenix.js", "phoenix");
 require.alias("react/react.js", "react");
-require.alias("react-router/lib/index.js", "react-router");
-require.alias("phoenix_html/priv/static/phoenix_html.js", "phoenix_html");
 require.alias("invariant/browser.js", "invariant");
 require.alias("warning/browser.js", "warning");
 require.alias("history/lib/index.js", "history");
