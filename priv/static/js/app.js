@@ -358,8 +358,15 @@ module.exports = JobForm;
 require.register("web/static/js/react/forms/jobtype.js", function(exports, require, module) {
 "use strict";
 
+var TextField = require("./text-field");
 var JobType = React.createClass({
   displayName: "JobType",
+  getInitialState: function getInitialState() {
+    return {
+      servicetype: null,
+      errors: []
+    };
+  },
   handleCreate: function handleCreate() {
     var _this = this;
 
@@ -367,6 +374,23 @@ var JobType = React.createClass({
       _this.setState({ serviceID: resp.service_id });
     }).receive("error", function (resp) {
       _this.setState({ errors: resp.errors });
+    });
+    this.props.onformchange();
+  },
+  handleFieldChange: function handleFieldChange(field, val) {
+    var obj = {};
+    obj[field] = val;
+    this.setState(obj);
+  },
+  parseErrors: function parseErrors(field) {
+    if (this.state.errors.length == 0) {
+      return [];
+    }
+
+    return this.state.errors.map(function (error) {
+      if (error.field == field) {
+        return error;
+      }
     });
   },
   render: function render() {
@@ -379,13 +403,13 @@ var JobType = React.createClass({
       React.createElement(
         "form",
         null,
-        React.createElement("input", { type: "text", placeholder: "Example: Dinner Server" })
+        React.createElement(TextField, { label: "servicetype", value: this.state.servicetype, errors: this.parseErrors("servicetype"), onChange: this.handleFieldChange.bind(this, "servicetype") })
       ),
       React.createElement("br", null),
       React.createElement("br", null),
       React.createElement(
         "div",
-        { className: "btn btn-primary", onClick: this.props.onformchange },
+        { className: "btn btn-primary", onClick: this.handleCreate },
         "Submit Service Type"
       )
     );
@@ -919,7 +943,7 @@ var ConnectionStatus = React.createClass({
   },
   receiveState: function receiveState(authState) {
     this.setState({
-      connected: authState.connected,
+      connected: authState.isSocketConnected,
       pollingAttempts: authState.pollingAttempts
     });
   },
@@ -1375,6 +1399,7 @@ module.exports = {
   channel: null,
   pollingInterval: null,
   pollingAttempts: 0,
+  pollingConnected: false,
   callBacks: [],
 
   subscribe: function subscribe(callBack) {
@@ -1429,11 +1454,15 @@ module.exports = {
   },
   pollConnection: function pollConnection() {
     if (window.AuthStore.isSocketConnected()) {
-      clearInterval(window.AuthStore.pollingInterval);
+      if (!window.AuthStore.pollingConnected) {
+        window.AuthStore.pollingConnected = true;
+        window.AuthStore.sendCallBacks();
+      }
     } else {
+      window.AuthStore.pollingConnected = false;
       window.AuthStore.pollingAttempts++;
+      window.AuthStore.sendCallBacks();
     }
-    window.AuthStore.sendCallBacks();
   },
   connectSocket: function connectSocket() {
     if (window.AuthStore.isLoggedIn() && !window.AuthStore.socket) {
