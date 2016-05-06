@@ -25,6 +25,17 @@ defmodule WhosAble.AccountChannel do
         {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
     end
   end
+  def handle_in("create_contact", msg, socket) do
+    account = get_account(socket)
+    params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
+    case WhosAble.Repo.insert(WhosAble.Contact.changeset(%WhosAble.Contact{}, params)) do
+      {:ok, contact} ->
+        WhosAble.AccountChannel.Contact.new_contact(contact, socket)
+        {:reply, {:ok, %{contact_id: contact.id}}, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
+    end
+  end
   def handle_in("create_job", msg, socket) do
     account = get_account(socket)
     params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
@@ -49,6 +60,10 @@ defmodule WhosAble.AccountChannel do
   end
   def handle_in("request_addresses", _, socket) do
     WhosAble.AccountChannel.Address.all_addresses(socket)
+    {:noreply, socket}
+  end
+  def handle_in("request_contacts", _, socket) do
+    WhosAble.AccountChannel.Contact.all_contacts(socket)
     {:noreply, socket}
   end
   def handle_in("request_jobs", _, socket) do

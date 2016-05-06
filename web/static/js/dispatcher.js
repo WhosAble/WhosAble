@@ -8,16 +8,27 @@ var Dispatcher = {
       });*/
   },
 
-  createService(name) {
-    return window.AuthStore.channel.push("create_service", {name: name})
-    /*  .receive("ok", (resp) => {
+  createJob(service_id, address_id, start, end, notes) {
+    return window.AuthStore.channel.push("create_job", {service_id: service_id, address_id: address_id, start: start, end: end, notes: notes})
+      /*.receive("ok", (resp) => {
       }).receive("error", (resp) => {
       });*/
   },
 
-  createJob(service_id, address_id, start, end, notes) {
-    return window.AuthStore.channel.push("create_job", {service_id: service_id, address_id: address_id, start: start, end: end, notes: notes})
-      /*.receive("ok", (resp) => {
+  createContact(service_id, firstName, lastName, email, phone, hourlyRate) {
+    return window.AuthStore.channel.push("create_contact", {service_id: service_id, first_name: firstName, last_name: lastName, email: email, phone: phone, hourly_rate: hourlyRate})
+      .receive("ok", (resp) => {
+        console.log("OKAY");
+        console.log(resp);
+      }).receive("error", (resp) => {
+        console.log("ERROR");
+        console.log(resp);
+      });
+  },
+
+  createService(name) {
+    return window.AuthStore.channel.push("create_service", {name: name})
+    /*  .receive("ok", (resp) => {
       }).receive("error", (resp) => {
       });*/
   },
