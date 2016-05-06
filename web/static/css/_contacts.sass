@@ -1,0 +1,39 @@
+@import "variables"
+
+.contact-list
+  display: -webkit-flex
+  display: flex
+  flex-wrap: wrap
+
+  .contact
+    margin: $margin
+    width: calc(33% - (#{$margin * 2}))
+    background: lighten($carrot, 45%)
+    border-top-left-radius: 15px
+    border-top-right-radius: 15px
+
+    @media (min-device-width: 769px) and (max-device-width: 1000px)
+      width: calc(50% - (#{$margin * 2}))
+
+    @media (max-device-width: 768px)
+      width: calc(100% - (#{$margin * 2}))
+
+    .contact-name
+      background: $carrot
+      padding: 10px 15px 5px 15px
+      font-size: 18px
+      font-weight: bold
+      border-top-left-radius: 15px
+      border-top-right-radius: 15px
+      color: #FFF
+      overflow: hidden
+
+    .contact-email
+      padding: 15px 15px 0px 15px
+      width: calc(100% - (#{$margin}))
+      overflow: hidden
+
+    .contact-phone
+      padding: 0px 15px 15px 15px
+      width: calc(100% - (#{$margin}))
+      overflow: hidden
