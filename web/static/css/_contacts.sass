@@ -1,5 +1,11 @@
 @import "variables"
 
+.contact-list-header
+  margin-top: $margin
+
+  .btn
+    width: 100%
+
 .contact-list
   display: -webkit-flex
   display: flex
@@ -7,17 +13,31 @@
 
   .contact
     margin: $margin
-    width: calc(33% - (#{$margin * 2}))
     background: lighten($carrot, 45%)
     border-top-left-radius: 15px
     border-top-right-radius: 15px
     border: 1px solid $carrot
+    @media (min-device-width: 1141px)
+      width: calc(33% - (#{$margin} + 2px))
 
-    @media (min-device-width: 769px) and (max-device-width: 1000px)
-      width: calc(50% - (#{$margin * 2}))
+      &:nth-child(3n + 1)
+        margin-left: 0px
+
+      &:nth-child(3n + 0)
+        margin-right: 0px
+
+    @media (min-device-width: 769px) and (max-device-width: 1140px)
+      width: calc(50% - #{$margin})
+
+      &:nth-child(2n + 1)
+        margin-left: 0px
+
+      &:nth-child(2n + 0)
+        margin-right: 0px
 
     @media (max-device-width: 768px)
-      width: calc(100% - (#{$margin * 2}))
+      margin: $margin 0px
+      width: 100%
 
     .contact-name
       background: $carrot

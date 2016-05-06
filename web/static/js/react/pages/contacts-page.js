@@ -61,7 +61,15 @@ var ContactsPage = React.createClass({
           <main role="main">
             <div className="row">
               <div className="col-xs-12">
-                { this.renderBtn() }
+                <div className="contact-list-header">
+                  <div className="row">
+                    <div className="col-xs-12 col-md-10">
+                    </div>
+                    <div className="col-xs-12 col-md-2">
+                      { this.renderBtn() }
+                    </div>
+                  </div>
+                </div>
                 { this.renderList() }
               </div>
             </div>
