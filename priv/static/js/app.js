@@ -1538,9 +1538,9 @@ module.exports = {
 };
 });
 
+require.alias("phoenix/priv/static/phoenix.js", "phoenix");
 require.alias("phoenix_html/priv/static/phoenix_html.js", "phoenix_html");
 require.alias("react-router/lib/index.js", "react-router");
-require.alias("phoenix/priv/static/phoenix.js", "phoenix");
 require.alias("react/react.js", "react");
 require.alias("invariant/browser.js", "invariant");
 require.alias("warning/browser.js", "warning");
