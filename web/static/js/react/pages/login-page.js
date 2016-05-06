@@ -16,7 +16,7 @@ var LoginPage = React.createClass({
           </main>
           <div>
         <Link to="/signup">
-          <i className="fa fa-plus"/>Signup
+          <i className="fa fa-user-plus"/>Signup
         </Link>
           </div>
         </div>

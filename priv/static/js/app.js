@@ -863,7 +863,7 @@ var NavBar = React.createClass({
           React.createElement(
             _reactRouter.Link,
             { to: "/signup" },
-            React.createElement("i", { className: "fa fa-plus" }),
+            React.createElement("i", { className: "fa fa-user-plus" }),
             "Signup"
           )
         ),
@@ -1201,7 +1201,7 @@ var LoginPage = React.createClass({
           React.createElement(
             _reactRouter.Link,
             { to: "/signup" },
-            React.createElement("i", { className: "fa fa-plus" }),
+            React.createElement("i", { className: "fa fa-user-plus" }),
             "Signup"
           )
         )
