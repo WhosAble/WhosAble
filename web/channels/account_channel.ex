@@ -14,21 +14,6 @@ defmodule WhosAble.AccountChannel do
     {:error, %{reason: "unauthorized"}}
   end
 
-  def handle_in("create_service", msg, socket) do
-    account = get_account(socket)
-    params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
-    case WhosAble.Repo.insert(WhosAble.Service.changeset(%WhosAble.Service{}, params)) do
-      {:ok, service} ->
-        WhosAble.AccountChannel.Service.new_service(service, socket)
-        {:reply, {:ok, %{service_id: service.id}}, socket}
-      {:error, changeset} ->
-        {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
-    end
-  end
-  def handle_in("request_services", _, socket) do
-    WhosAble.AccountChannel.Service.all_services(socket)
-    {:noreply, socket}
-  end
   def handle_in("create_address", msg, socket) do
     account = get_account(socket)
     params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
@@ -40,8 +25,38 @@ defmodule WhosAble.AccountChannel do
         {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
     end
   end
+  def handle_in("create_job", msg, socket) do
+    account = get_account(socket)
+    params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
+    case WhosAble.Repo.insert(WhosAble.Job.changeset(%WhosAble.Job{}, params)) do
+      {:ok, job} ->
+        WhosAble.AccountChannel.Job.new_job(job, socket)
+        {:reply, {:ok, %{job_id: job.id}}, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
+    end
+  end
+  def handle_in("create_service", msg, socket) do
+    account = get_account(socket)
+    params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
+    case WhosAble.Repo.insert(WhosAble.Service.changeset(%WhosAble.Service{}, params)) do
+      {:ok, service} ->
+        WhosAble.AccountChannel.Service.new_service(service, socket)
+        {:reply, {:ok, %{service_id: service.id}}, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
+    end
+  end
   def handle_in("request_addresses", _, socket) do
     WhosAble.AccountChannel.Address.all_addresses(socket)
+    {:noreply, socket}
+  end
+  def handle_in("request_jobs", _, socket) do
+    WhosAble.AccountChannel.Job.all_jobs(socket)
+    {:noreply, socket}
+  end
+  def handle_in("request_services", _, socket) do
+    WhosAble.AccountChannel.Service.all_services(socket)
     {:noreply, socket}
   end
 
