@@ -24,3 +24,25 @@
     font-size: 15px
     line-height: 20px
     margin-top: 10px
+
+$phone-format-width: 25px
+
+.phone-form-group
+  .phone-format
+    float: left
+    width: $phone-format-width
+    text-align: center
+    font-size: 24px
+
+  input[type="text"]
+    float: left
+    text-align: center
+
+    &.area-code
+      width: calc(30% - (#{$phone-format-width} * 2))
+
+    &.prefix
+      width: calc(33% - #{$phone-format-width})
+
+    &.line
+      width: 37%
