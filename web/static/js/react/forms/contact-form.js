@@ -3,6 +3,10 @@ var PhoneField = require("./phone-field");
 var LoadingEllipsis = require("../loading-ellipsis");
 
 var ContactForm = React.createClass({
+  propTypes: {
+    onCreate: React.PropTypes.func.isRequired
+  },
+
   getInitialState() {
     return {
       firstName: "",
@@ -17,6 +21,20 @@ var ContactForm = React.createClass({
 
   createContact(e) {
     e.preventDefault();
+    var phone = this.state.phone.replace(/-/g, "");
+    var contact = {
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      email: this.state.email,
+      phone: phone,
+      hourly_rate: this.state.hourlyRate
+    }
+    window.Dispatcher.createContact(contact)
+      .receive("ok", (resp) => {
+        this.props.onCreate(resp.contact_id);
+      }).receive("error", (resp) => {
+        this.setState({errors: resp.errors});
+      });
   },
 
   handleFieldChange(field, val) {

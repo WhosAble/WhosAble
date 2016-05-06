@@ -23,7 +23,6 @@ var PhoneField = React.createClass({
     var prefix = this.refs["prefix"].value.substring(0, 3);
     var line = this.refs["line"].value.substring(0, 4);
     var phone = areaCode + "-" + prefix + "-" + line;
-    console.log(phone);
     this.props.onChange(phone);
   },
 
