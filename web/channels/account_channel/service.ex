@@ -26,9 +26,9 @@ defmodule WhosAble.AccountChannel.Service do
 
   defp services_json(account) do
     services = WhosAble.Service
-    |> where(account_id: ^account.id)
-    |> Repo.all
-    |> Enum.reduce([], fn(service, acc) -> List.insert_at(acc, 0, %{id: service.id, name: service.name}) end)
+      |> where(account_id: ^account.id)
+      |> Repo.all
+      |> Enum.reduce([], fn(service, acc) -> List.insert_at(acc, 0, %{id: service.id, name: service.name}) end)
     %{
       services: services
     }

@@ -29,6 +29,21 @@ defmodule WhosAble.AccountChannel do
     WhosAble.AccountChannel.Service.all_services(socket)
     {:noreply, socket}
   end
+  def handle_in("create_address", msg, socket) do
+    account = get_account(socket)
+    params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
+    case WhosAble.Repo.insert(WhosAble.Address.changeset(%WhosAble.Address{}, params)) do
+      {:ok, address} ->
+        WhosAble.AccountChannel.Address.new_address(address, socket)
+        {:reply, {:ok, %{address_id: address.id}}, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
+    end
+  end
+  def handle_in("request_addresses", _, socket) do
+    WhosAble.AccountChannel.Address.all_addresses(socket)
+    {:noreply, socket}
+  end
 
   def get_account(socket), do: WhosAble.Repo.get(WhosAble.Account, parse_topic(socket))
 

@@ -8,6 +8,17 @@ var Dispatcher = {
       });*/
   },
 
+  createAddress(address, city, state, zip) {
+    return window.AuthStore.channel.push("create_address", {address: address, city: city, state: state, zip: zip})
+      .receive("ok", (resp) => {
+        console.log("OKAY");
+        console.log(resp);
+      }).receive("error", (resp) => {
+        console.log("ERROR");
+        console.log(resp);
+      });
+  },
+
   login(email, password) {
     return $.ajax({
       method: "POST",
