@@ -1,6 +1,31 @@
 import { browserHistory } from 'react-router';
 
 var Dispatcher = {
+  createAddress(address, city, state, zip) {
+    return window.AuthStore.channel.push("create_address", {address: address, city: city, state: state, zip: zip})
+      /*.receive("ok", (resp) => {
+      }).receive("error", (resp) => {
+      });*/
+  },
+
+  createJob(service_id, address_id, start, end, notes) {
+    return window.AuthStore.channel.push("create_job", {service_id: service_id, address_id: address_id, start: start, end: end, notes: notes})
+      /*.receive("ok", (resp) => {
+      }).receive("error", (resp) => {
+      });*/
+  },
+
+  createContact(service_id, firstName, lastName, email, phone, hourlyRate) {
+    return window.AuthStore.channel.push("create_contact", {service_id: service_id, first_name: firstName, last_name: lastName, email: email, phone: phone, hourly_rate: hourlyRate})
+      .receive("ok", (resp) => {
+        console.log("OKAY");
+        console.log(resp);
+      }).receive("error", (resp) => {
+        console.log("ERROR");
+        console.log(resp);
+      });
+  },
+
   createService(name) {
     return window.AuthStore.channel.push("create_service", {name: name})
     /*  .receive("ok", (resp) => {
