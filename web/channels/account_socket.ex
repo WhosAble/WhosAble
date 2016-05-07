@@ -9,7 +9,7 @@ defmodule WhosAble.AccountSocket do
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   def connect(%{"token" => token}, socket) do
-    case Phoenix.Token.verify(socket, "account socket", token, max_age: 2 * 60 * 60) do
+    case Phoenix.Token.verify(socket, "account socket", token, max_age: 14 * 24 * 60 * 60) do
       {:ok, %{account_id: account_id, user_id: _}} ->
         socket |> assign(:account, account_id)
         {:ok, socket}

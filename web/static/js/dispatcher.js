@@ -15,15 +15,8 @@ var Dispatcher = {
       });*/
   },
 
-  createContact(service_id, firstName, lastName, email, phone, hourlyRate) {
-    return window.AuthStore.channel.push("create_contact", {service_id: service_id, first_name: firstName, last_name: lastName, email: email, phone: phone, hourly_rate: hourlyRate})
-      .receive("ok", (resp) => {
-        console.log("OKAY");
-        console.log(resp);
-      }).receive("error", (resp) => {
-        console.log("ERROR");
-        console.log(resp);
-      });
+  createContact(contact) {
+    return window.AuthStore.channel.push("create_contact", contact);
   },
 
   createService(name) {

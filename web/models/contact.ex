@@ -20,6 +20,6 @@ defmodule WhosAble.Contact do
 
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(account_id service_id), ~w(first_name last_name email phone hourly_rate))
+    |> cast(params, ~w(account_id), ~w(service_id first_name last_name email phone hourly_rate))
   end
 end
