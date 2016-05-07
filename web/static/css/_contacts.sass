@@ -36,55 +36,55 @@
     font-style: italic
     color: $concrete
 
-  .contact-list
-    display: -webkit-flex
-    display: flex
-    flex-wrap: wrap
+.contact-list
+  display: -webkit-flex
+  display: flex
+  flex-wrap: wrap
 
-    .contact
-      margin: $margin
-      @media (min-device-width: 1141px)
-        width: calc(33% - (#{$margin} + 2px))
+  .contact
+    margin: $margin
+    @media (min-device-width: 1141px)
+      width: calc(33% - (#{$margin} + 2px))
 
-        &:nth-child(3n + 1)
-          margin-left: 0px
+      &:nth-child(3n + 1)
+        margin-left: 0px
 
-        &:nth-child(3n + 0)
-          margin-right: 0px
+      &:nth-child(3n + 0)
+        margin-right: 0px
 
-      @media (min-device-width: 769px) and (max-device-width: 1140px)
-        width: calc(50% - #{$margin})
+    @media (min-device-width: 769px) and (max-device-width: 1140px)
+      width: calc(50% - #{$margin})
 
-        &:nth-child(2n + 1)
-          margin-left: 0px
+      &:nth-child(2n + 1)
+        margin-left: 0px
 
-        &:nth-child(2n + 0)
-          margin-right: 0px
+      &:nth-child(2n + 0)
+        margin-right: 0px
 
-      @media (max-device-width: 768px)
-        margin: $margin 0px
-        width: 100%
+    @media (max-device-width: 768px)
+      margin: $margin 0px
+      width: 100%
 
-      .contact-header
-        background: $carrot
-        padding: 10px 15px 5px 15px
-        font-size: 18px
-        font-weight: bold
-        border-top-left-radius: 15px
-        border-top-right-radius: 15px
-        color: #FFF
+    .contact-header
+      background: $carrot
+      padding: 10px 15px 5px 15px
+      font-size: 18px
+      font-weight: bold
+      border-top-left-radius: 15px
+      border-top-right-radius: 15px
+      color: #FFF
+      overflow: hidden
+
+    .contact-body
+      border: 1px solid $carrot
+      background: lighten($carrot, 45%)
+
+      .contact-email
+        padding: 15px 15px 0px 15px
+        width: calc(100% - (#{$margin}))
         overflow: hidden
 
-      .contact-body
-        border: 1px solid $carrot
-        background: lighten($carrot, 45%)
-
-        .contact-email
-          padding: 15px 15px 0px 15px
-          width: calc(100% - (#{$margin}))
-          overflow: hidden
-
-        .contact-phone
-          padding: 0px 15px 15px 15px
-          width: calc(100% - (#{$margin}))
-          overflow: hidden
+      .contact-phone
+        padding: 0px 15px 15px 15px
+        width: calc(100% - (#{$margin}))
+        overflow: hidden

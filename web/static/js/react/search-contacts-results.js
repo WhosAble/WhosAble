@@ -1,8 +1,7 @@
 var Contact = require("./contact");
-var ServiceContactListHeader = require("./service-contact-list-header");
 import _ from "lodash";
 
-var ServiceContactList = React.createClass({
+var SearchContactsResults = React.createClass({
   getInitialState() {
     return {
       contacts: null
@@ -21,18 +20,27 @@ var ServiceContactList = React.createClass({
     this.setState({contacts: contacts});
   },
 
-  matchingServiceType(contact) {
-    return this.props.service != null && contact.service_id == this.props.service.id;
+  matchesField(field) {
+    var searchOn = this.props.search.split(" ");
+    var found = false;
+    if(searchOn.length > 0) {
+      searchOn.forEach(function(search) {
+        if(search != "" && field.search(new RegExp(search, "i")) != -1) {
+          found = true;
+        }
+      });
+    }
+    return found;
   },
 
-  noServiceType(contact) {
-    return this.props.service == null && contact.service_id == null;
+  matchesContact(contact) {
+    return this.matchesField(contact.first_name) || this.matchesField(contact.last_name) || this.matchesField(contact.email);
   },
 
   renderList() {
     var self = this;
     var list = _.compact(this.state.contacts.map(function(contact, index) {
-      if(self.noServiceType(contact) || self.matchingServiceType(contact)) {
+      if(self.matchesContact(contact)) {
         return(<Contact key={index} contact={contact}/>);
       }
     }));
@@ -47,14 +55,11 @@ var ServiceContactList = React.createClass({
     if(this.state.contacts == null) { return(<noscript/>) }
 
     return(
-      <div>
-        <ServiceContactListHeader service={this.props.service}/>
-        <div className="contact-list">
-          { this.renderList() }
-        </div>
+      <div className="contact-list">
+        { this.renderList() }
       </div>
     );
   }
 });
 
-module.exports = ServiceContactList
+module.exports = SearchContactsResults;
