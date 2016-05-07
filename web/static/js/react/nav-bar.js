@@ -94,7 +94,7 @@ var NavBar = React.createClass({
         <ul id="menu" className={ menuClass }>
           <li>
             <Link to="/signup">
-              <i className="fa fa-plus"/>Signup
+              <i className="fa fa-user-plus"/>Signup
             </Link>
           </li>
           <li>
