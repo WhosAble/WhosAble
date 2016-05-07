@@ -2,7 +2,11 @@ import {browserHistory} from 'react-router';
 
 var ServiceContactListHeader = React.createClass({
   handleCreate() {
-    browserHistory.push("/app/contacts/new")
+    if(this.props.service == null) {
+      browserHistory.push("/app/contacts/new")
+    } else {
+      browserHistory.push("/app/contacts/new/services/" + this.props.service.id)
+    }
   },
 
   renderTitle() {

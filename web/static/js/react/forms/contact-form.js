@@ -4,11 +4,13 @@ var LoadingEllipsis = require("../loading-ellipsis");
 
 var ContactForm = React.createClass({
   propTypes: {
-    onCreate: React.PropTypes.func.isRequired
+    onCreate: React.PropTypes.func.isRequired,
+    serviceID: React.PropTypes.string
   },
 
   getInitialState() {
     return {
+      serviceID: this.props.serviceID,
       firstName: "",
       lastName: "",
       email: "",
@@ -23,6 +25,7 @@ var ContactForm = React.createClass({
     e.preventDefault();
     var phone = this.state.phone.replace(/-/g, "");
     var contact = {
+      service_id: this.state.serviceID,
       first_name: this.state.firstName,
       last_name: this.state.lastName,
       email: this.state.email,

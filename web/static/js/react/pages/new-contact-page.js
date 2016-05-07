@@ -14,7 +14,7 @@ var NewContactPage = React.createClass({
         <div className="container">
           <main role="main">
             <h1>Create a Contact</h1>
-            <ContactForm onCreate={this.handleCreate}/>
+            <ContactForm serviceID={this.props.params.serviceID} onCreate={this.handleCreate}/>
           </main>
         </div>
       </div>
