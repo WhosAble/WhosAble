@@ -6,55 +6,85 @@
   .btn
     width: 100%
 
-.contact-list
-  display: -webkit-flex
-  display: flex
-  flex-wrap: wrap
+.service-contact-list
+  .service-contact-list-header
+    position: relative
 
-  .contact
-    margin: $margin
-    background: lighten($carrot, 45%)
-    border-top-left-radius: 15px
-    border-top-right-radius: 15px
-    border: 1px solid $carrot
-    @media (min-device-width: 1141px)
-      width: calc(33% - (#{$margin} + 2px))
-
-      &:nth-child(3n + 1)
-        margin-left: 0px
-
-      &:nth-child(3n + 0)
-        margin-right: 0px
-
-    @media (min-device-width: 769px) and (max-device-width: 1140px)
-      width: calc(50% - #{$margin})
-
-      &:nth-child(2n + 1)
-        margin-left: 0px
-
-      &:nth-child(2n + 0)
-        margin-right: 0px
-
-    @media (max-device-width: 768px)
-      margin: $margin 0px
-      width: 100%
-
-    .contact-name
-      background: $carrot
-      padding: 10px 15px 5px 15px
-      font-size: 18px
-      font-weight: bold
-      border-top-left-radius: 15px
-      border-top-right-radius: 15px
-      color: #FFF
+    h3
+      text-align: center
+      border-bottom: 2px solid $clouds
+      padding: 0px 55px
       overflow: hidden
+      height: 30px
+      line-height: 30px
 
-    .contact-email
-      padding: 15px 15px 0px 15px
-      width: calc(100% - (#{$margin}))
-      overflow: hidden
+    .new-contact-btn
+      position: absolute
+      top: 0px
+      right: 0px
+      cursor: pointer
 
-    .contact-phone
-      padding: 0px 15px 15px 15px
-      width: calc(100% - (#{$margin}))
-      overflow: hidden
+      &:hover
+        color: $belize
+
+      @media (max-device-width: 768px)
+        top: -15px
+        width: 50px
+        text-align: right
+
+  .no-contacts
+    font-style: italic
+    color: $concrete
+
+  .contact-list
+    display: -webkit-flex
+    display: flex
+    flex-wrap: wrap
+
+    .contact
+      margin: $margin
+      @media (min-device-width: 1141px)
+        width: calc(33% - (#{$margin} + 2px))
+
+        &:nth-child(3n + 1)
+          margin-left: 0px
+
+        &:nth-child(3n + 0)
+          margin-right: 0px
+
+      @media (min-device-width: 769px) and (max-device-width: 1140px)
+        width: calc(50% - #{$margin})
+
+        &:nth-child(2n + 1)
+          margin-left: 0px
+
+        &:nth-child(2n + 0)
+          margin-right: 0px
+
+      @media (max-device-width: 768px)
+        margin: $margin 0px
+        width: 100%
+
+      .contact-header
+        background: $carrot
+        padding: 10px 15px 5px 15px
+        font-size: 18px
+        font-weight: bold
+        border-top-left-radius: 15px
+        border-top-right-radius: 15px
+        color: #FFF
+        overflow: hidden
+
+      .contact-body
+        border: 1px solid $carrot
+        background: lighten($carrot, 45%)
+
+        .contact-email
+          padding: 15px 15px 0px 15px
+          width: calc(100% - (#{$margin}))
+          overflow: hidden
+
+        .contact-phone
+          padding: 0px 15px 15px 15px
+          width: calc(100% - (#{$margin}))
+          overflow: hidden

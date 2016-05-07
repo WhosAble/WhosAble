@@ -1,8 +1,7 @@
 var CreateBtn = require("../create-btn");
 var NavBar = require("../nav-bar");
-var Contact = require("../contact");
+var ContactList = require("../contact-list");
 import _ from "lodash";
-
 import {browserHistory} from 'react-router';
 
 var ContactsPage = React.createClass({
@@ -13,14 +12,14 @@ var ContactsPage = React.createClass({
   },
 
   componentDidMount() {
-    window.ContactsStore.subscribe(this.receiveState);
+    window.ContactsStore.subscribe(this.receiveContacts);
   },
 
   componentWillUnmount() {
-    window.ContactsStore.unsubscribe(this.receiveState);
+    window.ContactsStore.unsubscribe(this.receiveContacts);
   },
 
-  receiveState(contacts) {
+  receiveContacts(contacts) {
     this.setState({contacts: contacts});
   },
 
@@ -29,27 +28,24 @@ var ContactsPage = React.createClass({
   },
 
   renderBtn() {
-    if(this.state.contacts == null || this.state.contacts.length == 0) {
+    if(this.state.contacts == null || _.isEmpty(this.state.contacts)) {
       return(
         <CreateBtn title="Create a new Contact" onCreate={ this.handleCreate }/>
-      );
-    } else {
-      return(
-        <div className="btn btn-primary" onClick={ this.handleCreate }>New Contact</div>
       );
     }
   },
 
   renderList() {
-    if(this.state.contacts == null || this.state.contacts.length == 0) {
+    if(this.state.contacts != null && !_.isEmpty(this.state.contacts)) {
       return(
-        <CreateBtn title="Create a new Contact" onCreate={ this.handleCreate }/>
+        <div className="row">
+          <div className="col-xs-12">
+            <div className="contact-list-header">
+            </div>
+            <ContactList contacts={this.state.contacts} services={this.state.services}/>
+          </div>
+        </div>
       );
-    } else {
-      var list = _.values(this.state.contacts).map(function(contact, index) {
-        return(<Contact key={index} contact={contact}/>);
-      });
-      return(<div className="contact-list">{ list }</div>);
     }
   },
 
@@ -59,20 +55,8 @@ var ContactsPage = React.createClass({
         <NavBar/>
         <div className="container">
           <main role="main">
-            <div className="row">
-              <div className="col-xs-12">
-                <div className="contact-list-header">
-                  <div className="row">
-                    <div className="col-xs-12 col-md-10">
-                    </div>
-                    <div className="col-xs-12 col-md-2">
-                      { this.renderBtn() }
-                    </div>
-                  </div>
-                </div>
-                { this.renderList() }
-              </div>
-            </div>
+            { this.renderBtn() }
+            { this.renderList() }
           </main>
         </div>
       </div>

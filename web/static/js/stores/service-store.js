@@ -1,4 +1,5 @@
 import {Socket} from "phoenix"
+import _ from "lodash";
 
 module.exports = {
   services: {},
@@ -26,7 +27,7 @@ module.exports = {
   },
 
   sendCallBack(callBack) {
-    callBack(window.ServiceStore.services);
+    callBack(_.values(window.ServiceStore.services));
   },
 
   addNewService(service) {
