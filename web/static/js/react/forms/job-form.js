@@ -1,10 +1,36 @@
 var JobForm = React.createClass({
   getInitialState() {
     return {
-      email: null,
-      password: null,
-      errors: []
+      services: null,
+      serviceID: null
     };
+  },
+
+  componentDidMount() {
+    window.ServiceStore.subscribe(this.receiveServices);
+  },
+
+  componentWillUnmount() {
+    window.ServiceStore.unsubscribe(this.receiveServices);
+  },
+
+  receiveServices(services) {
+    var newState = {services: services};
+    if(this.state.serviceID == null && services.length > 0) {
+      newState.serviceID = services[0].id;
+    }
+    this.setState(newState);
+  },
+
+  getSelectedService() {
+    var self = this;
+    var selectedService = null;
+    this.state.services.forEach(function(service) {
+      if(service.id == self.state.serviceID) {
+        selectedService = service;
+      }
+    });
+    return selectedService;
   },
 
   handleFieldChange(field, val) {
@@ -21,12 +47,23 @@ var JobForm = React.createClass({
     });
   },
 
+  renderServiceType() {
+    if(this.state.services == null || this.state.services.length == 0) { return <noscript/> }
+
+    var service = this.getSelectedService();
+    return(
+      <div>{service.name}</div>
+    );
+  },
+
   render() {
     return(
       <form id="JobForm">
       Describe the job:
       <br/>
       <br/>
+
+      { this.renderServiceType() }
 
       <div className="btn btn-primary" onClick={this.props.onformchange}>Service Type</div>
 
