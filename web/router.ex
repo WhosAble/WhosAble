@@ -27,6 +27,7 @@ defmodule WhosAble.Router do
   scope "/", WhosAble do
     pipe_through :browser
 
+    post "messages/receive", MessagesController, :receive
     get "*path", PageController, :load_page
   end
 end
