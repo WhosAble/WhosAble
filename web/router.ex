@@ -17,17 +17,20 @@ defmodule WhosAble.Router do
     plug :put_secure_browser_headers
   end
 
-  scope "/api", WhosAble do
+  scope "/", WhosAble do
     pipe_through :api
 
-    post "/signup", UserController, :create
-    post "/login", LoginController, :login
+    scope "/api", nil do
+      post "/signup", UserController, :create
+      post "/login", LoginController, :login
+    end
+
+    post "messages/receive", MessagesController, :receive
   end
 
   scope "/", WhosAble do
     pipe_through :browser
 
-    post "messages/receive", MessagesController, :receive
     get "*path", PageController, :load_page
   end
 end
