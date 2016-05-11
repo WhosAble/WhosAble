@@ -9,9 +9,9 @@ defmodule WhosAble.SendMessage do
 
     url = "https://api.plivo.com/v1/Account/#{plivo_auth_id}/Message/"
 
-    message = "Tyler, it's Mike Hoffert. I'm using the WhosAble app to find a CEO for June 4th from 10:00 AM to 11:00 AM. Are you able? Simply reply with 'y' or 'n' to let me know. Powered by WhosAble.com."
     contact = WhosAble.Repo.get(WhosAble.Contact, contact_id)
-    data = Poison.encode!(%{src: plivo_number, dst: "+1" <> contact.phone, text: message})
+    data = %{src: plivo_number, dst: "+1" <> contact.phone, text: generate_message(job, contact)}
+      |> Poison.encode!()
 
     encoded = Base.encode64("#{plivo_auth_id}:#{plivo_auth_password}")
     options = [{"content-type", "application/json"}, {"Authorization", "Basic #{encoded}"}]
@@ -25,6 +25,11 @@ defmodule WhosAble.SendMessage do
   ###
   ### PRIVATE
   ###
+
+  defp generate_message(job, contact) do
+    service = WhosAble.Repo.get(WhosAble.Service, job.service_id)
+    contact.first_name <> ", it's Mike Hoffert. I'm using the WhosAble app to find a " <> service.name <> " for June 4th from 10:00 AM to 11:00 AM. Are you able? Simply reply with 'y' or 'n' to let me know. Powered by WhosAble.com."
+  end
 
   defp parse_body(%HTTPoison.Response{body: body}) do
     case Poison.decode(body) do
