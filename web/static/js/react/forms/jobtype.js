@@ -13,10 +13,10 @@ var JobType = React.createClass({
     window.Dispatcher.createService(this.state.servicetype)
     .receive("ok", (resp) => {
       this.setState({serviceID: resp.service_id});
+      this.props.onFormChange("job")
     }).receive("error", (resp) => {
       this.setState({errors: resp.errors});
     });
-    this.props.onFormChange()
   },
 
   handleFieldChange(field, val) {
@@ -40,7 +40,7 @@ var JobType = React.createClass({
         <br/>
         <br/>
         <form onSubmit={ this.handleCreate }>
-          <TextField label="servicetype" value={ this.state.servicetype } errors={ this.parseErrors("servicetype") } onChange={ this.handleFieldChange.bind(this, "servicetype") }/>
+          <TextField label="servicetype" value={ this.state.servicetype } errors={ this.parseErrors("name") } onChange={ this.handleFieldChange.bind(this, "servicetype") }/>
         </form>
         <br/>
         <br/>

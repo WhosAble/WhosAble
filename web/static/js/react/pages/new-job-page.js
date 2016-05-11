@@ -9,19 +9,15 @@ var NewJobPage = React.createClass({
     };
   },
 
-  handleFormChange() {
-    this.setState({form: "type"})
-  },
-
-  handleSaveTypeForm(){
-    this.setState({form: "job"})
+  handleFormChange(form) {
+    this.setState({form: form})
   },
 
   renderform() {
     if(this.state.form == "job"){
       return <JobForm onFormChange={this.handleFormChange}/>
     } else {
-      return <JobType onFormChange={this.handleSaveTypeForm}/>
+      return <JobType onFormChange={this.handleFormChange}/>
     }
   },
 

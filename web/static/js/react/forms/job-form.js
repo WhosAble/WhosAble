@@ -47,6 +47,10 @@ var JobForm = React.createClass({
     });
   },
 
+  switchToServiceTypeForm() {
+    this.props.onFormChange("type");
+  },
+
   renderServiceType() {
     if(this.state.services == null || this.state.services.length == 0) { return <noscript/> }
 
@@ -65,25 +69,23 @@ var JobForm = React.createClass({
 
         { this.renderServiceType() }
 
-        <div className="btn btn-primary" onClick={this.props.onFormChange}>Service Type</div>
+        <div className="btn btn-primary" onClick={this.switchToServiceTypeForm}>Service Type</div>
 
         <br/>
         <br/>
         <textarea name="startlocation" rows="4" cols="20"/>
         <br/><br/>
         Start Date:
-          <input type="date" name="startdate"/>
-          End Date:
-            <input type="date" name="enddate"/>
-          <br/><br/>
-        Select a start time:
-          <input type="time" name="usr_time"/>
-          Select an end time:
-            <input type="time" name="usr_time"/>
+        <input type="date" name="startdate"/>
+        End Date:
+        <input type="date" name="enddate"/>
         <br/><br/>
-            <textarea name="message" rows="15" cols="40">
-            Notes:
-            </textarea>
+        Select a start time:
+        <input type="time" name="usr_time"/>
+        Select an end time:
+        <input type="time" name="usr_time"/>
+        <br/><br/>
+        <textarea name="message" rows="15" cols="40"/>
         <br/><br/>
         <input type="submit" value="Submit"/>
       </form>
