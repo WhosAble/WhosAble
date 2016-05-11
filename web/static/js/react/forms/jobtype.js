@@ -16,7 +16,7 @@ var JobType = React.createClass({
     }).receive("error", (resp) => {
       this.setState({errors: resp.errors});
     });
-    this.props.onformchange()
+    this.props.onFormChange()
   },
 
   handleFieldChange(field, val) {
