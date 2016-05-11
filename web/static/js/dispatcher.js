@@ -5,8 +5,8 @@ var Dispatcher = {
     return window.AuthStore.channel.push("create_address", {address: address, city: city, state: state, zip: zip})
   },
 
-  createJob(service_id, address_id, start, end, notes) {
-    return window.AuthStore.channel.push("create_job", {service_id: service_id, address_id: address_id, start: start, end: end, notes: notes})
+  createJob(job, contacts) {
+    return window.AuthStore.channel.push("create_job", {job: job, contacts: contacts})
   },
 
   createContact(contact) {

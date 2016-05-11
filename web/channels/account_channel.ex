@@ -36,13 +36,13 @@ defmodule WhosAble.AccountChannel do
         {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
     end
   end
-  def handle_in("create_job", msg, socket) do
+  def handle_in("create_job", %{"job" => job_params, "contacts" => contact_params}, socket) do
     account = get_account(socket)
-    params = Map.merge(scrub_params(msg), %{"account_id" => account.id})
+    params = Map.merge(scrub_params(job_params), %{"account_id" => account.id})
     case WhosAble.Repo.insert(WhosAble.Job.changeset(%WhosAble.Job{}, params)) do
       {:ok, job} ->
+        create_job_contacts(job, contact_params)
         WhosAble.AccountChannel.Job.new_job(job, socket)
-        #WhosAble.SendMessage(job, contact)
         {:reply, {:ok, %{job_id: job.id}}, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
@@ -81,6 +81,16 @@ defmodule WhosAble.AccountChannel do
   ###
   ### PRIVATE
   ###
+
+  defp create_job_contacts(job, []), do: nil
+  defp create_job_contacts(job, [contact_id | contacts]) do
+    case WhosAble.Repo.insert(WhosAble.JobContact.changeset(%WhosAble.JobContact{}, %{job_id: job.id, contact_id: contact_id})) do
+      {:ok, job_contact} ->
+        sms_id = WhosAble.SendMessage.send_message(job, contact_id)
+        WhosAble.Repo.update(Ecto.Changeset.change(job_contact, %{sms_id: sms_id}))
+    end
+    create_job_contacts(job, contacts)
+  end
 
   defp errors_json(changeset) do
     Enum.map(changeset.errors, fn {field, message} ->

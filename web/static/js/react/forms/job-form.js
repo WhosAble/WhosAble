@@ -3,6 +3,7 @@ var JobForm = React.createClass({
     return {
       services: null,
       locations: null,
+      contacts: null,
       serviceID: null,
       locationID: null
     };
@@ -11,11 +12,17 @@ var JobForm = React.createClass({
   componentDidMount() {
     window.ServiceStore.subscribe(this.receiveServices);
     window.AddressStore.subscribe(this.receiveLocations);
+    window.ContactsStore.subscribe(this.receiveContacts);
   },
 
   componentWillUnmount() {
     window.ServiceStore.unsubscribe(this.receiveServices);
     window.AddressStore.unsubscribe(this.receiveLocations);
+    window.ContactsStore.unsubscribe(this.receiveContacts);
+  },
+
+  receiveContacts(contacts) {
+    this.setState({contacts: contacts});
   },
 
   receiveLocations(locations) {
@@ -32,6 +39,27 @@ var JobForm = React.createClass({
       newState.serviceID = services[0].id;
     }
     this.setState(newState);
+  },
+
+  handleSubmit(e) {
+    e.preventDefault();
+    var job = {
+      service_id: this.state.serviceID,
+      address_id: this.state.locationID,
+      start: "2016/05/29 00:00:00",
+      start: "2016-05-29T00:00:00Z",
+      end: "2016-05-29T00:05:00Z"
+    }
+    var contacts = [];
+    this.state.contacts.forEach(function(contact) {
+      contacts.push(contact.id);
+    });
+    window.Dispatcher.createJob(job, contacts)
+      .receive("ok", (resp) => {
+        this.props.onCreate("job", resp.job_id);
+      }).receive("error", (resp) => {
+        this.setState({errors: resp.errors});
+      });
   },
 
   getSelectedLocation() {
@@ -98,7 +126,7 @@ var JobForm = React.createClass({
 
   render() {
     return(
-      <form id="JobForm">
+      <form onSubmit={ this.handleSubmit }>
         Describe the job:
         <br/>
         <br/>
@@ -129,7 +157,7 @@ var JobForm = React.createClass({
         <textarea name="message" rows="15" cols="40"/>
         <br/>
         <br/>
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Submit" onClick={ this.handleSubmit }/>
       </form>
     );
   }
