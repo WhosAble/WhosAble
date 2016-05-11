@@ -13,11 +13,12 @@ var Dispatcher = {
     return window.AuthStore.channel.push("create_contact", contact);
   },
 
+  createLocation(location) {
+    return window.AuthStore.channel.push("create_address", location);
+  },
+
   createService(name) {
     return window.AuthStore.channel.push("create_service", {name: name})
-    /*  .receive("ok", (resp) => {
-      }).receive("error", (resp) => {
-      });*/
   },
 
   login(email, password) {

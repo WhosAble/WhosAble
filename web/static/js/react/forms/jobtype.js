@@ -12,8 +12,7 @@ var JobType = React.createClass({
     e.preventDefault();
     window.Dispatcher.createService(this.state.servicetype)
     .receive("ok", (resp) => {
-      this.setState({serviceID: resp.service_id});
-      this.props.onFormChange("job")
+      this.props.onCreate(resp.service_id)
     }).receive("error", (resp) => {
       this.setState({errors: resp.errors});
     });

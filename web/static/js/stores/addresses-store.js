@@ -1,4 +1,5 @@
 import {Socket} from "phoenix"
+import _ from "lodash";
 
 module.exports = {
   addresses: {},
@@ -26,7 +27,7 @@ module.exports = {
   },
 
   sendCallBack(callBack) {
-    callBack(window.AddressStore.addresses);
+    callBack(_.values(window.AddressStore.addresses));
   },
 
   addNewAddress(address) {

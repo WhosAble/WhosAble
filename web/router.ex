@@ -22,16 +22,6 @@ defmodule WhosAble.Router do
 
     post "/signup", UserController, :create
     post "/login", LoginController, :login
-
-    scope "/", nil do
-      pipe_through :authenticated
-
-#       get "/account/settings", AccountSettingController, :show
-
-#       post "/location", LocationController, :create
-#       put "/location/:location_id", LocationController, :update
-#       delete "/location/:location_id", LocationController, :destroy
-    end
   end
 
   scope "/", WhosAble do

@@ -42,6 +42,7 @@ defmodule WhosAble.AccountChannel do
     case WhosAble.Repo.insert(WhosAble.Job.changeset(%WhosAble.Job{}, params)) do
       {:ok, job} ->
         WhosAble.AccountChannel.Job.new_job(job, socket)
+        #WhosAble.SendMessage(job, contact)
         {:reply, {:ok, %{job_id: job.id}}, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
