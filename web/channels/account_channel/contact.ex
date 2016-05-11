@@ -29,6 +29,7 @@ defmodule WhosAble.AccountChannel.Contact do
     }
   end
 
+  defp contacts_json(nil), do: %{contacts: []}
   defp contacts_json(account) do
     contacts = WhosAble.Contact
       |> where(account_id: ^account.id)

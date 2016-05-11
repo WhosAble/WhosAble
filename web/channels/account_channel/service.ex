@@ -24,6 +24,7 @@ defmodule WhosAble.AccountChannel.Service do
     }
   end
 
+  defp services_json(nil), do: %{services: []}
   defp services_json(account) do
     services = WhosAble.Service
       |> where(account_id: ^account.id)

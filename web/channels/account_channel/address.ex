@@ -27,6 +27,7 @@ defmodule WhosAble.AccountChannel.Address do
     }
   end
 
+  defp addresses_json(nil), do: %{addresses: []}
   defp addresses_json(account) do
     addresses = WhosAble.Address
       |> where(account_id: ^account.id)
