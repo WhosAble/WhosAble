@@ -28,7 +28,7 @@ var JobsPage = React.createClass({
   renderContacts(job) {
     if(job.contacts.length == 0) { return <noscript/> }
 
-    return job.contacts.map(function(contact) {
+    var contacts = job.contacts.map(function(contact) {
       return(
         <div key={"contact" + contact.id}>
           <div>First Name: {contact.first_name}</div>
@@ -38,6 +38,11 @@ var JobsPage = React.createClass({
         </div>
       );
     });
+    return(
+      <div className="contacts">
+        {contacts}
+      </div>
+    );
   },
 
   renderJobs() {
