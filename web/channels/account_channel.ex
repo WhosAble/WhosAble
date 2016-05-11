@@ -3,9 +3,11 @@ defmodule WhosAble.AccountChannel do
 
   def join("account:" <> account_id, %{"token" => token}, socket) do
     case Phoenix.Token.verify(socket, "account socket", token) do
-      {:ok, %{account_id: token_account_id, user_id: _}} ->
-        case parse_account_id(account_id) == token_account_id do
-          true -> {:ok, socket}
+      {:ok, %{account_id: token_account_id, user_id: user_id}} ->
+        case parse_int(account_id) == token_account_id do
+          true ->
+            socket = socket |> assign(:user_id, user_id)
+            {:ok, socket}
           false -> {:error, %{reason: "unauthorized"}}
         end
     end
@@ -36,9 +38,9 @@ defmodule WhosAble.AccountChannel do
         {:reply, {:error, %{errors: errors_json(changeset)}}, socket}
     end
   end
-  def handle_in("create_job", %{"job" => job_params, "contacts" => contact_params}, socket) do
+  def handle_in("create_job", %{"job" => job_params, "contacts" => contact_params}, %{assigns: %{user_id: user_id}} = socket) do
     account = get_account(socket)
-    params = Map.merge(scrub_params(job_params), %{"account_id" => account.id})
+    params = Map.merge(scrub_params(job_params), %{"account_id" => account.id, "user_id" => user_id})
     case WhosAble.Repo.insert(WhosAble.Job.changeset(%WhosAble.Job{}, params)) do
       {:ok, job} ->
         create_job_contacts(job, contact_params)
@@ -78,6 +80,9 @@ defmodule WhosAble.AccountChannel do
 
   def get_account(socket), do: WhosAble.Repo.get(WhosAble.Account, parse_topic(socket))
 
+  def parse_topic(%{topic: "account:" <> account_id}), do: parse_int(account_id)
+  def parse_topic(_), do: nil
+
   ###
   ### PRIVATE
   ###
@@ -101,22 +106,12 @@ defmodule WhosAble.AccountChannel do
     end)
   end
 
-  defp parse_account_id(account_id) do
-    case Integer.parse(account_id) do
-      {id, _} -> id
-      _ -> nil
-    end
-  end
-
   defp parse_int(str) do
     case Integer.parse(str) do
       {int, _} -> int
       _ -> nil
     end
   end
-
-  def parse_topic(%{topic: "account:" <> account_id}), do: parse_int(account_id)
-  def parse_topic(_), do: nil
 
   defp render_message({message, values}) do
     Enum.reduce values, message, fn {k, v}, acc ->

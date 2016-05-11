@@ -28,7 +28,8 @@ defmodule WhosAble.SendMessage do
 
   defp generate_message(job, contact) do
     service = WhosAble.Repo.get(WhosAble.Service, job.service_id)
-    contact.first_name <> ", it's Mike Hoffert. I'm using the WhosAble app to find a " <> service.name <> " for June 4th from 10:00 AM to 11:00 AM. Are you able? Simply reply with 'y' or 'n' to let me know. Powered by WhosAble.com."
+    user = WhosAble.Repo.get(WhosAble.User, job.user_id)
+    contact.first_name <> ", it's " <> user.first_name <> " " <> user.last_name <>". I'm using the WhosAble app to find a " <> service.name <> " for June 4th from 10:00 AM to 11:00 AM. Are you able? Simply reply with 'y' or 'n' to let me know. Powered by WhosAble.com."
   end
 
   defp parse_body(%HTTPoison.Response{body: body}) do
