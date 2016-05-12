@@ -22,6 +22,9 @@ var ContactsPage = require("./react/pages/contacts-page");
 var NewJobPage = require("./react/pages/new-job-page");
 var JobsPage = require("./react/pages/jobs-page");
 var NotFoundPage = require("./react/pages/not-found-page");
+var Secure = require("./react/pages/secure");
+var Connect = require("./react/pages/connect");
+var Affordable = require("./react/pages/affordable");
 
 function ensureAuthenticated() {
   if(window.AuthStore.isLoggedIn() == false) {
@@ -42,6 +45,9 @@ function ensureNotAuthenticated() {
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={HomePage}/>
+    <Route path="/affordable" component={Affordable}/>
+    <Route path="/connect" component={Connect}/>
+    <Route path="/secure" component={Secure}/>
     <Route path="/login" component={LoginPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/signup" component={SignupPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/app" component={ConnectionStatus} onEnter={ensureAuthenticated}>
