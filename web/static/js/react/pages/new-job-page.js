@@ -1,45 +1,53 @@
 var NavBar = require("../nav-bar");
 var JobForm = require("../forms/job-form")
 var JobType = require("../forms/jobtype")
+var LocationForm = require("../forms/location-form")
+import {browserHistory} from 'react-router';
+
 var NewJobPage = React.createClass({
   getInitialState() {
-      return {
-        form: "job",
-        type: null
-      };
-    },
-handleformchange() {
-  this.setState({form: "type"})
-},
-handlesavetypeform(){
-  this.setState({form: "job"})
-},
-renderform() {
-if(this.state.form == "job"){
-  return <JobForm onformchange={this.handleformchange}/>
-} else {
-  return <JobType onformchange={this.handlesavetypeform}/>
-}
-},
+    return {
+      form: "job",
+      type: null
+    };
+  },
 
-componentDidMount() {
-  window.ServiceStore.subscribe(this.receiveState);
-},
+  handleFormChange(form, ID) {
+    // TODO: Do something with the ID
+    this.setState({form: form})
+  },
 
-componentWillUnmount() {
-  window.ServiceStore.unsubscribe(this.receiveState);
-},
+  renderform() {
+    if(this.state.form == "job") {
+      return <JobForm onFormChange={this.handleFormChange}/>
+    } else if(this.state.form == "type") {
+      return <JobType onCreate={this.handleFormChange.bind(this, "job")}/>
+    } else {
+      return <LocationForm onCreate={this.handleFormChange.bind(this, "job")}/>
+    }
+  },
 
-receiveState(services) {
-  this.setState({services: services});
-},
+  componentDidMount() {
+    window.ServiceStore.subscribe(this.receiveState);
+  },
+
+  componentWillUnmount() {
+    window.ServiceStore.unsubscribe(this.receiveState);
+  },
+
+  receiveState(services) {
+    this.setState({services: services});
+  },
+
   render() {
     return(
       <div>
         <NavBar/>
-        {this.renderform()}
-
-
+        <div className="container">
+          <main role="main">
+            {this.renderform()}
+          </main>
+        </div>
       </div>
     );
   }

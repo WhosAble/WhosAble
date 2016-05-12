@@ -3,27 +3,22 @@ import { browserHistory } from 'react-router';
 var Dispatcher = {
   createAddress(address, city, state, zip) {
     return window.AuthStore.channel.push("create_address", {address: address, city: city, state: state, zip: zip})
-      /*.receive("ok", (resp) => {
-      }).receive("error", (resp) => {
-      });*/
   },
 
-  createJob(service_id, address_id, start, end, notes) {
-    return window.AuthStore.channel.push("create_job", {service_id: service_id, address_id: address_id, start: start, end: end, notes: notes})
-      /*.receive("ok", (resp) => {
-      }).receive("error", (resp) => {
-      });*/
+  createJob(job, contacts) {
+    return window.AuthStore.channel.push("create_job", {job: job, contacts: contacts})
   },
 
   createContact(contact) {
     return window.AuthStore.channel.push("create_contact", contact);
   },
 
+  createLocation(location) {
+    return window.AuthStore.channel.push("create_address", location);
+  },
+
   createService(name) {
     return window.AuthStore.channel.push("create_service", {name: name})
-    /*  .receive("ok", (resp) => {
-      }).receive("error", (resp) => {
-      });*/
   },
 
   login(email, password) {

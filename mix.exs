@@ -18,7 +18,7 @@ defmodule WhosAble.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {WhosAble, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :phoenix_ecto, :postgrex, :comeonin]]
+     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :phoenix_ecto, :postgrex, :httpoison, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -34,6 +34,7 @@ defmodule WhosAble.Mixfile do
       {:cowboy, "~> 1.0"},
       {:gettext, "~> 0.9"},
       {:exrm, "~> 1.0"},
+      {:httpoison, "~> 0.8.2"},
       {:phoenix, "~> 1.1.4"},
       {:phoenix_ecto, "~> 2.0"},
       {:phoenix_html, "~> 2.4"},

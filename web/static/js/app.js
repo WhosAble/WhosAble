@@ -7,7 +7,7 @@ window.Dispatcher = require("./dispatcher");
 
 window.AuthStore = require("./stores/auth-store");
 window.ServiceStore = require("./stores/service-store");
-window.AddressesStore = require("./stores/addresses-store");
+window.AddressStore = require("./stores/addresses-store");
 window.ContactsStore = require("./stores/contacts-store");
 window.JobsStore = require("./stores/jobs-store");
 window.AuthStore.connectSocket();

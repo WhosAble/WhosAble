@@ -58,7 +58,7 @@ var ContactForm = React.createClass({
     if(this.state.loading) {
       return(
         <button type="submit" className="btn">
-          <LoadingEllipsis>Logging In</LoadingEllipsis>
+          <LoadingEllipsis>Creating Contact</LoadingEllipsis>
         </button>
       );
     } else {
@@ -68,7 +68,7 @@ var ContactForm = React.createClass({
 
   render() {
     return(
-      <form onSubmit={ this.login }>
+      <form onSubmit={ this.createContact }>
         <div className="row">
           <div className="col-xs-6">
             <TextField label="First Name" value={ this.state.firstName } errors={ this.parseErrors("first_name") } onChange={ this.handleFieldChange.bind(this, "firstName") }/>

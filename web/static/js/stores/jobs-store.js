@@ -1,4 +1,5 @@
 import {Socket} from "phoenix"
+import _ from "lodash";
 
 module.exports = {
   jobs: {},
@@ -26,7 +27,7 @@ module.exports = {
   },
 
   sendCallBack(callBack) {
-    callBack(window.JobsStore.jobs);
+    callBack(_.values(window.JobsStore.jobs));
   },
 
   addNewJob(job) {
