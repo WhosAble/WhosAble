@@ -1,4 +1,5 @@
 import {Socket} from "phoenix"
+import _ from "lodash";
 
 module.exports = {
   contacts: {},
@@ -26,7 +27,7 @@ module.exports = {
   },
 
   sendCallBack(callBack) {
-    callBack(window.ContactsStore.contacts);
+    callBack(_.values(window.ContactsStore.contacts));
   },
 
   addNewContact(contact) {

@@ -54,6 +54,7 @@ ReactDOM.render(
       <IndexRoute component={DashboardPage}/>
       <Route path="contacts" component={ContactsPage}/>
       <Route path="contacts/new" component={NewContactPage}/>
+      <Route path="contacts/new/services/:serviceID" component={NewContactPage}/>
       <Route path="jobs" component={JobsPage}/>
       <Route path="jobs/new" component={NewJobPage}/>
     </Route>

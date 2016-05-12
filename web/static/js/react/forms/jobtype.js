@@ -1,4 +1,5 @@
 var TextField = require("./text-field");
+
 var JobType = React.createClass({
   getInitialState() {
     return {
@@ -6,8 +7,10 @@ var JobType = React.createClass({
       errors: []
     };
   },
-handleCreate() {
-  window.Dispatcher.createService(this.state.servicetype)
+
+  handleCreate(e) {
+    e.preventDefault();
+    window.Dispatcher.createService(this.state.servicetype)
     .receive("ok", (resp) => {
       this.setState({serviceID: resp.service_id});
     }).receive("error", (resp) => {
@@ -15,11 +18,13 @@ handleCreate() {
     });
     this.props.onformchange()
   },
+
   handleFieldChange(field, val) {
     var obj = {};
     obj[field] = val;
     this.setState(obj);
   },
+
   parseErrors(field) {
     if(this.state.errors.length == 0) { return []; }
 
@@ -27,17 +32,20 @@ handleCreate() {
       if(error.field == field) { return error; }
     });
   },
+
   render() {
     return(
-<div>
-Service Type:
-<br/><br/>
-<form>
-<TextField label="servicetype" value={ this.state.servicetype } errors={ this.parseErrors("servicetype") } onChange={ this.handleFieldChange.bind(this, "servicetype") }/>
-</form>
-      <br/><br/>
-      <div className="btn btn-primary" onClick={this.handleCreate}>Submit Service Type</div>
-</div>
+      <div>
+        Service Type:
+        <br/>
+        <br/>
+        <form onSubmit={ this.handleCreate }>
+          <TextField label="servicetype" value={ this.state.servicetype } errors={ this.parseErrors("servicetype") } onChange={ this.handleFieldChange.bind(this, "servicetype") }/>
+        </form>
+        <br/>
+        <br/>
+        <div className="btn btn-primary" onClick={ this.handleCreate }>Submit Service Type</div>
+      </div>
     );
   }
 });
