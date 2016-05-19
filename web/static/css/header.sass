@@ -54,9 +54,11 @@
 
     li
       float: right
-      border-right: 2px solid $silver
-      width: 40%
+      border-right: none
+      width: calc(100%-40px)
       line-height: $header-height
+      padding-right: 5px
+      padding-left: 5px
 
       a
         display: block
@@ -75,7 +77,7 @@
         &.active
           background-color: $midnight
 
-      &:first-child
+      &.logo-li
         background: $silver
         font-weight: normal
         width: $header-height
@@ -90,7 +92,7 @@
           &:hover
             font-weight: normal
 
-      &:last-child
+      &.menu-btn-li
         border-right: none
 
         #menu-btn

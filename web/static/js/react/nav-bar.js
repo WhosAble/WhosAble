@@ -35,7 +35,7 @@ var NavBar = React.createClass({
 
   renderLogo() {
     return(
-      <li>
+      <li className="logo-li">
         <Link to="/">
           <img src="/images/logo.png" alt="WhosAble"/>
         </Link>
@@ -48,7 +48,7 @@ var NavBar = React.createClass({
     if(this.state.menuOpen) { menuClass = "open"; }
 
     return(
-      <li>
+      <li className="menu-btn-li">
       <div className="hidden-md hidden-lg hidden-xl visible-sm visible-xs">
         <div id="menu-btn" className={ menuClass } onClick={ this.openMenu }>
 
