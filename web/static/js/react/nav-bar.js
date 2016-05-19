@@ -49,23 +49,77 @@ var NavBar = React.createClass({
 
     return(
       <li>
+      <div className="hidden-md hidden-lg hidden-xl visible-sm visible-xs">
         <div id="menu-btn" className={ menuClass } onClick={ this.openMenu }>
+
           <span></span>
           <span></span>
           <span></span>
           <span></span>
+          </div>
         </div>
       </li>
     );
   },
 
+renderDesktopMenu() {
+
+  var menuClass = "";
+  if(this.state.isLoggedIn) { menuClass += " app-menu"; }
+  if(this.state.isLoggedIn) {
+    return(
+      <li>
+      <ul className="hidden-sm hidden-xs visible-xl visible-lg visible-md">
+        <li>
+          <Link to="/app">
+            <i className="fa fa-tachometer"/>Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link to="/app/jobs">
+            <i className="fa fa-briefcase"/>Jobs
+          </Link>
+        </li>
+        <li>
+          <Link to="/app/contacts">
+            <i className="fa fa-users"/>Contacts
+          </Link>
+        </li>
+        <li>
+          <a href="javascript:;" onClick={ this.handleLogout }>
+            <i className="fa fa-sign-out"/>Logout
+          </a>
+        </li>
+      </ul>
+      </li>
+      );
+      } else {
+      return(
+        <li>
+      <ul className="hidden-sm hidden-xs visible-xl visible-lg visible-md">
+      <li>
+        <Link to="/login">
+          <i className="fa fa-sign-in"/>Login
+        </Link>
+      </li>
+        <li>
+          <Link to="/signup">
+            <i className="fa fa-user-plus"/>Signup
+          </Link>
+        </li>
+      </ul>
+      </li>
+      );
+      }
+      },
+
   renderMenu() {
     var menuClass = "";
     if(this.state.menuOpen) { menuClass = "open"; }
     if(this.state.isLoggedIn) { menuClass += " app-menu"; }
-
     if(this.state.isLoggedIn) {
       return(
+
         <ul id="menu" className={ menuClass }>
           <li>
             <Link to="/app">
@@ -91,6 +145,7 @@ var NavBar = React.createClass({
       );
     } else {
       return(
+
         <ul id="menu" className={ menuClass }>
           <li>
             <Link to="/signup">
@@ -112,9 +167,12 @@ var NavBar = React.createClass({
       <div id="nav-bar">
         <ul id="nav-bar-items">
           { this.renderLogo() }
+          { this.renderDesktopMenu() }
           { this.renderMenuBtn() }
+
         </ul>
         { this.renderMenu() }
+
       </div>
     );
   }

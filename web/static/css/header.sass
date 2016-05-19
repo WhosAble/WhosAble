@@ -1,6 +1,7 @@
 @import "variables"
 
 #nav-bar
+
   ul#menu
     position: absolute
     top: $header-height
@@ -51,9 +52,9 @@
     background-color: $midnight
 
     li
-      float: left
+      float: right
       border-right: 2px solid $silver
-      width: $header-height * 2
+      width: 40%
       line-height: $header-height
 
       a
@@ -79,6 +80,7 @@
         width: $header-height
         text-align: center
         border-right: none
+        float: left
 
         a
           img
@@ -88,9 +90,7 @@
             font-weight: normal
 
       &:last-child
-        float: right
         border-right: none
-        width: $header-height
 
         #menu-btn
           width: 40px
