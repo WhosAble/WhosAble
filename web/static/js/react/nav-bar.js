@@ -86,7 +86,7 @@ renderDesktopMenu() {
           </Link>
         </li>
         <li>
-        <Link to="/app/locations">
+        <Link to="/locations">
           <i className="fa fa-location-arrow"/>Locations
           </Link>
           </li>
@@ -142,7 +142,7 @@ renderDesktopMenu() {
             </Link>
           </li>
           <li>
-          <Link to="/app/locations">
+          <Link to="/locations">
             <i className="fa fa-location-arrow"/>Locations
             </Link>
             </li>
