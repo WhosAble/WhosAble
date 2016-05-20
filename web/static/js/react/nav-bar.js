@@ -86,6 +86,11 @@ renderDesktopMenu() {
           </Link>
         </li>
         <li>
+        <Link to="/app/locations">
+          <i className="fa fa-location-arrow"/>Locations
+          </Link>
+          </li>
+        <li>
           <a href="javascript:;" onClick={ this.handleLogout }>
             <i className="fa fa-sign-out"/>Logout
           </a>
@@ -136,6 +141,11 @@ renderDesktopMenu() {
               <i className="fa fa-users"/>Contacts
             </Link>
           </li>
+          <li>
+          <Link to="/app/locations">
+            <i className="fa fa-location-arrow"/>Locations
+            </Link>
+            </li>
           <li>
             <a href="javascript:;" onClick={ this.handleLogout }>
               <i className="fa fa-sign-out"/>Logout

@@ -25,6 +25,8 @@ var NotFoundPage = require("./react/pages/not-found-page");
 var Secure = require("./react/pages/secure");
 var Connect = require("./react/pages/connect");
 var Affordable = require("./react/pages/affordable");
+var LocationsPage = require("./react/pages/locations-page");
+
 
 function ensureAuthenticated() {
   if(window.AuthStore.isLoggedIn() == false) {
@@ -48,6 +50,7 @@ ReactDOM.render(
     <Route path="/affordable" component={Affordable}/>
     <Route path="/connect" component={Connect}/>
     <Route path="/secure" component={Secure}/>
+    <Route path="/locations" component={LocationsPage}/>
     <Route path="/login" component={LoginPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/signup" component={SignupPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/app" component={ConnectionStatus} onEnter={ensureAuthenticated}>
