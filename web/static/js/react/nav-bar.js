@@ -72,27 +72,27 @@ renderDesktopMenu() {
       <ul className="hidden-sm hidden-xs visible-xl visible-lg visible-md">
         <li>
           <Link to="/app">
-            <i className="fa fa-tachometer"/>Dashboard
+            <i className="fa fa-tachometer fa-fw"/>Dashboard
           </Link>
         </li>
         <li>
           <Link to="/app/jobs">
-            <i className="fa fa-briefcase"/>Jobs
+            <i className="fa fa-briefcase fa-fw"/>Jobs
           </Link>
         </li>
         <li>
           <Link to="/app/contacts">
-            <i className="fa fa-users"/>Contacts
+            <i className="fa fa-users fa-fw"/>Contacts
           </Link>
         </li>
         <li>
         <Link to="/locations">
-          <i className="fa fa-location-arrow"/>Locations
+          <i className="fa fa-location-arrow fa-fw"/>Locations
           </Link>
           </li>
         <li>
           <a href="javascript:;" onClick={ this.handleLogout }>
-            <i className="fa fa-sign-out"/>Logout
+            <i className="fa fa-sign-out fa-fw"/>Logout
           </a>
         </li>
       </ul>
@@ -104,12 +104,12 @@ renderDesktopMenu() {
       <ul className="hidden-sm hidden-xs visible-xl visible-lg visible-md">
       <li>
         <Link to="/login">
-          <i className="fa fa-sign-in"/>Login
+          <i className="fa fa-sign-in fa-fw"/>Login
         </Link>
       </li>
         <li>
           <Link to="/signup">
-            <i className="fa fa-user-plus"/>Signup
+            <i className="fa fa-user-plus fa-fw"/>Signup
           </Link>
         </li>
       </ul>
@@ -128,27 +128,27 @@ renderDesktopMenu() {
         <ul id="menu" className={ menuClass }>
           <li>
             <Link to="/app">
-              <i className="fa fa-tachometer"/>Dashboard
+              <i className="fa fa-tachometer fa-fw"/>Dashboard
             </Link>
           </li>
           <li>
             <Link to="/app/jobs">
-              <i className="fa fa-briefcase"/>Jobs
+              <i className="fa fa-briefcase fa-fw"/>Jobs
             </Link>
           </li>
           <li>
             <Link to="/app/contacts">
-              <i className="fa fa-users"/>Contacts
+              <i className="fa fa-users fa-fw"/>Contacts
             </Link>
           </li>
           <li>
           <Link to="/locations">
-            <i className="fa fa-location-arrow"/>Locations
+            <i className="fa fa-location-arrow fa-fw"/>Locations
             </Link>
             </li>
           <li>
             <a href="javascript:;" onClick={ this.handleLogout }>
-              <i className="fa fa-sign-out"/>Logout
+              <i className="fa fa-sign-out fa-fw"/>Logout
             </a>
           </li>
         </ul>
@@ -159,12 +159,12 @@ renderDesktopMenu() {
         <ul id="menu" className={ menuClass }>
           <li>
             <Link to="/signup">
-              <i className="fa fa-user-plus"/>Signup
+              <i className="fa fa-user-plus fa-fw"/>Signup
             </Link>
           </li>
           <li>
             <Link to="/login">
-              <i className="fa fa-sign-in"/>Login
+              <i className="fa fa-sign-in fa-fw"/>Login
             </Link>
           </li>
         </ul>
