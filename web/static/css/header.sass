@@ -1,6 +1,7 @@
 @import "variables"
 
 #nav-bar
+
   ul#menu
     position: absolute
     top: $header-height
@@ -21,7 +22,7 @@
       max-height: $header-height * 2
 
       &.app-menu
-        max-height: $header-height * 4
+        max-height: $header-height * 5
 
     li
       width: 100%
@@ -38,6 +39,7 @@
           font-size: $margin * 2
           color: $orange
   @media only screen and (min-device-width: 0px) and (max-device-width: 568px)
+
     ul#menu
       width: 100%
 
@@ -51,16 +53,19 @@
     background-color: $midnight
 
     li
-      float: left
-      border-right: 2px solid $silver
-      width: $header-height * 2
+      float: right
+      border-right: none
+      width: calc(100%-40px)
       line-height: $header-height
+
 
       a
         display: block
         color: white
         text-align: center
         text-decoration: none
+        padding-right: 8px
+        padding-left: 8px
 
         .fa
           line-height: $header-height
@@ -68,17 +73,17 @@
         &:hover
           background-color: $silver
           color: $midnight
-          font-weight: bold
 
         &.active
           background-color: $midnight
 
-      &:first-child
+      &.logo-li
         background: $silver
         font-weight: normal
         width: $header-height
         text-align: center
         border-right: none
+        float: left
 
         a
           img
@@ -87,16 +92,15 @@
           &:hover
             font-weight: normal
 
-      &:last-child
-        float: right
+      &.menu-btn-li
         border-right: none
-        width: $header-height
 
         #menu-btn
           width: 40px
           height: 45px
           position: relative
           margin-top: 12px
+          margin-right: 12px
           -webkit-transform: rotate(0deg)
           -moz-transform: rotate(0deg)
           -o-transform: rotate(0deg)
