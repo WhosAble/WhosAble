@@ -1,5 +1,4 @@
 import {Link} from 'react-router'
-
 var NavBar = React.createClass({
   propTypes: {
   },
