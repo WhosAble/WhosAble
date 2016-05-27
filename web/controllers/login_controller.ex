@@ -5,7 +5,7 @@ defmodule WhosAble.LoginController do
   alias WhosAble.User
 
   def login(conn, %{"email" => _, "password" => _}) do
-    email = scrub_params(conn, "email").params["email"] || ""
+    email = String.downcase(scrub_params(conn, "email").params["email"]) || ""
     password = scrub_params(conn, "password").params["password"] || ""
 
     conn

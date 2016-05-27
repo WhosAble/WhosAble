@@ -21,7 +21,8 @@ defmodule WhosAble.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, ~w(account_id first_name last_name email password), [])
-    |> validate_format(:email, ~r/\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\Z/)
+    |> update_change(:email, &String.downcase/1)
+    |> validate_format(:email, ~r/\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\Z/)
     |> unique_constraint(:email)
     |> validate_length(:password, min: 8, max: 100)
     |> put_pass_hash
