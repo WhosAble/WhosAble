@@ -1,0 +1,48 @@
+@import "variables"
+
+.jobs
+  .month-header
+    margin-top: $margin * 2
+    border-top: 2px solid $asbestos
+
+    .month-header-text
+      margin: -14px auto $margin
+      font-size: 18px
+      width: 100px
+      text-align: center
+      background: #FFF
+
+  .job
+    border-radius: 5px
+    border: 2px solid $concrete
+    padding: 5px 10px
+    margin-bottom: $margin
+
+    &.green-job
+      background: $nephritis
+
+    &.yellow-job
+      background: $sunflower
+
+    &.gray-job
+      background: $clouds
+
+    .service-type
+      font-size: 18px
+      font-weight: bold
+
+    .contacts
+      margin-left: 8px
+
+    .job-address, .job-city, .start-time, .end-time
+      text-align: right
+      font-size: 14px
+      line-height: 14px
+
+    .job-address
+      font-size: 18px
+      line-height: 22px
+      font-weight: bold
+
+    .start-time
+      margin-top: 5px
