@@ -1,0 +1,101 @@
+@import "variables"
+
+#HomePage
+  #tophalf
+    background-color: lighten($orange, 12%)
+    width: 100%
+    padding-top: 166px
+    text-align: center
+
+    @media (max-device-width: 768px)
+      padding-top: $margin * 3
+
+    .titlequote
+      font-size: 36px
+
+      @media (min-device-width: 769px)
+        div
+          display: inline-block
+          margin-left: 8px
+
+      @media (max-device-width: 768px)
+        font-size: 28px
+
+    #with
+      padding: 47px 0px
+      margin: 0px auto
+      font-size: 24px
+      width: 555px
+
+      @media (max-device-width: 768px)
+        font-size: 18px
+        width: 280px
+
+    #buttons
+      display: inline-block
+      padding-bottom: 110px
+
+      @media (max-device-width: 768px)
+        padding-bottom: $margin * 2
+
+  #bottomhalf
+    padding-top: 50px
+    text-align: center
+
+    @media (max-device-width: 768px)
+      padding-top: $margin * 2
+
+    #platform
+      font-size: 24px
+      margin: 0px auto
+      width: 575px
+
+      @media (max-device-width: 768px)
+        font-size: 18px
+        width: 280px
+
+    #icons
+      padding-top: 60px
+      color: $black
+      text-align: center
+      margin: 0px auto
+      width: 555px
+
+      .icon
+        i
+          color: $black
+          width: 75px
+          font-size: 65px
+          text-align: center
+          margin: 0px auto
+
+        a
+          color: $black
+          text-align: center
+
+          div
+            margin: 0px auto
+            width: 75px
+
+        &.secure-icon
+          i
+            font-size: 80px
+            line-height: 65px
+            color: lighten($midnight, 12%)
+
+        &.connect-icon
+          i
+            color: lighten($midnight, 12%)
+
+        &.affordable-icon
+          i
+            color: lighten($midnight, 12%)
+
+      @media (max-device-width: 768px)
+        width: 280px
+
+        .icon
+          padding-bottom: 50px
+
+          i
+            font-size: 65px
