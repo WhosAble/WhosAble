@@ -67,18 +67,21 @@ var HomePage = React.createClass({
         <br/>
 <div id="icons" className="row">
 <div className="col-xs-4">
-<Link to="/secure">Secure
+<Link to="/secure">
 <i className="fa fa-lock fa-3x"></i>
+<div>Secure</div>
 </Link>
 </div>
 <div className="col-xs-4">
-<Link to="/connect">Connect to your employees
+<Link to="/connect">
 <i className="fa fa-users fa-3x"></i>
+<div>Connect to your employees</div>
 </Link>
 </div>
 <div className="col-xs-4">
-<Link to="/affordable">Affordable
+<Link to="/affordable">
 <i className="fa fa-usd fa-3x"></i>
+<div>Affordable</div>
 </Link>
 </div>
 </div>
