@@ -62,22 +62,20 @@ var LocationForm = React.createClass({
   render() {
     return(
       <form onSubmit={ this.createLocation }>
-        <div className="row">
-          <div className="col-xs-12">
+        <div className="row" style={{marginTop: "25px"}}>
+          <div className="col-xs-12 col-lg-4">
             <TextField label="Address" value={ this.state.address } errors={ this.parseErrors("address") } onChange={ this.handleFieldChange.bind(this, "address") }/>
           </div>
-          <div className="col-xs-12">
+          <div className="col-xs-12 col-md-5 col-lg-3">
             <TextField label="City" value={ this.state.city } errors={ this.parseErrors("city") } onChange={ this.handleFieldChange.bind(this, "city") }/>
           </div>
-          <div className="col-xs-12">
+          <div className="col-xs-12 col-md-3 col-lg-1">
             <TextField label="State" value={ this.state.state } errors={ this.parseErrors("state") } onChange={ this.handleFieldChange.bind(this, "state") }/>
           </div>
-          <div className="col-xs-12">
+          <div className="col-xs-12 col-md-4 col-lg-2">
             <TextField label="Zip" value={ this.state.zip } errors={ this.parseErrors("zip") } onChange={ this.handleFieldChange.bind(this, "zip") }/>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
+          <div className="col-xs-12 col-lg-2">
             { this.renderBtn() }
           </div>
         </div>
