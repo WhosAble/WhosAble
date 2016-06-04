@@ -1,10 +1,9 @@
 @import "variables"
 
 #nav-bar
-
   ul#menu
     position: absolute
-    top: $header-height
+    top: calc(#{$header-height} - 5px)
     right: 0px
     background: $midnight
     list-style-type: none
@@ -26,7 +25,7 @@
 
     li
       width: 100%
-      border-top: 3px solid $clouds
+      border-top: 3px solid #FFF
 
       a
         color: $clouds
@@ -40,47 +39,57 @@
           margin-right: $margin
           font-size: $margin * 2
           color: $orange
-  @media only screen and (min-device-width: 0px) and (max-device-width: 568px)
 
+  @media (min-width: 600px)
+    ul#menu
+      display: none
+
+  @media (min-width: 0px) and (max-width: 599px)
+    ul#menu
+      display: block
+
+  @media (min-width: 0px) and (max-width: 568px)
     ul#menu
       width: 100%
 
   ul#nav-bar-items
     width: 100%
     height: $header-height
-    list-style-type: none
+    list-style: none
     margin: 0px
     padding: 0px
     overflow: hidden
-    background-color: $midnight
+    background-color: #FFF
+    border-bottom: 2px solid $midnight
 
     li
       float: right
       border-right: none
-      width: calc(100%-40px)
+      list-style: none
       line-height: $header-height
-
 
       a
         display: block
-        color: white
+        color: #2c3e50
         text-align: center
         text-decoration: none
-        padding-right: 8px
-        padding-left: 8px
+        padding: 0px 8px
 
         .fa
           line-height: $header-height
 
         &:hover
-          background-color: $silver
-          color: $midnight
+          background-color: $midnight
+          color: #FFF
 
         &.active
           background-color: $midnight
 
+      li
+        a
+          padding: 0px $margin
+
       &.logo-li
-        background: $silver
         font-weight: normal
         width: $header-height
         text-align: center
@@ -92,11 +101,11 @@
             height: 40px
 
           &:hover
+            background-color: #FFF
             font-weight: normal
 
       &.menu-btn-li
         border-right: none
-
 
         #menu-btn
           width: 40px
@@ -142,8 +151,6 @@
               top: 24px
 
           &.open
-            margin-right: 0px
-
             span
               background: $alizarin
 
@@ -153,12 +160,14 @@
                 left: 50%
 
               &:nth-child(2)
+                width: calc(100% + 6px)
                 -webkit-transform: rotate(45deg)
                 -moz-transform: rotate(45deg)
                 -o-transform: rotate(45deg)
                 transform: rotate(45deg)
 
               &:nth-child(3)
+                width: calc(100% + 6px)
                 -webkit-transform: rotate(-45deg)
                 -moz-transform: rotate(-45deg)
                 -o-transform: rotate(-45deg)
@@ -168,3 +177,11 @@
                 top: 12px
                 width: 0%
                 left: 50%
+
+      @media (max-width: 599px)
+        ul.desktop-menu
+          display: none
+
+      @media (min-width: 600px)
+        &.menu-btn-li
+          display: none

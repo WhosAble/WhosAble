@@ -27,7 +27,7 @@
       &:hover
         color: $belize
 
-      @media (max-device-width: 768px)
+      @media (max-width: 768px)
         top: -15px
         width: 50px
         text-align: right
@@ -43,7 +43,7 @@
 
   .contact
     margin: $margin
-    @media (min-device-width: 1141px)
+    @media (min-width: 1141px)
       width: calc(33% - (#{$margin} + 2px))
 
       &:nth-child(3n + 1)
@@ -52,7 +52,7 @@
       &:nth-child(3n + 0)
         margin-right: 0px
 
-    @media (min-device-width: 769px) and (max-device-width: 1140px)
+    @media (min-width: 769px) and (max-width: 1140px)
       width: calc(50% - #{$margin})
 
       &:nth-child(2n + 1)
@@ -61,7 +61,7 @@
       &:nth-child(2n + 0)
         margin-right: 0px
 
-    @media (max-device-width: 768px)
+    @media (max-width: 768px)
       margin: $margin 0px
       width: 100%
 
