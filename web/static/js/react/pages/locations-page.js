@@ -1,8 +1,8 @@
 var CreateBtn = require("../create-btn");
 var NavBar = require("../nav-bar");
-var LocationList = require("../location-list");
 var SearchLocationForm = require("../forms/search-location-form");
 var SearchLocationResults = require("../search-location-results");
+var LocationList = require("../location-list");
 import _ from "lodash";
 import {browserHistory} from 'react-router';
 import {Link} from 'react-router'
@@ -40,14 +40,6 @@ var LocationsPage = React.createClass({
     this.handleSearch();
   },
 
-  renderBtn() {
-    if(this.state.addresses == null || _.isEmpty(this.state.addresses)) {
-      return(
-        <CreateBtn title="Create a new Location" onCreate={ this.handleCreate }/>
-      );
-    }
-  },
-
   renderLocationList() {
     if(this.state.search == "") {
       return(
@@ -62,7 +54,7 @@ var LocationsPage = React.createClass({
         <div className="row">
           <div className="col-xs-12">
             <div className="location-list-header">
-              <SearchForm search={ this.state.search } onSearchChange={ this.handleSearchChange } onSearch={ this.handleSearch }/>
+              <SearchLocationForm search={ this.state.search } onSearchChange={ this.handleSearchChange } onSearch={ this.handleSearch }/>
             </div>
             { this.renderLocationList() }
             { this.renderSearchLocationResults() }
