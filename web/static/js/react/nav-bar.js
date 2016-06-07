@@ -79,7 +79,7 @@ var NavBar = React.createClass({
               </Link>
             </li>
             <li>
-            <Link to="/locations">
+            <Link to="/app/locations">
               <i className="fa fa-location-arrow fa-fw"/>Locations
               </Link>
               </li>
@@ -134,7 +134,7 @@ var NavBar = React.createClass({
             </Link>
           </li>
           <li>
-          <Link to="/locations">
+          <Link to="/app/locations">
             <i className="fa fa-location-arrow fa-fw"/>Locations
             </Link>
             </li>
