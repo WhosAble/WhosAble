@@ -67,7 +67,7 @@ var LocationsPage = React.createClass({
   renderSearchLocationResults() {
     if(this.state.search != "") {
       return(
-        <SearchResults search={ this.state.search }/>
+        <SearchLocationResults search={ this.state.search }/>
       );
     }
   },
@@ -82,6 +82,7 @@ var LocationsPage = React.createClass({
       </h4>
       <hr/>
       {this.renderList()}
+      {this.renderSearchLocationResults()}
       </div>
     );
   }

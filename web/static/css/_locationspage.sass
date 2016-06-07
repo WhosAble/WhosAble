@@ -4,17 +4,25 @@
   text-align: center
   display: inline-block
   width: 100%
+  padding-left: 40px
+  padding-right: 40px
 
   a
     float: right
     color: $black
 
-.location
+.locations
   display: -webkit-flex
   display: flex
   flex-wrap: wrap
+
+.location
   background-color: lighten($turquoise, 50%)
   border: 2px solid $turquoise
+  border-top-left-radius: 15px
+  border-top-right-radius: 15px
+  border-bottom-left-radius: 15px
+  border-bottom-right-radius: 15px
   margin: $margin
   @media (min-width: 1141px)
     width: calc(33% - (#{$margin} + 2px))
@@ -39,21 +47,11 @@
     width: 100%
 
   .location-address
-    padding: 15px 0px 10px 0px
+    padding: 10px 0px 0px 0px
     width: calc(100% - (#{$margin}))
     overflow: hidden
 
-  .location-city
-    padding: 15px
-    width: calc(100% - (#{$margin}))
-    overflow: hidden
-
-  .location-state
-    padding: 15px
-    width: calc(100% - (#{$margin}))
-    overflow: hidden
-
-  .location-zip
-    padding: 15px
+  .location-citythruzip
+    padding: 0px 0px 10px 0px
     width: calc(100% - (#{$margin}))
     overflow: hidden
