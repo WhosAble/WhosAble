@@ -89,6 +89,7 @@ var LocationsPage = React.createClass({
       </Link>
       </h4>
       <hr/>
+      {this.renderList()}
       </div>
     );
   }
