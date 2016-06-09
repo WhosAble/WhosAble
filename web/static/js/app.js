@@ -26,6 +26,7 @@ var Secure = require("./react/pages/secure");
 var Connect = require("./react/pages/connect");
 var Affordable = require("./react/pages/affordable");
 var LocationsPage = require("./react/pages/locations-page");
+var NewLocationsPage = require("./react/pages/new-locations-page");
 
 
 function ensureAuthenticated() {
@@ -50,7 +51,6 @@ ReactDOM.render(
     <Route path="/affordable" component={Affordable}/>
     <Route path="/connect" component={Connect}/>
     <Route path="/secure" component={Secure}/>
-    <Route path="/locations" component={LocationsPage}/>
     <Route path="/login" component={LoginPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/signup" component={SignupPage} onEnter={ensureNotAuthenticated}/>
     <Route path="/app" component={ConnectionStatus} onEnter={ensureAuthenticated}>
@@ -60,6 +60,8 @@ ReactDOM.render(
       <Route path="contacts/new/services/:serviceID" component={NewContactPage}/>
       <Route path="jobs" component={JobsPage}/>
       <Route path="jobs/new" component={NewJobPage}/>
+      <Route path="locations" component={LocationsPage}/>
+      <Route path="locations/new" component={NewLocationsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
   </Router>
