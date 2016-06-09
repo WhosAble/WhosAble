@@ -53,9 +53,6 @@ var LocationsPage = React.createClass({
       return(
         <div className="row">
           <div className="col-xs-12">
-            <div className="location-list-header">
-              <SearchLocationForm search={ this.state.search } onSearchChange={ this.handleSearchChange } onSearch={ this.handleSearch }/>
-            </div>
             { this.renderLocationList() }
             { this.renderSearchLocationResults() }
           </div>
@@ -76,13 +73,17 @@ var LocationsPage = React.createClass({
     return(
       <div id="LocationsPage">
       <NavBar/>
+      <div className="location-list-header">
+      <SearchLocationForm search={ this.state.search } onSearchChange={ this.handleSearchChange } onSearch={ this.handleSearch }/>
+      </div>
+      <div>
       <h4>Locations
       <Link to="/app/newlocationspage">Add New Location
       </Link>
       </h4>
       <hr/>
       {this.renderList()}
-      {this.renderSearchLocationResults()}
+      </div>
       </div>
     );
   }
