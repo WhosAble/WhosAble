@@ -61,7 +61,7 @@ ReactDOM.render(
       <Route path="jobs" component={JobsPage}/>
       <Route path="jobs/new" component={NewJobPage}/>
       <Route path="locations" component={LocationsPage}/>
-      <Route path="newlocationspage" component={NewLocationsPage}/>
+      <Route path="locations/new" component={NewLocationsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
   </Router>

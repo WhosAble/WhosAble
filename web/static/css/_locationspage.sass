@@ -1,61 +1,61 @@
 @import "variables"
 
-#LocationsPage
-  text-align: center
-  display: inline-block
-  width: 100%
-  padding-left: 40px
-  padding-right: 40px
-
-  a
-    float: right
-    color: $black
-
-.location-list-header
-  width: 100%
-  float: left
-
-.locations
-  display: -webkit-flex
-  display: flex
-  flex-wrap: wrap
-
-.location
-  background-color: lighten($turquoise, 50%)
-  border: 2px solid $turquoise
-  border-top-left-radius: 15px
-  border-top-right-radius: 15px
-  border-bottom-left-radius: 15px
-  border-bottom-right-radius: 15px
-  margin: $margin
-  @media (min-width: 1141px)
-    width: calc(33% - (#{$margin} + 2px))
-
-    &:nth-child(3n + 1)
-      margin-left: 0px
-
-    &:nth-child(3n + 0)
-      margin-right: 0px
-
-  @media (min-width: 769px) and (max-width: 1140px)
-    width: calc(50% - #{$margin})
-
-    &:nth-child(2n + 1)
-      margin-left: 0px
-
-    &:nth-child(2n + 0)
-      margin-right: 0px
-
-  @media (max-width: 768px)
-    margin: $margin 0px
+  #LocationsPage
+    text-align: center
+    display: inline-block
     width: 100%
+    padding-left: 40px
+    padding-right: 40px
 
-  .location-address
-    padding: 10px 0px 0px 0px
-    width: calc(100% - (#{$margin}))
-    overflow: hidden
+    a
+      float: right
+      color: $black
 
-  .location-citythruzip
-    padding: 0px 0px 10px 0px
-    width: calc(100% - (#{$margin}))
-    overflow: hidden
+    .location-list-header
+      width: 100%
+      float: left
+
+  .locations
+    display: -webkit-flex
+    display: flex
+    flex-wrap: wrap
+
+    .location
+      background-color: lighten($turquoise, 50%)
+      border: 2px solid $turquoise
+      border-top-left-radius: 15px
+      border-top-right-radius: 15px
+      border-bottom-left-radius: 15px
+      border-bottom-right-radius: 15px
+      margin: $margin
+      @media (min-width: 1141px)
+      width: calc(33% - (#{$margin} + 2px))
+
+      &:nth-child(3n + 1)
+        margin-left: 0px
+
+      &:nth-child(3n + 0)
+        margin-right: 0px
+
+    @media (min-width: 769px) and (max-width: 1140px)
+      width: calc(50% - #{$margin})
+
+      &:nth-child(2n + 1)
+        margin-left: 0px
+
+      &:nth-child(2n + 0)
+        margin-right: 0px
+
+    @media (max-width: 768px)
+      margin: $margin 0px
+      width: 100%
+
+    .location-address
+      padding: 10px 0px 0px 0px
+      width: calc(100% - (#{$margin}))
+      overflow: hidden
+
+    .location-citythruzip
+      padding: 0px 0px 10px 0px
+      width: calc(100% - (#{$margin}))
+      overflow: hidden
