@@ -3,7 +3,6 @@ var Job = require("./location-list");
 import _ from "lodash";
 
 var LocationList = React.createClass({
-    browserHistory.push("/app/locations/new")
 
   render() {
 

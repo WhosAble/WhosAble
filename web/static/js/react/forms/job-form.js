@@ -157,7 +157,8 @@ var JobForm = React.createClass({
         <textarea name="message" rows="15" cols="40"/>
         <br/>
         <br/>
-        <input type="submit" value="Submit" onClick={ this.handleSubmit }/>
+        <hr/>
+        <div id="createjobbutton" className="btn btn-primary" onClick={ this.handleSubmit }>Create Job</div>
       </form>
     );
   }
