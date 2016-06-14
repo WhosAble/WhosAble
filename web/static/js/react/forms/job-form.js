@@ -84,6 +84,17 @@ var JobForm = React.createClass({
     return selectedService;
   },
 
+  getSelectedContact() {
+    var self = this;
+    var selectedContact = null;
+    this.state.contacts.forEach(function(contact) {
+      if(contact.id == self.state.contactID) {
+        selectedContact = contact;
+      }
+    });
+    return selectedContact;
+  },
+
   handleFieldChange(field, val) {
     var obj = {};
     obj[field] = val;
@@ -106,6 +117,10 @@ var JobForm = React.createClass({
     this.props.onFormChange("type");
   },
 
+  switchtoContactForm() {
+    this.props.onFormChange("contacts");
+  },
+
   renderLocation() {
     if(this.state.locations == null || this.state.locations.length <= 0) { return <noscript/> }
 
@@ -124,40 +139,80 @@ var JobForm = React.createClass({
     );
   },
 
+  renderContacts() {
+    if(this.state.contacts == null || this.state.contacts.length == 0) {return <noscript/> }
+
+    var contact = this.getSelectedContact();
+    return(
+      <div>{contact.dontknow}</div>
+    );
+  },
+
+  renderContactList() {
+    if(this.state.search == "") {
+      return(
+        <ContactList contacts={this.state.contacts}/>
+      );
+    }
+  },
+
+  renderList() {
+    if(this.state.contacts != null && !_.isEmpty(this.state.contacts)) {
+      return(
+        <div className="row">
+          <div className="col-xs-12">
+            { this.renderLocationList() }
+          </div>
+        </div>
+      );
+    }
+  },
+
   render() {
     return(
       <form onSubmit={ this.handleSubmit }>
-        Describe the job:
-        <br/>
-        <br/>
-
+        <h3>1     Service Type</h3>
         { this.renderServiceType() }
-        <div className="btn btn-primary" onClick={this.switchToServiceTypeForm}>Service Type</div>
-
+        <div id="servicetypechange" onClick={this.switchToServiceTypeForm}>change</div>
         <br/>
-        <br/>
+        <hr/>
 
+        <div id="locationdiv">
+        <h3>2     Location</h3>
         { this.renderLocation() }
-        <div className="btn btn-primary" onClick={this.switchToLocationForm}>Location</div>
+        <div id="locationchange" onClick={this.switchToLocationForm}>change</div>
+        <br/>
+        <hr/>
+        </div>
 
-        <br/>
-        <br/>
+        <h3>3     Start Time</h3>
         Start Date:
         <input type="date" name="startdate"/>
-        End Date:
-        <input type="date" name="enddate"/>
         <br/>
         <br/>
         Select a start time:
         <input type="time" name="usr_time"/>
+        <br/>
+        <hr/>
+
+        <h3>4     End Time</h3>
+        End Date:
+        <input type="date" name="enddate"/>
+        <br/>
+        <br/>
         Select an end time:
         <input type="time" name="usr_time"/>
         <br/>
+        <hr/>
+
+        <h3>5     Contacts</h3>
+        { this.renderContacts() }
+        <div id="newcontact" onClick={this.switchToContactForm}>new contact</div>
         <br/>
-        <textarea name="message" rows="15" cols="40"/>
-        <br/>
+        {this.renderList()}
         <br/>
         <hr/>
+
         <div id="createjobbutton" className="btn btn-primary" onClick={ this.handleSubmit }>Create Job</div>
       </form>
     );
