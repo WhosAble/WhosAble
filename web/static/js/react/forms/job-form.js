@@ -22,7 +22,11 @@ var JobForm = React.createClass({
   },
 
   receiveContacts(contacts) {
-    this.setState({contacts: contacts});
+    var newState = {contacts: contacts};
+    if(this.state.contactID == null && contacts.length > 0) {
+      newState.contactID = contacts[0].id;
+    }
+    this.setState(newState);
   },
 
   receiveLocations(locations) {
@@ -144,7 +148,7 @@ var JobForm = React.createClass({
 
     var contact = this.getSelectedContact();
     return(
-      <div>{contact.dontknow}</div>
+      <div>{contact.first_name} {contact.last_name}</div>
     );
   },
 
@@ -154,6 +158,10 @@ var JobForm = React.createClass({
         <ContactList contacts={this.state.contacts}/>
       );
     }
+  },
+
+  renderLocationList() {
+    return(<noscript/>);
   },
 
   renderList() {
