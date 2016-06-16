@@ -1,3 +1,10 @@
+var NavBar = require("../nav-bar");
+var ContactList = require("../contact-list");
+var LocationForm = require("../forms/location-form");
+import _ from "lodash";
+import {browserHistory, Link} from 'react-router';
+
+
 var JobForm = React.createClass({
   getInitialState() {
     return {
@@ -160,16 +167,12 @@ var JobForm = React.createClass({
     }
   },
 
-  renderLocationList() {
-    return(<noscript/>);
-  },
-
   renderList() {
     if(this.state.contacts != null && !_.isEmpty(this.state.contacts)) {
       return(
         <div className="row">
           <div className="col-xs-12">
-            { this.renderLocationList() }
+            { this.renderContactList() }
           </div>
         </div>
       );
@@ -214,10 +217,9 @@ var JobForm = React.createClass({
         <hr/>
 
         <h3>5     Contacts</h3>
-        { this.renderContacts() }
         <div id="newcontact" onClick={this.switchToContactForm}>new contact</div>
         <br/>
-        {this.renderList()}
+        { this.renderList() }
         <br/>
         <hr/>
 
