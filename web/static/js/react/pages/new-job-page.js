@@ -2,6 +2,7 @@ var NavBar = require("../nav-bar");
 var JobForm = require("../forms/job-form")
 var JobType = require("../forms/jobtype")
 var LocationForm = require("../forms/location-form")
+var ContactForm = require("../forms/contact-form")
 import {browserHistory} from 'react-router';
 
 var NewJobPage = React.createClass({

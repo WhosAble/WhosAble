@@ -1,6 +1,7 @@
 var NavBar = require("../nav-bar");
 var ContactList = require("../contact-list");
 var LocationForm = require("../forms/location-form");
+var ContactForm = require("../forms/contact-form");
 import _ from "lodash";
 import {browserHistory, Link} from 'react-router';
 
@@ -12,7 +13,9 @@ var JobForm = React.createClass({
       locations: null,
       contacts: null,
       serviceID: null,
-      locationID: null
+      locationID: null,
+      startTime: moment().add(1, 'day'),
+      endTime: moment().add(2, 'day')
     };
   },
 
@@ -128,7 +131,7 @@ var JobForm = React.createClass({
     this.props.onFormChange("type");
   },
 
-  switchtoContactForm() {
+  switchToContactForm() {
     this.props.onFormChange("contacts");
   },
 
@@ -159,68 +162,89 @@ var JobForm = React.createClass({
     );
   },
 
-  renderContactList() {
-    if(this.state.search == "") {
+  renderOldContactList() {
       return(
         <ContactList contacts={this.state.contacts}/>
       );
-    }
   },
 
-  renderList() {
-    if(this.state.contacts != null && !_.isEmpty(this.state.contacts)) {
-      return(
-        <div className="row">
-          <div className="col-xs-12">
-            { this.renderContactList() }
-          </div>
-        </div>
-      );
-    }
-  },
 
   render() {
     return(
       <form onSubmit={ this.handleSubmit }>
-        <h3>1     Service Type</h3>
-        { this.renderServiceType() }
-        <div id="servicetypechange" onClick={this.switchToServiceTypeForm}>change</div>
-        <br/>
-        <hr/>
 
-        <div id="locationdiv">
-        <h3>2     Location</h3>
-        { this.renderLocation() }
-        <div id="locationchange" onClick={this.switchToLocationForm}>change</div>
-        <br/>
-        <hr/>
+        <div id="servicediv" className="row">
+        <div className="col=xs-12 col-md-4">
+        <div id="header">1     Service Type</div>
         </div>
-
-        <h3>3     Start Time</h3>
-        Start Date:
-        <input type="date" name="startdate"/>
+        <div className="col-xs-12 col-md-4">
+        { this.renderServiceType() }
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div id="servicetypechange" onClick={this.switchToServiceTypeForm}>change</div>
+        </div>
         <br/>
-        <br/>
-        Select a start time:
-        <input type="time" name="usr_time"/>
-        <br/>
+        </div>
         <hr/>
 
-        <h3>4     End Time</h3>
-        End Date:
-        <input type="date" name="enddate"/>
+        <div id="locationdiv" className="row">
+        <div className="col-xs-12 col-md-4">
+        <div id="header">2     Location</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        { this.renderLocation() }
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div id="locationchange" onClick={this.switchToLocationForm}>change</div>
+        </div>
         <br/>
-        <br/>
-        Select an end time:
-        <input type="time" name="usr_time"/>
-        <br/>
+        </div>
         <hr/>
 
-        <h3>5     Contacts</h3>
+
+        <div id="starttimediv" className="row">
+        <div className="col-xs-12 col-md-4">
+        <div id="header">3     Start Time</div>
+        </div>
+        <div id="enterstarttime" className="col-xs-12 col-md-4">
+        <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div id="timechange" onclick="showdiv()">change</div>
+        </div>
+        <br/>
+        </div>
+        <hr/>
+
+
+        <div id="endtimediv" className="row">
+        <div className="col-xs-12 col-md-4">
+        <div id="header">4     End Time</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div id="timechange">change</div>
+        </div>
+        <br/>
+        </div>
+        <hr/>
+
+
+        <div id="contactsdiv" className="row">
+        <div className="col-xs-12 col-md-4">
+        <div id="header">5     Contacts</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        contacts list
+        </div>
+        <div className="col-xs-12 col-md-4">
         <div id="newcontact" onClick={this.switchToContactForm}>new contact</div>
+        </div>
         <br/>
-        { this.renderList() }
         <br/>
+        </div>
         <hr/>
 
         <div id="createjobbutton" className="btn btn-primary" onClick={ this.handleSubmit }>Create Job</div>
