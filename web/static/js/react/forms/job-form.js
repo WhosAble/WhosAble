@@ -15,7 +15,9 @@ var JobForm = React.createClass({
       serviceID: null,
       locationID: null,
       startTime: moment().add(1, 'day'),
-      endTime: moment().add(2, 'day')
+      endTime: moment().add(2, 'day'),
+      startformopen: false,
+      endformopen: false
     };
   },
 
@@ -135,6 +137,10 @@ var JobForm = React.createClass({
     this.props.onFormChange("contacts");
   },
 
+  switchToStartFormOpen() {
+    this.setState({startformopen: true});
+  },
+
   renderLocation() {
     if(this.state.locations == null || this.state.locations.length <= 0) { return <noscript/> }
 
@@ -168,6 +174,40 @@ var JobForm = React.createClass({
       );
   },
 
+  renderStartTime() {
+    if(this.state.startformopen == false) {
+      return(
+        <div id="starttimediv" className="row">
+        <div className="col-xs-12 col-md-4">
+        <div id="header">3     Start Time</div>
+        </div>
+        <div id="enterstarttime" className="col-xs-12 col-md-4">
+        <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div id="timechange" onclick={this.switchToStartFormOpen}>change</div>
+        </div>
+        <br/>
+        </div>
+      )
+      } else {
+        return(
+          <div id="starttimediv" className="row">
+          <div className="col-xs-12 col-md-4">
+          <div id="header">3     Start Time</div>
+          </div>
+          <div id="enterstarttime" className="col-xs-12 col-md-4">
+          <input type="date" name="startdate"/>
+          <input type="time" name="usr_time"/>
+          </div>
+          <div className="col-xs-12 col-md-4">
+          <div id="timechange">set</div>
+          </div>
+          <br/>
+          </div>
+        )
+      }
+  },
 
   render() {
     return(
@@ -202,18 +242,7 @@ var JobForm = React.createClass({
         <hr/>
 
 
-        <div id="starttimediv" className="row">
-        <div className="col-xs-12 col-md-4">
-        <div id="header">3     Start Time</div>
-        </div>
-        <div id="enterstarttime" className="col-xs-12 col-md-4">
-        <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div id="timechange" onclick="showdiv()">change</div>
-        </div>
-        <br/>
-        </div>
+        {this.renderStartTime() }
         <hr/>
 
 
