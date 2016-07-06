@@ -174,6 +174,20 @@ var JobForm = React.createClass({
       );
   },
 
+  setStartTime() {
+    var starttime = {
+      date: this.refs["startdate"],
+      time: this.refs["start_time"]
+    }
+  },
+
+  setEndTime() {
+    var endtime = {
+      date: this.refs["enddate"],
+      time: this.refs["end_time"]
+    }
+  },
+
   renderStartTime() {
     if(this.state.startformopen == false) {
       return(
@@ -185,7 +199,7 @@ var JobForm = React.createClass({
         <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
         </div>
         <div className="col-xs-12 col-md-4">
-        <div id="timechange" onclick={this.switchToStartFormOpen}>change</div>
+        <div id="timechange" onClick={this.switchToStartFormOpen}>change</div>
         </div>
         <br/>
         </div>
@@ -197,11 +211,46 @@ var JobForm = React.createClass({
           <div id="header">3     Start Time</div>
           </div>
           <div id="enterstarttime" className="col-xs-12 col-md-4">
-          <input type="date" name="startdate"/>
-          <input type="time" name="usr_time"/>
+          <input type="date" ref="startdate"/>
+          <input type="time" ref="start_time"/>
           </div>
           <div className="col-xs-12 col-md-4">
-          <div id="timechange">set</div>
+          <div id="starttimechange" onClick={this.setStartTime}>set</div>
+          </div>
+          <br/>
+          </div>
+        )
+      }
+  },
+
+  renderEndTime() {
+    if(this.state.endformopen == false) {
+      return(
+        <div id="endtimediv" className="row">
+        <div className="col-xs-12 col-md-4">
+        <div id="header">3     End Time</div>
+        </div>
+        <div id="enterendtime" className="col-xs-12 col-md-4">
+        <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div id="endtimechange" onClick={this.switchToEndFormOpen}>change</div>
+        </div>
+        <br/>
+        </div>
+      )
+      } else {
+        return(
+          <div id="endtimediv" className="row">
+          <div className="col-xs-12 col-md-4">
+          <div id="header">3     End Time</div>
+          </div>
+          <div id="enterendtime" className="col-xs-12 col-md-4">
+          <input type="date" name="enddate"/>
+          <input type="time" name="end_time"/>
+          </div>
+          <div className="col-xs-12 col-md-4">
+          <div id="endtimechange" onClick={this.setEndTime}>set</div>
           </div>
           <br/>
           </div>
@@ -246,18 +295,7 @@ var JobForm = React.createClass({
         <hr/>
 
 
-        <div id="endtimediv" className="row">
-        <div className="col-xs-12 col-md-4">
-        <div id="header">4     End Time</div>
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div id="timechange">change</div>
-        </div>
-        <br/>
-        </div>
+        {this.renderEndTime() }
         <hr/>
 
 
