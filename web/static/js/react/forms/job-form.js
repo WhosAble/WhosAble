@@ -175,17 +175,17 @@ var JobForm = React.createClass({
   },
 
   setStartTime() {
-    var starttime = {
-      date: this.refs["startdate"],
-      time: this.refs["start_time"]
-    }
+    this.setState({
+      startTime: moment(this.refs["startdate"].value + "" + this.refs["start_time"].value),
+      startformopen: false
+    });
   },
 
   setEndTime() {
-    var endtime = {
-      date: this.refs["enddate"],
-      time: this.refs["end_time"]
-    }
+    this.setState({
+      endTime: moment(this.refs["enddate"].value + "" + this.refs["end_time"].value),
+      endformopen: false
+    });
   },
 
   renderStartTime() {
@@ -211,8 +211,8 @@ var JobForm = React.createClass({
           <div id="header">3     Start Time</div>
           </div>
           <div id="enterstarttime" className="col-xs-12 col-md-4">
-          <input type="date" ref="startdate"/>
-          <input type="time" ref="start_time"/>
+          <input type="date" defaultValue={this.state.startTime.format("YYYY-MM-DD")} ref="startdate"/>
+          <input type="time" defaultValue={this.state.startTime.format("HH:mm")} ref="start_time"/>
           </div>
           <div className="col-xs-12 col-md-4">
           <div id="starttimechange" onClick={this.setStartTime}>set</div>
@@ -246,11 +246,11 @@ var JobForm = React.createClass({
           <div id="header">3     End Time</div>
           </div>
           <div id="enterendtime" className="col-xs-12 col-md-4">
-          <input type="date" name="enddate"/>
-          <input type="time" name="end_time"/>
+          <input type="date" defaultValue={this.state.endTime.format("YYYY-MM-DD")} ref="enddate"/>
+          <input type="time" defaultValue={this.state.endTime.format("HH:mm")} ref="end_time"/>
           </div>
           <div className="col-xs-12 col-md-4">
-          <div id="endtimechange" onClick={this.setEndTime}>set</div>
+          <div id="settimechange" onClick={this.setEndTime}>set</div>
           </div>
           <br/>
           </div>
