@@ -150,12 +150,16 @@ var JobForm = React.createClass({
   },
 
   renderContacts() {
-    if(this.state.contacts == null || this.state.contacts.length == 0)
-      {return <noscript/>
-    } else if(contacts[i].service_id == selectedServiceID) {
-      return({contact.first_name} {contact.last_name}},
-    );
-  },
+    if(this.state.contacts == null || this.state.contacts.length == 0){return <noscript/>}
+    var this.state.contacts = [];
+    for(var i = 0; i < contacts.length; i++) {
+     if(contacts[i].service_id == this.state.serviceID) {
+       return(
+         <div>{contact.first_name} {contact.last_name}</div>
+       );
+     }
+   }
+ },
 
   setStartTime() {
     this.setState({
@@ -287,7 +291,7 @@ var JobForm = React.createClass({
         <div id="header">5     Contacts</div>
         </div>
         <div className="col-xs-12 col-md-4">
-        contacts list
+        {this.renderContacts() }
         </div>
         <div className="col-xs-12 col-md-4">
         <div id="change" onClick={this.switchToContactForm}>new contact</div>
