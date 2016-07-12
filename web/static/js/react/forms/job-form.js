@@ -149,16 +149,36 @@ var JobForm = React.createClass({
     );
   },
 
+  checkTheBox(contactID) {
+    var newContactIDs = this.state.selectedContactIDs;
+    newContactIDs.push(contactID);
+    this.setState({selectedContactIDs: newContactIDs})
+  },
+  uncheckTheBox(contactID) {
+    var newContactIDs = this.state.selectedContactIDs;
+    newContactIDs.splice(_.indexOf(newContactIDs, 1));
+    this.setState({selectedContactIDs: newContactIDs})
+  },
+
+  renderContactCB(contactID) {
+  if(_.indexOf(this.state.selectedContactIDs, contactID) != -1) {
+         <input type="checkbox" checked={true} onClick={this.uncheckTheBox}/>
+       } else {
+         <input type="checkbox" onClick={this.checkTheBox}/>
+       }
+},
+
   renderContacts() {
-    if(this.state.contacts == null || this.state.contacts.length == 0){return <noscript/>}
-    var this.state.contacts = [];
-    for(var i = 0; i < contacts.length; i++) {
-     if(contacts[i].service_id == this.state.serviceID) {
+   if(this.state.contacts == null || this.state.contacts.length == 0){return <noscript/>}
+
+   var filteredContacts = this.state.contacts.map((contact) => {
+     if(contact.service_id == this.state.serviceID) {
        return(
-         <div>{contact.first_name} {contact.last_name}</div>
+          <div key={contact.id}>{this.renderContactCB(contact.id)} {contact.first_name} {contact.last_name} {contact.email} {contact.phone}</div>
        );
      }
-   }
+   });
+   return _.compact(filteredContacts);
  },
 
   setStartTime() {
