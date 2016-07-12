@@ -35,9 +35,6 @@ var JobForm = React.createClass({
 
   receiveContacts(contacts) {
     var newState = {contacts: contacts};
-    if(this.state.contactID == null && contacts.length > 0) {
-      newState.contactID = contacts[0].id;
-    }
     this.setState(newState);
   },
 
@@ -100,17 +97,6 @@ var JobForm = React.createClass({
     return selectedService;
   },
 
-  getSelectedContact() {
-    var self = this;
-    var selectedContact = null;
-    this.state.contacts.forEach(function(contact) {
-      if(contact.id == self.state.contactID) {
-        selectedContact = contact;
-      }
-    });
-    return selectedContact;
-  },
-
   handleFieldChange(field, val) {
     var obj = {};
     obj[field] = val;
@@ -141,6 +127,10 @@ var JobForm = React.createClass({
     this.setState({startformopen: true});
   },
 
+  switchToEndFormOpen() {
+    this.setState({endformopen: true});
+  },
+
   renderLocation() {
     if(this.state.locations == null || this.state.locations.length <= 0) { return <noscript/> }
 
@@ -160,30 +150,23 @@ var JobForm = React.createClass({
   },
 
   renderContacts() {
-    if(this.state.contacts == null || this.state.contacts.length == 0) {return <noscript/> }
-
-    var contact = this.getSelectedContact();
-    return(
-      <div>{contact.first_name} {contact.last_name}</div>
+    if(this.state.contacts == null || this.state.contacts.length == 0)
+      {return <noscript/>
+    } else if(contacts[i].service_id == selectedServiceID) {
+      return({contact.first_name} {contact.last_name}},
     );
-  },
-
-  renderOldContactList() {
-      return(
-        <ContactList contacts={this.state.contacts}/>
-      );
   },
 
   setStartTime() {
     this.setState({
-      startTime: moment(this.refs["startdate"].value + "" + this.refs["start_time"].value),
+      startTime: moment(this.refs["startdate"].value + " " + this.refs["start_time"].value),
       startformopen: false
     });
   },
 
   setEndTime() {
     this.setState({
-      endTime: moment(this.refs["enddate"].value + "" + this.refs["end_time"].value),
+      endTime: moment(this.refs["enddate"].value + " " + this.refs["end_time"].value),
       endformopen: false
     });
   },
@@ -199,7 +182,7 @@ var JobForm = React.createClass({
         <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
         </div>
         <div className="col-xs-12 col-md-4">
-        <div id="timechange" onClick={this.switchToStartFormOpen}>change</div>
+        <div id="change" onClick={this.switchToStartFormOpen}>change</div>
         </div>
         <br/>
         </div>
@@ -215,7 +198,7 @@ var JobForm = React.createClass({
           <input type="time" defaultValue={this.state.startTime.format("HH:mm")} ref="start_time"/>
           </div>
           <div className="col-xs-12 col-md-4">
-          <div id="starttimechange" onClick={this.setStartTime}>set</div>
+          <div id="change" onClick={this.setStartTime}>set</div>
           </div>
           <br/>
           </div>
@@ -234,7 +217,7 @@ var JobForm = React.createClass({
         <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
         </div>
         <div className="col-xs-12 col-md-4">
-        <div id="endtimechange" onClick={this.switchToEndFormOpen}>change</div>
+        <div id="change" onClick={this.switchToEndFormOpen}>change</div>
         </div>
         <br/>
         </div>
@@ -250,7 +233,7 @@ var JobForm = React.createClass({
           <input type="time" defaultValue={this.state.endTime.format("HH:mm")} ref="end_time"/>
           </div>
           <div className="col-xs-12 col-md-4">
-          <div id="settimechange" onClick={this.setEndTime}>set</div>
+          <div id="change" onClick={this.setEndTime}>set</div>
           </div>
           <br/>
           </div>
@@ -270,7 +253,7 @@ var JobForm = React.createClass({
         { this.renderServiceType() }
         </div>
         <div className="col-xs-12 col-md-4">
-        <div id="servicetypechange" onClick={this.switchToServiceTypeForm}>change</div>
+        <div id="change" onClick={this.switchToServiceTypeForm}>change</div>
         </div>
         <br/>
         </div>
@@ -284,7 +267,7 @@ var JobForm = React.createClass({
         { this.renderLocation() }
         </div>
         <div className="col-xs-12 col-md-4">
-        <div id="locationchange" onClick={this.switchToLocationForm}>change</div>
+        <div id="change" onClick={this.switchToLocationForm}>change</div>
         </div>
         <br/>
         </div>
@@ -307,7 +290,7 @@ var JobForm = React.createClass({
         contacts list
         </div>
         <div className="col-xs-12 col-md-4">
-        <div id="newcontact" onClick={this.switchToContactForm}>new contact</div>
+        <div id="change" onClick={this.switchToContactForm}>new contact</div>
         </div>
         <br/>
         <br/>
