@@ -17,7 +17,8 @@ var JobForm = React.createClass({
       startTime: moment().add(1, 'day'),
       endTime: moment().add(2, 'day'),
       startformopen: false,
-      endformopen: false
+      endformopen: false,
+      selectedContactIDs: []
     };
   },
 
@@ -160,13 +161,17 @@ var JobForm = React.createClass({
     this.setState({selectedContactIDs: newContactIDs})
   },
 
+  renderSelectAll() {
+    return(<input type="checkbox" id="selectall" onClick="selectAll"/>);
+  },
+
   renderContactCB(contactID) {
-  if(_.indexOf(this.state.selectedContactIDs, contactID) != -1) {
-         <input type="checkbox" checked={true} onClick={this.uncheckTheBox}/>
-       } else {
-         <input type="checkbox" onClick={this.checkTheBox}/>
-       }
-},
+   if(_.indexOf(this.state.selectedContactIDs, contactID) != -1) {
+     return(<input type="checkbox" checked={true} onClick={this.uncheckTheBox.bind(this, contactID)}/>);
+   } else {
+      return(<input type="checkbox" onClick={this.checkTheBox.bind(this, contactID)}/>);
+   }
+ },
 
   renderContacts() {
    if(this.state.contacts == null || this.state.contacts.length == 0){return <noscript/>}
@@ -174,7 +179,11 @@ var JobForm = React.createClass({
    var filteredContacts = this.state.contacts.map((contact) => {
      if(contact.service_id == this.state.serviceID) {
        return(
-          <div key={contact.id}>{this.renderContactCB(contact.id)} {contact.first_name} {contact.last_name} {contact.email} {contact.phone}</div>
+          <div key={contact.id}><div className="contact-checkbox">{this.renderContactCB(contact.id)}</div>
+          <div className="contact-name">{contact.first_name} {contact.last_name}</div>
+          <div className="contact-email">{contact.email}</div>
+          <div className="contact-phone">{contact.phone}</div>
+          </div>
        );
      }
    });
@@ -311,13 +320,20 @@ var JobForm = React.createClass({
         <div id="header">5     Contacts</div>
         </div>
         <div className="col-xs-12 col-md-4">
-        {this.renderContacts() }
+        {this.renderSelectAll() } Select All
         </div>
         <div className="col-xs-12 col-md-4">
         <div id="change" onClick={this.switchToContactForm}>new contact</div>
         </div>
         <br/>
         <br/>
+        </div>
+        <div className="row">
+        <div className="col-xs-12 col-md-4">
+        </div>
+        <div id="contactsbyservice" className="col-xs-12 col-md-8">
+        {this.renderContacts() }
+        </div>
         </div>
         <hr/>
 
