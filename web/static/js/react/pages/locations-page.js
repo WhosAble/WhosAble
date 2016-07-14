@@ -1,4 +1,3 @@
-var NavBar = require("../nav-bar");
 var SearchLocationForm = require("../forms/search-location-form");
 var SearchLocationResults = require("../search-location-results");
 var LocationList = require("../location-list");
@@ -70,20 +69,20 @@ var LocationsPage = React.createClass({
   render() {
     return(
       <div id="LocationsPage">
-      <NavBar/>
-      <div className="location-list-header">
-      <SearchLocationForm search={ this.state.search } onSearchChange={ this.handleSearchChange } onSearch={ this.handleSearch }/>
-      </div>
-      <div>
-      <h4>Locations
-      <Link to="/app/locations/new">Add New Location
-      </Link>
-      </h4>
-      <hr/>
-      {this.renderList()}
-      </div>
+        <div className="location-list-header">
+          <SearchLocationForm search={ this.state.search } onSearchChange={ this.handleSearchChange } onSearch={ this.handleSearch }/>
+        </div>
+        <div>
+          <h4>
+            Locations
+            <Link to="/app/locations/new">Add New Location</Link>
+          </h4>
+          <hr/>
+          {this.renderList()}
+        </div>
       </div>
     );
   }
 });
+
 module.exports = LocationsPage;

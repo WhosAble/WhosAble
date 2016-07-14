@@ -1,4 +1,3 @@
-var NavBar = require("../nav-bar");
 var JobForm = require("../forms/job-form")
 var JobType = require("../forms/jobtype")
 var LocationForm = require("../forms/location-form")
@@ -17,16 +16,6 @@ var NewJobPage = React.createClass({
     this.setState({form: form})
   },
 
-  renderform() {
-    if(this.state.form == "job") {
-      return <JobForm onFormChange={this.handleFormChange}/>
-    } else if(this.state.form == "type") {
-      return <JobType onCreate={this.handleFormChange.bind(this, "job")}/>
-    } else {
-      return <LocationForm onCreate={this.handleFormChange.bind(this, "job")}/>
-    }
-  },
-
   componentDidMount() {
     window.ServiceStore.subscribe(this.receiveState);
   },
@@ -40,16 +29,13 @@ var NewJobPage = React.createClass({
   },
 
   render() {
-    return(
-      <div>
-        <NavBar/>
-        <div className="container">
-          <main role="main">
-            {this.renderform()}
-          </main>
-        </div>
-      </div>
-    );
+    if(this.state.form == "job") {
+      return <JobForm onFormChange={this.handleFormChange}/>
+    } else if(this.state.form == "type") {
+      return <JobType onCreate={this.handleFormChange.bind(this, "job")}/>
+    } else {
+      return <LocationForm onCreate={this.handleFormChange.bind(this, "job")}/>
+    }
   }
 });
 

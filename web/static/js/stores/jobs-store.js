@@ -2,7 +2,7 @@ import {Socket} from "phoenix"
 import _ from "lodash";
 
 module.exports = {
-  jobs: {},
+  jobs: null,
   callBacks: [],
 
   subscribe(callBack) {
@@ -27,7 +27,11 @@ module.exports = {
   },
 
   sendCallBack(callBack) {
-    callBack(_.values(window.JobsStore.jobs));
+    if(window.JobsStore.jobs == null) {
+      callBack(null);
+    } else {
+      callBack(_.cloneDeep(_.values(window.JobsStore.jobs)));
+    }
   },
 
   addNewJob(job) {
@@ -45,7 +49,7 @@ module.exports = {
   },
 
   connectToChannel() {
-    if(window.AuthStore.isLoggedIn() && window.AuthStore.channel && Object.keys(window.JobsStore.jobs).length === 0) {
+    if(window.AuthStore.isLoggedIn() && window.AuthStore.channel && window.JobsStore.jobs == null) {
       window.AuthStore.channel.on("new_job", (job) => {
         window.JobsStore.addNewJob(job);
       })

@@ -1,6 +1,5 @@
-import {browserHistory} from 'react-router'
-var NavBar = require("../nav-bar");
 var ContactForm = require("../forms/contact-form");
+import {browserHistory} from 'react-router'
 
 var NewContactPage = React.createClass({
   handleCreate(contactID) {
@@ -10,13 +9,8 @@ var NewContactPage = React.createClass({
   render() {
     return(
       <div>
-        <NavBar/>
-        <div className="container">
-          <main role="main">
-            <h1>Create a Contact</h1>
-            <ContactForm serviceID={this.props.params.serviceID} onCreate={this.handleCreate}/>
-          </main>
-        </div>
+        <h1>Create a Contact</h1>
+        <ContactForm serviceID={this.props.params.serviceID} onCreate={this.handleCreate}/>
       </div>
     );
   }

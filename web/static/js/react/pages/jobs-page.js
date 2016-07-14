@@ -1,4 +1,3 @@
-var NavBar = require("../nav-bar");
 var JobList = require("../job-list");
 import {browserHistory} from 'react-router';
 
@@ -26,18 +25,17 @@ var JobsPage = React.createClass({
   },
 
   render() {
-    return(
-      <div>
-        <NavBar/>
-        <div className="container">
-          <main role="main">
-            <div style={{float: "right", cursor: "pointer"}} onClick={this.handleCreate}>Create a Job</div>
-            <h3>Jobs</h3>
-            <JobList jobs={this.state.jobs}/>
-          </main>
+    if(this.state.jobs == null) {
+      return(<div>Loading</div>);
+    } else {
+      return(
+        <div>
+          <div style={{float: "right", cursor: "pointer"}} onClick={this.handleCreate}>Create a Job</div>
+          <h3>Jobs</h3>
+          <JobList jobs={this.state.jobs}/>
         </div>
-      </div>
-    );
+      );
+    }
   }
 });
 
