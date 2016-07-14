@@ -34,7 +34,7 @@ defmodule WhosAble.UserControllerTest do
   end
 
   test "duplicate email", context do
-    create(:user, email: "test@test.com")
+    insert(:user, email: "test@test.com")
     starting_users_count = user_count
     starting_accounts_count = account_count
 

@@ -47,7 +47,7 @@ defmodule WhosAble.Mixfile do
       {:logger_file_backend, "~> 0.0.8"},
       {:erlware_commons, "~> 0.21.0"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:ex_machina, "~> 0.6.1", only: :test}
+      {:ex_machina, "~> 1.0.2", only: :test}
     ]
   end
 
