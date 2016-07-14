@@ -31,7 +31,11 @@ var NewJobPage = React.createClass({
 
   render() {
     if(this.state.form == "job") {
-      return <JobForm onFormChange={this.handleFormChange}/>
+      return(
+        <div style={{marginTop: "15px"}}>
+          <JobForm onFormChange={this.handleFormChange}/>
+        </div>
+      );
     } else if(this.state.form == "type") {
       return <JobType onCreate={this.handleFormChange.bind(this, "job")}/>
     } else if(this.state.form == "contacts") {
