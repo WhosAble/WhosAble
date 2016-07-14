@@ -3,6 +3,9 @@ machine:
     PATH: $HOME/.asdf/bin:$HOME/.asdf/shims:$PATH
 
 dependencies:
+  pre:
+    - ci/prepare.sh
+
   cache_directories:
     - ~/.asdf
 
@@ -18,9 +21,7 @@ dependencies:
     - mix local.rebar --force
     - mix deps.get
     - mix deps.compile
-    - cp config/dev.sample.exs config/dev.secret.exs
-    - cp config/test.sample.exs config/test.secret.exs
 
 test:
   override:
-    - MIX_ENV=test mix test
+    - ci/tests.sh
