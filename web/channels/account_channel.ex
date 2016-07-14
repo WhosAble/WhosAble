@@ -87,7 +87,7 @@ defmodule WhosAble.AccountChannel do
   ### PRIVATE
   ###
 
-  defp create_job_contacts(job, []), do: nil
+  defp create_job_contacts(_, []), do: nil
   defp create_job_contacts(job, [contact_id | contacts]) do
     case WhosAble.Repo.insert(WhosAble.JobContact.changeset(%WhosAble.JobContact{}, %{job_id: job.id, contact_id: contact_id})) do
       {:ok, job_contact} ->

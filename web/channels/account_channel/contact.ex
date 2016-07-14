@@ -1,10 +1,11 @@
 defmodule WhosAble.AccountChannel.Contact do
-  use WhosAble.Web, :channel
-
+  import Phoenix.Channel, only: [broadcast: 3]
   import Ecto.Query
 
+  alias WhosAble.{AccountChannel, Contact, Repo}
+
   def all_contacts(socket) do
-    account = WhosAble.AccountChannel.get_account(socket)
+    account = AccountChannel.get_account(socket)
 
     broadcast(socket, "all_contacts", contacts_json(account))
   end
@@ -31,7 +32,7 @@ defmodule WhosAble.AccountChannel.Contact do
 
   defp contacts_json(nil), do: %{contacts: []}
   defp contacts_json(account) do
-    contacts = WhosAble.Contact
+    contacts = Contact
       |> where(account_id: ^account.id)
       |> Repo.all
       |> Enum.reduce([], fn(contact, acc) -> List.insert_at(acc, 0, contact_json(contact)) end)

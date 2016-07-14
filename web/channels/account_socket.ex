@@ -13,8 +13,7 @@ defmodule WhosAble.AccountSocket do
       {:ok, %{account_id: account_id, user_id: _}} ->
         socket |> assign(:account, account_id)
         {:ok, socket}
-      {:error, reason} ->
-        :error
+      {:error, _} -> :error
     end
   end
   def connect(_, _) do
