@@ -118,22 +118,26 @@ sudo env MIX_ENV=prod mix release
 ```
 
 ## Install
-1) run install.sh
+1) login as root
+``` sh
+sudo -i
+```
+2) run install.sh
 
-2) install postgres
+3) install postgres
 ``` sh
 apt install postgresql -y
 su postgres
 createuser --pwprompt --createdb elixir
 exit
 ```
-3) run elixir_install.sh
+4) run elixir_install.sh
 
-4) clone project
+5) clone project
 
-5) setup prod secret file
+6) setup prod secret file
 
-6) Install gems
+7) Install gems
 ```sh
 curl -sSL https://get.rvm.io | bash -s stable
 source /etc/profile.d/rvm.sh
@@ -141,8 +145,8 @@ rvm install ruby-2.3
 gem install sass
 bundle install
 ```
-7) copy ssl certs
+8) copy ssl certs
 
-8) setup nginx config
+9) setup nginx config
 
-9) run release.sh
+10) run release.sh

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-sudo -i
 apt update && apt upgrade -y
 apt install tmux git-core vim unzip npm python-setuptools python-dev build-essential -y
 update-alternatives --set editor /usr/bin/vim.basic

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-sudo -i
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 echo '. $HOME/.asdf/asdf.sh' >> ~/.profile
 echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.profile

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo -i
-
 mix deps.clean
 mix deps.get
 mix deps.compile exrm
