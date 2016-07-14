@@ -1,9 +1,9 @@
 import {Socket} from "phoenix"
 
 module.exports = {
-  token: sessionStorage.getItem("token"),
-  userID: sessionStorage.getItem("userID"),
-  accountID: sessionStorage.getItem("accountID"),
+  token: localStorage.getItem("token"),
+  userID: localStorage.getItem("userID"),
+  accountID: localStorage.getItem("accountID"),
   hashLocation: null,
   socket: null,
   channel: null,
@@ -47,9 +47,9 @@ module.exports = {
   },
 
   setSession(loginResponse) {
-    sessionStorage.setItem("token", loginResponse.token);
-    sessionStorage.setItem("userID", loginResponse.user_id);
-    sessionStorage.setItem("accountID", loginResponse.account_id);
+    localStorage.setItem("token", loginResponse.token);
+    localStorage.setItem("userID", loginResponse.user_id);
+    localStorage.setItem("accountID", loginResponse.account_id);
     window.AuthStore.token = loginResponse.token;
     window.AuthStore.userID = loginResponse.user_id;
     window.AuthStore.accountID = loginResponse.account_id;
@@ -58,7 +58,7 @@ module.exports = {
   },
 
   clearSession() {
-    sessionStorage.clear();
+    localStorage.clear();
 
     window.AuthStore.token = null;
     window.AuthStore.userID = null;
