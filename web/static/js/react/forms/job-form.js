@@ -18,7 +18,8 @@ var JobForm = React.createClass({
       endTime: moment().add(2, 'day'),
       startformopen: false,
       endformopen: false,
-      selectedContactIDs: []
+      selectedContactIDs: [],
+      allSelected: true
     };
   },
 
@@ -36,6 +37,9 @@ var JobForm = React.createClass({
 
   receiveContacts(contacts) {
     var newState = {contacts: contacts};
+    if(this.state.serviceID != null) {
+      newState.selectedContactIDs = this.allContactIDs();
+    }
     this.setState(newState);
   },
 
@@ -51,6 +55,9 @@ var JobForm = React.createClass({
     var newState = {services: services};
     if(this.state.serviceID == null && services.length > 0) {
       newState.serviceID = services[0].id;
+    }
+    if(this.state.contacts != null) {
+      newState.selectedContactIDs = this.allContactIDs();
     }
     this.setState(newState);
   },
@@ -153,25 +160,60 @@ var JobForm = React.createClass({
   checkTheBox(contactID) {
     var newContactIDs = this.state.selectedContactIDs;
     newContactIDs.push(contactID);
-    this.setState({selectedContactIDs: newContactIDs})
+    var allSelected = false;
+    if(this.isAllContactIDs(newContactIDs)) {
+      allSelected = true;
+    }
+    this.setState({allSelected: allSelected, selectedContactIDs: newContactIDs})
   },
+
   uncheckTheBox(contactID) {
     var newContactIDs = this.state.selectedContactIDs;
-    newContactIDs.splice(_.indexOf(newContactIDs, 1));
-    this.setState({selectedContactIDs: newContactIDs})
+    newContactIDs.splice(_.indexOf(newContactIDs, contactID), 1);
+    var allSelected = false;
+    if(this.isAllContactIDs(newContactIDs)) {
+      allSelected = true;
+    }
+    this.setState({allSelected: allSelected, selectedContactIDs: newContactIDs})
+  },
+
+  allContactIDs() {
+   var filteredContactIDs = [];
+   this.state.contacts.forEach((contact) => {
+     if(contact.service_id == this.state.serviceID) {
+       filteredContactIDs.push(contact.id);
+     }
+   });
+   return filteredContactIDs;
+  },
+
+  isAllContactIDs(contactIDs) {
+    return _.isEqual(this.allContactIDs().sort(), contactIDs.sort());
+  },
+
+  selectAll() {
+   if(this.isAllContactIDs(this.state.selectedContactIDs)) {
+     this.setState({allSelected: false, selectedContactIDs: []});
+   } else {
+     this.setState({allSelected: true, selectedContactIDs: this.allContactIDs()});
+   }
   },
 
   renderSelectAll() {
-    return(<input type="checkbox" id="selectall" onClick="selectAll"/>);
+    if(this.state.allSelected) {
+      return(<input type="checkbox" checked={true} id="selectall" onClick={this.selectAll}/>);
+    } else {
+      return(<input type="checkbox" id="selectall" onClick={this.selectAll}/>);
+    }
   },
 
   renderContactCB(contactID) {
-   if(_.indexOf(this.state.selectedContactIDs, contactID) != -1) {
-     return(<input type="checkbox" checked={true} onClick={this.uncheckTheBox.bind(this, contactID)}/>);
-   } else {
+    if(_.indexOf(this.state.selectedContactIDs, contactID) != -1) {
+      return(<input type="checkbox" checked={true} onClick={this.uncheckTheBox.bind(this, contactID)}/>);
+    } else {
       return(<input type="checkbox" onClick={this.checkTheBox.bind(this, contactID)}/>);
-   }
- },
+    }
+  },
 
   renderContacts() {
    if(this.state.contacts == null || this.state.contacts.length == 0){return <noscript/>}
