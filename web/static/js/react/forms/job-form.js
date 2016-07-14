@@ -221,10 +221,11 @@ var JobForm = React.createClass({
    var filteredContacts = this.state.contacts.map((contact) => {
      if(contact.service_id == this.state.serviceID) {
        return(
-          <div key={contact.id}><div className="contact-checkbox">{this.renderContactCB(contact.id)}</div>
-          <div className="contact-name">{contact.first_name} {contact.last_name}</div>
-          <div className="contact-email">{contact.email}</div>
-          <div className="contact-phone">{contact.phone}</div>
+          <div className="job-form-contact" key={contact.id}>
+            <div className="contact-checkbox">{this.renderContactCB(contact.id)}</div>
+            <div className="contact-name">{contact.first_name} {contact.last_name}</div>
+            <div className="contact-email">{contact.email}</div>
+            <div className="contact-phone">{contact.phone}</div>
           </div>
        );
      }
@@ -251,13 +252,13 @@ var JobForm = React.createClass({
       return(
         <div id="starttimediv" className="row">
         <div className="col-xs-12 col-md-4">
-        <div id="header">3     Start Time</div>
+        <div id="job-form-section-title">3 Start Time</div>
         </div>
         <div id="enterstarttime" className="col-xs-12 col-md-4">
         <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
         </div>
         <div className="col-xs-12 col-md-4">
-        <div id="change" onClick={this.switchToStartFormOpen}>change</div>
+        <div className="change" onClick={this.switchToStartFormOpen}>change</div>
         </div>
         <br/>
         </div>
@@ -266,14 +267,14 @@ var JobForm = React.createClass({
         return(
           <div id="starttimediv" className="row">
           <div className="col-xs-12 col-md-4">
-          <div id="header">3     Start Time</div>
+          <div id="job-form-section-title">3 Start Time</div>
           </div>
           <div id="enterstarttime" className="col-xs-12 col-md-4">
           <input type="date" defaultValue={this.state.startTime.format("YYYY-MM-DD")} ref="startdate"/>
           <input type="time" defaultValue={this.state.startTime.format("HH:mm")} ref="start_time"/>
           </div>
           <div className="col-xs-12 col-md-4">
-          <div id="change" onClick={this.setStartTime}>set</div>
+          <div className="change" onClick={this.setStartTime}>set</div>
           </div>
           <br/>
           </div>
@@ -285,32 +286,30 @@ var JobForm = React.createClass({
     if(this.state.endformopen == false) {
       return(
         <div id="endtimediv" className="row">
-        <div className="col-xs-12 col-md-4">
-        <div id="header">3     End Time</div>
-        </div>
-        <div id="enterendtime" className="col-xs-12 col-md-4">
-        <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div id="change" onClick={this.switchToEndFormOpen}>change</div>
-        </div>
-        <br/>
+          <div className="col-xs-12 col-md-4">
+            <div id="job-form-section-title">3 End Time</div>
+          </div>
+          <div id="enterendtime" className="col-xs-12 col-md-4">
+            <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToEndFormOpen}>change</div>
+          </div>
         </div>
       )
       } else {
         return(
           <div id="endtimediv" className="row">
-          <div className="col-xs-12 col-md-4">
-          <div id="header">3     End Time</div>
-          </div>
-          <div id="enterendtime" className="col-xs-12 col-md-4">
-          <input type="date" defaultValue={this.state.endTime.format("YYYY-MM-DD")} ref="enddate"/>
-          <input type="time" defaultValue={this.state.endTime.format("HH:mm")} ref="end_time"/>
-          </div>
-          <div className="col-xs-12 col-md-4">
-          <div id="change" onClick={this.setEndTime}>set</div>
-          </div>
-          <br/>
+            <div className="col-xs-12 col-md-4">
+              <div id="job-form-section-title">3 End Time</div>
+            </div>
+            <div id="enterendtime" className="col-xs-12 col-md-4">
+              <input type="date" defaultValue={this.state.endTime.format("YYYY-MM-DD")} ref="enddate"/>
+              <input type="time" defaultValue={this.state.endTime.format("HH:mm")} ref="end_time"/>
+            </div>
+            <div className="col-xs-12 col-md-4">
+              <div className="change" onClick={this.setEndTime}>set</div>
+            </div>
           </div>
         )
       }
@@ -318,68 +317,65 @@ var JobForm = React.createClass({
 
   render() {
     return(
-      <form onSubmit={ this.handleSubmit }>
-
+      <form className="job-form" onSubmit={ this.handleSubmit }>
         <div id="servicediv" className="row">
-        <div className="col=xs-12 col-md-4">
-        <div id="header">1     Service Type</div>
+          <div className="col=xs-12 col-md-4">
+            <div id="job-form-section-title">1 Service Type</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            { this.renderServiceType() }
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToServiceTypeForm}>change</div>
+          </div>
         </div>
-        <div className="col-xs-12 col-md-4">
-        { this.renderServiceType() }
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div id="change" onClick={this.switchToServiceTypeForm}>change</div>
-        </div>
-        <br/>
-        </div>
+
         <hr/>
 
         <div id="locationdiv" className="row">
-        <div className="col-xs-12 col-md-4">
-        <div id="header">2     Location</div>
+          <div className="col-xs-12 col-md-4">
+            <div id="job-form-section-title">2     Location</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            { this.renderLocation() }
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToLocationForm}>change</div>
+          </div>
         </div>
-        <div className="col-xs-12 col-md-4">
-        { this.renderLocation() }
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div id="change" onClick={this.switchToLocationForm}>change</div>
-        </div>
-        <br/>
-        </div>
-        <hr/>
 
+        <hr/>
 
         {this.renderStartTime() }
-        <hr/>
 
+        <hr/>
 
         {this.renderEndTime() }
-        <hr/>
 
+        <hr/>
 
         <div id="contactsdiv" className="row">
-        <div className="col-xs-12 col-md-4">
-        <div id="header">5     Contacts</div>
-        </div>
-        <div className="col-xs-12 col-md-4">
-        {this.renderSelectAll() } Select All
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div id="change" onClick={this.switchToContactForm}>new contact</div>
-        </div>
-        <br/>
-        <br/>
+          <div className="col-xs-12 col-md-4">
+            <div id="job-form-section-title">5 Contacts</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            {this.renderSelectAll() } Select All
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToContactForm}>new contact</div>
+          </div>
         </div>
         <div className="row">
-        <div className="col-xs-12 col-md-4">
+          <div className="col-xs-12 col-md-4">
+          </div>
+          <div id="contacts-by-service" className="col-xs-12 col-md-8">
+            {this.renderContacts() }
+          </div>
         </div>
-        <div id="contactsbyservice" className="col-xs-12 col-md-8">
-        {this.renderContacts() }
-        </div>
-        </div>
+
         <hr/>
 
-        <div id="createjobbutton" className="btn btn-primary" onClick={ this.handleSubmit }>Create Job</div>
+        <div className="btn btn-primary pull-right" onClick={ this.handleSubmit }>Create Job</div>
       </form>
     );
   }
