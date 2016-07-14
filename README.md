@@ -116,3 +116,27 @@ GRANT ALL PRIVILEGES ON DATABASE whosable to whosable;
 sudo env MIX_ENV=prod mix phoenix.digest
 sudo env MIX_ENV=prod mix release
 ```
+
+## Install
+1) run install.sh
+2) install postgres
+``` sh
+apt install postgresql -y
+su postgres
+createuser --pwprompt --createdb elixir
+exit
+```
+3) run elixir_install.sh
+4) clone project
+5) setup prod secret file
+6) Install gems
+```sh
+curl -sSL https://get.rvm.io | bash -s stable
+source /etc/profile.d/rvm.sh
+rvm install ruby-2.3
+gem install sass
+bundle install
+```
+7) copy ssl certs
+8) setup nginx config
+9) run release.sh
