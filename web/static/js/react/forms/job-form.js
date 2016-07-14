@@ -1,7 +1,3 @@
-var NavBar = require("../nav-bar");
-var ContactList = require("../contact-list");
-var LocationForm = require("../forms/location-form");
-var ContactForm = require("../forms/contact-form");
 import _ from "lodash";
 import {browserHistory, Link} from 'react-router';
 
