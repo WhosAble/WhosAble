@@ -1,3 +1,7 @@
+import _ from "lodash";
+import {browserHistory, Link} from 'react-router';
+
+
 var JobForm = React.createClass({
   getInitialState() {
     return {
@@ -5,7 +9,13 @@ var JobForm = React.createClass({
       locations: null,
       contacts: null,
       serviceID: null,
-      locationID: null
+      locationID: null,
+      startTime: moment().add(1, 'day'),
+      endTime: moment().add(2, 'day'),
+      startformopen: false,
+      endformopen: false,
+      selectedContactIDs: [],
+      allSelected: true
     };
   },
 
@@ -22,7 +32,11 @@ var JobForm = React.createClass({
   },
 
   receiveContacts(contacts) {
-    this.setState({contacts: contacts});
+    var newState = {contacts: contacts};
+    if(this.state.serviceID != null) {
+      newState.selectedContactIDs = this.allContactIDs();
+    }
+    this.setState(newState);
   },
 
   receiveLocations(locations) {
@@ -37,6 +51,9 @@ var JobForm = React.createClass({
     var newState = {services: services};
     if(this.state.serviceID == null && services.length > 0) {
       newState.serviceID = services[0].id;
+    }
+    if(this.state.contacts != null) {
+      newState.selectedContactIDs = this.allContactIDs();
     }
     this.setState(newState);
   },
@@ -106,6 +123,18 @@ var JobForm = React.createClass({
     this.props.onFormChange("type");
   },
 
+  switchToContactForm() {
+    this.props.onFormChange("contacts");
+  },
+
+  switchToStartFormOpen() {
+    this.setState({startformopen: true});
+  },
+
+  switchToEndFormOpen() {
+    this.setState({endformopen: true});
+  },
+
   renderLocation() {
     if(this.state.locations == null || this.state.locations.length <= 0) { return <noscript/> }
 
@@ -124,40 +153,225 @@ var JobForm = React.createClass({
     );
   },
 
+  checkTheBox(contactID) {
+    var newContactIDs = this.state.selectedContactIDs;
+    newContactIDs.push(contactID);
+    var allSelected = false;
+    if(this.isAllContactIDs(newContactIDs)) {
+      allSelected = true;
+    }
+    this.setState({allSelected: allSelected, selectedContactIDs: newContactIDs})
+  },
+
+  uncheckTheBox(contactID) {
+    var newContactIDs = this.state.selectedContactIDs;
+    newContactIDs.splice(_.indexOf(newContactIDs, contactID), 1);
+    var allSelected = false;
+    if(this.isAllContactIDs(newContactIDs)) {
+      allSelected = true;
+    }
+    this.setState({allSelected: allSelected, selectedContactIDs: newContactIDs})
+  },
+
+  allContactIDs() {
+   var filteredContactIDs = [];
+   this.state.contacts.forEach((contact) => {
+     if(contact.service_id == this.state.serviceID) {
+       filteredContactIDs.push(contact.id);
+     }
+   });
+   return filteredContactIDs;
+  },
+
+  isAllContactIDs(contactIDs) {
+    return _.isEqual(this.allContactIDs().sort(), contactIDs.sort());
+  },
+
+  selectAll() {
+   if(this.isAllContactIDs(this.state.selectedContactIDs)) {
+     this.setState({allSelected: false, selectedContactIDs: []});
+   } else {
+     this.setState({allSelected: true, selectedContactIDs: this.allContactIDs()});
+   }
+  },
+
+  renderSelectAll() {
+    if(this.state.allSelected) {
+      return(<input type="checkbox" checked={true} id="selectall" onClick={this.selectAll}/>);
+    } else {
+      return(<input type="checkbox" id="selectall" onClick={this.selectAll}/>);
+    }
+  },
+
+  renderContactCB(contactID) {
+    if(_.indexOf(this.state.selectedContactIDs, contactID) != -1) {
+      return(<input type="checkbox" checked={true} onClick={this.uncheckTheBox.bind(this, contactID)}/>);
+    } else {
+      return(<input type="checkbox" onClick={this.checkTheBox.bind(this, contactID)}/>);
+    }
+  },
+
+  renderContacts() {
+   if(this.state.contacts == null || this.state.contacts.length == 0){return <noscript/>}
+
+   var filteredContacts = this.state.contacts.map((contact) => {
+     if(contact.service_id == this.state.serviceID) {
+       return(
+          <div className="job-form-contact" key={contact.id}>
+            <div className="contact-checkbox">{this.renderContactCB(contact.id)}</div>
+            <div className="contact-name">{contact.first_name} {contact.last_name}</div>
+            <div className="contact-email">{contact.email}</div>
+            <div className="contact-phone">{contact.phone}</div>
+          </div>
+       );
+     }
+   });
+   return _.compact(filteredContacts);
+ },
+
+  setStartTime() {
+    this.setState({
+      startTime: moment(this.refs["startdate"].value + " " + this.refs["start_time"].value),
+      startformopen: false
+    });
+  },
+
+  setEndTime() {
+    this.setState({
+      endTime: moment(this.refs["enddate"].value + " " + this.refs["end_time"].value),
+      endformopen: false
+    });
+  },
+
+  renderStartTime() {
+    if(this.state.startformopen == false) {
+      return(
+        <div id="starttimediv" className="row">
+        <div className="col-xs-12 col-md-4">
+        <div className="job-form-section-title">3 Start Time</div>
+        </div>
+        <div id="enterstarttime" className="col-xs-12 col-md-4">
+        <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
+        </div>
+        <div className="col-xs-12 col-md-4">
+        <div className="change" onClick={this.switchToStartFormOpen}>change</div>
+        </div>
+        <br/>
+        </div>
+      )
+      } else {
+        return(
+          <div id="starttimediv" className="row">
+          <div className="col-xs-12 col-md-4">
+          <div className="job-form-section-title">3 Start Time</div>
+          </div>
+          <div id="enterstarttime" className="col-xs-12 col-md-4">
+          <input type="date" defaultValue={this.state.startTime.format("YYYY-MM-DD")} ref="startdate"/>
+          <input type="time" defaultValue={this.state.startTime.format("HH:mm")} ref="start_time"/>
+          </div>
+          <div className="col-xs-12 col-md-4">
+          <div className="change" onClick={this.setStartTime}>set</div>
+          </div>
+          <br/>
+          </div>
+        )
+      }
+  },
+
+  renderEndTime() {
+    if(this.state.endformopen == false) {
+      return(
+        <div id="endtimediv" className="row">
+          <div className="col-xs-12 col-md-4">
+            <div className="job-form-section-title">3 End Time</div>
+          </div>
+          <div id="enterendtime" className="col-xs-12 col-md-4">
+            <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToEndFormOpen}>change</div>
+          </div>
+        </div>
+      )
+      } else {
+        return(
+          <div id="endtimediv" className="row">
+            <div className="col-xs-12 col-md-4">
+              <div className="job-form-section-title">3 End Time</div>
+            </div>
+            <div id="enterendtime" className="col-xs-12 col-md-4">
+              <input type="date" defaultValue={this.state.endTime.format("YYYY-MM-DD")} ref="enddate"/>
+              <input type="time" defaultValue={this.state.endTime.format("HH:mm")} ref="end_time"/>
+            </div>
+            <div className="col-xs-12 col-md-4">
+              <div className="change" onClick={this.setEndTime}>set</div>
+            </div>
+          </div>
+        )
+      }
+  },
+
   render() {
     return(
-      <form onSubmit={ this.handleSubmit }>
-        Describe the job:
-        <br/>
-        <br/>
+      <form className="job-form" onSubmit={ this.handleSubmit }>
+        <div id="servicediv" className="row">
+          <div className="col=xs-12 col-md-4">
+            <div className="job-form-section-title">1 Service Type</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            { this.renderServiceType() }
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToServiceTypeForm}>change</div>
+          </div>
+        </div>
 
-        { this.renderServiceType() }
-        <div className="btn btn-primary" onClick={this.switchToServiceTypeForm}>Service Type</div>
+        <hr/>
 
-        <br/>
-        <br/>
+        <div id="locationdiv" className="row">
+          <div className="col-xs-12 col-md-4">
+            <div className="job-form-section-title">2     Location</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            { this.renderLocation() }
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToLocationForm}>change</div>
+          </div>
+        </div>
 
-        { this.renderLocation() }
-        <div className="btn btn-primary" onClick={this.switchToLocationForm}>Location</div>
+        <hr/>
 
-        <br/>
-        <br/>
-        Start Date:
-        <input type="date" name="startdate"/>
-        End Date:
-        <input type="date" name="enddate"/>
-        <br/>
-        <br/>
-        Select a start time:
-        <input type="time" name="usr_time"/>
-        Select an end time:
-        <input type="time" name="usr_time"/>
-        <br/>
-        <br/>
-        <textarea name="message" rows="15" cols="40"/>
-        <br/>
-        <br/>
-        <input type="submit" value="Submit" onClick={ this.handleSubmit }/>
+        {this.renderStartTime() }
+
+        <hr/>
+
+        {this.renderEndTime() }
+
+        <hr/>
+
+        <div id="contactsdiv" className="row">
+          <div className="col-xs-12 col-md-4">
+            <div className="job-form-section-title">5 Contacts</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            {this.renderSelectAll() } Select All
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToContactForm}>new contact</div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-12 col-md-4">
+          </div>
+          <div id="contacts-by-service" className="col-xs-12 col-md-8">
+            {this.renderContacts() }
+          </div>
+        </div>
+
+        <hr/>
+
+        <div className="btn btn-primary pull-right" onClick={ this.handleSubmit }>Create Job</div>
       </form>
     );
   }
