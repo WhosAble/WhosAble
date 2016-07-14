@@ -55,7 +55,7 @@ var SearchLocationResults = React.createClass({
     if(this.state.addresses == null) { return(<noscript/>) }
 
     return(
-      <div className="location-list">
+      <div className="locations">
         { this.renderList() }
       </div>
     );

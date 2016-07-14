@@ -1,5 +1,4 @@
 var CreateBtn = require("../create-btn");
-var NavBar = require("../nav-bar");
 var ContactList = require("../contact-list");
 var SearchForm = require("../forms/search-contacts-form");
 var SearchResults = require("../search-contacts-results");
@@ -81,13 +80,8 @@ var ContactsPage = React.createClass({
   render() {
     return(
       <div>
-        <NavBar/>
-        <div className="container">
-          <main role="main">
-            { this.renderBtn() }
-            { this.renderList() }
-          </main>
-        </div>
+        { this.renderBtn() }
+        { this.renderList() }
       </div>
     );
   }

@@ -1,6 +1,7 @@
 var CreateBtn = require("./create-btn");
 var Job = require("./job-list-job");
 import _ from "lodash";
+import {browserHistory} from 'react-router';
 
 var JobList = React.createClass({
   handleCreate() {
@@ -8,7 +9,6 @@ var JobList = React.createClass({
   },
 
   renderJobs(monthTime) {
-    var self = this;
     var jobs = [];
     this.props.jobs.forEach(function(job) {
       var startTime = moment(job.start);
@@ -18,9 +18,7 @@ var JobList = React.createClass({
         );
       }
     });
-    if(_.isEmpty(jobs)) {
-      return(<noscript/>);
-    } else {
+    if(!_.isEmpty(jobs)) {
       return(
         <div>
           <div className="month-header">
@@ -32,22 +30,37 @@ var JobList = React.createClass({
     }
   },
 
+  renderCreateBtn() {
+    return(<CreateBtn title="Create a new Job" onCreate={ this.handleCreate }/>);
+  },
+
   render() {
-    if(this.props.jobs == null || this.props.jobs.length == 0) {
-      return <CreateBtn title="Create a new Job" onCreate={ this.handleCreate }/>
+    if(this.props.jobs.length == 0) {
+      return this.renderCreateBtn();
     }
 
     var startMonthTime = moment().startOf('month');
+    var thisMonth = this.renderJobs(startMonthTime);
+    var nextMonth = this.renderJobs(startMonthTime.add(1, 'month'))
+    var twoMonths = this.renderJobs(startMonthTime.add(1, 'month'))
+    var threeMonths = this.renderJobs(startMonthTime.add(1, 'month'))
+    var fourMonths = this.renderJobs(startMonthTime.add(1, 'month'))
 
-    return(
-      <div className="jobs">
-        {this.renderJobs(startMonthTime)}
-        {this.renderJobs(startMonthTime.add(1, 'month'))}
-        {this.renderJobs(startMonthTime.add(1, 'month'))}
-        {this.renderJobs(startMonthTime.add(1, 'month'))}
-        {this.renderJobs(startMonthTime.add(1, 'month'))}
-      </div>
-    );
+    //show future jobs if there are any
+    if(thisMonth != null || nextMonth != null || twoMonths != null || threeMonths != null || fourMonths != null) {
+      return(
+        <div className="jobs">
+          {thisMonth}
+          {nextMonth}
+          {twoMonths}
+          {threeMonths}
+          {fourMonths}
+        </div>
+      );
+    } else {
+      //no future jobs
+      return this.renderCreateBtn();
+    }
   },
 });
 
