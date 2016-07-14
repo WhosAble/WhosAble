@@ -4,7 +4,7 @@ defmodule WhosAble.Mixfile do
   def project do
     [app: :whos_able,
      version: "0.0.4",
-     elixir: "~> 1.2.3",
+     elixir: "~> 1.3.1",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -18,7 +18,8 @@ defmodule WhosAble.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {WhosAble, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :phoenix_ecto, :postgrex, :httpoison, :comeonin]]
+     applications: [:phoenix, :phoenix_html, :phoenix_pubsub, :cowboy, :logger, :gettext, :phoenix_ecto, :postgrex, :httpoison,
+      :comeonin, :ssl, :logger_file_backend, :erlware_commons, :cf]]
   end
 
   # Specifies which paths to compile per environment.
@@ -30,17 +31,23 @@ defmodule WhosAble.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:cf, "~> 0.2.1"},
+      {:poison, "~> 2.0.1"},
+      {:httpoison, "~> 0.8.0"},
+      {:hackney, "~> 1.4.8"},
       {:comeonin, "~> 2.3"},
       {:cowboy, "~> 1.0"},
       {:gettext, "~> 0.9"},
-      {:exrm, "~> 1.0"},
-      {:httpoison, "~> 0.8.2"},
-      {:phoenix, "~> 1.1.4"},
-      {:phoenix_ecto, "~> 2.0"},
-      {:phoenix_html, "~> 2.4"},
+      {:exrm, "~> 1.0.6"},
+      {:phoenix, "~> 1.2.0"},
+      {:phoenix_ecto, "~> 3.0"},
+      {:phoenix_html, "~> 2.6"},
+      {:phoenix_pubsub, "~> 1.0"},
       {:postgrex, ">= 0.0.0"},
+      {:logger_file_backend, "~> 0.0.8"},
+      {:erlware_commons, "~> 0.21.0"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:ex_machina, "~> 0.6.1", only: :test}
+      {:ex_machina, "~> 1.0.2", only: :test}
     ]
   end
 
@@ -52,6 +59,7 @@ defmodule WhosAble.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"]]
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end

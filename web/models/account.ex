@@ -3,7 +3,7 @@ defmodule WhosAble.Account do
 
   schema "accounts" do
     has_many :users, WhosAble.User
-    has_many :locations, WhosAble.Location
+    has_many :addresses, WhosAble.Address
 
     timestamps
   end

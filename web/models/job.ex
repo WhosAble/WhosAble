@@ -18,7 +18,7 @@ defmodule WhosAble.Job do
   ### CHANGESETS
   ###
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(account_id user_id service_id address_id start end), [])
   end

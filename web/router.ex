@@ -25,12 +25,12 @@ defmodule WhosAble.Router do
       post "/login", LoginController, :login
     end
 
-    post "messages/receive", MessagesController, :receive
+    post "/messages/receive", MessagesController, :receive
   end
 
   scope "/", WhosAble do
     pipe_through :browser
 
-    get "*path", PageController, :load_page
+    get "/*path", PageController, :load_page
   end
 end

@@ -8,7 +8,7 @@ defmodule WhosAble.LoginControllerTest do
   end
 
   test "wrong email", context do
-    user = create(:user)
+    user = insert(:user)
 
     conn = context.conn |> post("/api/login", email: "my@email.com", password: user.password)
     assert json_response(conn, 200)["status"] == "failure"
@@ -16,7 +16,7 @@ defmodule WhosAble.LoginControllerTest do
   end
 
   test "wrong password", context do
-    user = create(:user)
+    user = insert(:user)
 
     conn = context.conn |> post("/api/login", email: user.email, password: user.password <> "wrong")
     assert json_response(conn, 200)["status"] == "failure"
@@ -24,7 +24,7 @@ defmodule WhosAble.LoginControllerTest do
   end
 
   test "valid login", context do
-    user = create(:user)
+    user = insert(:user)
 
     conn = context.conn |> post("/api/login", email: user.email, password: user.password)
     assert json_response(conn, 200)["status"] == "success"

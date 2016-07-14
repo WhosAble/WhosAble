@@ -1,10 +1,11 @@
 defmodule WhosAble.AccountChannel.Job do
-  use WhosAble.Web, :channel
-
+  import Phoenix.Channel, only: [broadcast: 3]
   import Ecto.Query
 
+  alias WhosAble.{AccountChannel, Address, Job, JobContact, Repo, Service}
+
   def all_jobs(socket) do
-    account = WhosAble.AccountChannel.get_account(socket)
+    account = AccountChannel.get_account(socket)
 
     broadcast(socket, "all_jobs", jobs_json(account))
   end
@@ -18,12 +19,12 @@ defmodule WhosAble.AccountChannel.Job do
   ###
 
   defp contacts_json(job) do
-    WhosAble.JobContact.job_contacts(job.id)
+    JobContact.job_contacts(job.id)
   end
 
   defp job_json(job) do
-    service = WhosAble.Repo.get(WhosAble.Service, job.service_id)
-    address = WhosAble.Repo.get(WhosAble.Address, job.address_id)
+    service = Repo.get(Service, job.service_id)
+    address = Repo.get(Address, job.address_id)
     %{
       id: job.id,
       service_id: job.service_id,
@@ -39,7 +40,7 @@ defmodule WhosAble.AccountChannel.Job do
 
   defp jobs_json(nil), do: %{jobs: []}
   defp jobs_json(account) do
-    jobs = WhosAble.Job
+    jobs = Job
       |> where(account_id: ^account.id)
       |> Repo.all
       |> Enum.reduce([], fn(job, acc) -> List.insert_at(acc, 0, job_json(job)) end)

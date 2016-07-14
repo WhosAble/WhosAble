@@ -1,13 +1,13 @@
 defmodule WhosAble.Factory do
   use ExMachina.Ecto, repo: WhosAble.Repo
 
-  def factory(:account) do
+  def account_factory do
     %WhosAble.Account{}
   end
 
-  def factory(:user) do
+  def user_factory do
     %WhosAble.User{
-      account_id: create(:account).id,
+      account_id: insert(:account).id,
       first_name: sequence(:first_name, &"User#{&1}"),
       last_name: sequence(:last_name, &"User#{&1}"),
       email: sequence(:email, &"test#{&1}@test.com"),

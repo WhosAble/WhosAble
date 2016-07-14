@@ -14,6 +14,8 @@ config :whos_able, WhosAble.Endpoint,
   pubsub: [name: WhosAble.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :whos_able, ecto_repos: [WhosAble.Repo]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

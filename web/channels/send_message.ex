@@ -1,6 +1,4 @@
 defmodule WhosAble.SendMessage do
-  use WhosAble.Web, :channel
-
   def send_message(job, contact_id) do
     config = Application.get_env(:whos_able, WhosAble.Endpoint)
     plivo_auth_id = config[:plivo_auth_id]
@@ -18,7 +16,7 @@ defmodule WhosAble.SendMessage do
 
     case HTTPoison.post(url, data, options) do
       {:ok, resp} -> parse_body(resp)
-      resp -> nil
+      _ -> nil
     end
   end
 
