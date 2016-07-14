@@ -252,7 +252,7 @@ var JobForm = React.createClass({
       return(
         <div id="starttimediv" className="row">
         <div className="col-xs-12 col-md-4">
-        <div id="job-form-section-title">3 Start Time</div>
+        <div className="job-form-section-title">3 Start Time</div>
         </div>
         <div id="enterstarttime" className="col-xs-12 col-md-4">
         <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
@@ -267,7 +267,7 @@ var JobForm = React.createClass({
         return(
           <div id="starttimediv" className="row">
           <div className="col-xs-12 col-md-4">
-          <div id="job-form-section-title">3 Start Time</div>
+          <div className="job-form-section-title">3 Start Time</div>
           </div>
           <div id="enterstarttime" className="col-xs-12 col-md-4">
           <input type="date" defaultValue={this.state.startTime.format("YYYY-MM-DD")} ref="startdate"/>
@@ -287,7 +287,7 @@ var JobForm = React.createClass({
       return(
         <div id="endtimediv" className="row">
           <div className="col-xs-12 col-md-4">
-            <div id="job-form-section-title">3 End Time</div>
+            <div className="job-form-section-title">3 End Time</div>
           </div>
           <div id="enterendtime" className="col-xs-12 col-md-4">
             <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
@@ -301,7 +301,7 @@ var JobForm = React.createClass({
         return(
           <div id="endtimediv" className="row">
             <div className="col-xs-12 col-md-4">
-              <div id="job-form-section-title">3 End Time</div>
+              <div className="job-form-section-title">3 End Time</div>
             </div>
             <div id="enterendtime" className="col-xs-12 col-md-4">
               <input type="date" defaultValue={this.state.endTime.format("YYYY-MM-DD")} ref="enddate"/>
@@ -320,7 +320,7 @@ var JobForm = React.createClass({
       <form className="job-form" onSubmit={ this.handleSubmit }>
         <div id="servicediv" className="row">
           <div className="col=xs-12 col-md-4">
-            <div id="job-form-section-title">1 Service Type</div>
+            <div className="job-form-section-title">1 Service Type</div>
           </div>
           <div className="col-xs-12 col-md-4">
             { this.renderServiceType() }
@@ -334,7 +334,7 @@ var JobForm = React.createClass({
 
         <div id="locationdiv" className="row">
           <div className="col-xs-12 col-md-4">
-            <div id="job-form-section-title">2     Location</div>
+            <div className="job-form-section-title">2     Location</div>
           </div>
           <div className="col-xs-12 col-md-4">
             { this.renderLocation() }
@@ -356,7 +356,7 @@ var JobForm = React.createClass({
 
         <div id="contactsdiv" className="row">
           <div className="col-xs-12 col-md-4">
-            <div id="job-form-section-title">5 Contacts</div>
+            <div className="job-form-section-title">5 Contacts</div>
           </div>
           <div className="col-xs-12 col-md-4">
             {this.renderSelectAll() } Select All
