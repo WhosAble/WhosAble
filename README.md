@@ -145,8 +145,22 @@ rvm install ruby-2.3
 gem install sass
 bundle install
 ```
-8) copy ssl certs
+8) Upgrade npm and node
+``` sh
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+sudo ln -sf /usr/local/n/versions/node/<VERSION>/bin/node /usr/bin/node 
+sudo npm install -g npm
+sudo npm install -g npm
+```
+9) copy ssl certs
 
-9) setup nginx config
+10) setup nginx config
 
-10) run release.sh
+11) run release.sh
+
+12) restart nginx
+``` sh
+sudo service nginx reload
+```
