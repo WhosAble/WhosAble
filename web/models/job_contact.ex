@@ -19,7 +19,7 @@ defmodule WhosAble.JobContact do
   ### CHANGESETS
   ###
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model |> cast(params, ~w(job_id contact_id), [])
   end
 end

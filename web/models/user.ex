@@ -18,7 +18,7 @@ defmodule WhosAble.User do
   ### CHANGESETS
   ###
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(account_id first_name last_name email password), [])
     |> update_change(:email, &String.downcase/1)

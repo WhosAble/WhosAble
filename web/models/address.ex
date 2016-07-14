@@ -16,7 +16,7 @@ defmodule WhosAble.Address do
   ### CHANGESETS
   ###
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(account_id address city state zip), [])
   end

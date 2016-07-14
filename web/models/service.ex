@@ -13,7 +13,7 @@ defmodule WhosAble.Service do
   ### CHANGESETS
   ###
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(account_id name), [])
     |> unique_constraint(:name)
