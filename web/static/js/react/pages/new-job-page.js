@@ -1,6 +1,7 @@
 var JobForm = require("../forms/job-form")
 var JobType = require("../forms/jobtype")
 var LocationForm = require("../forms/location-form")
+var ContactForm = require("../forms/contact-form")
 import {browserHistory} from 'react-router';
 
 var NewJobPage = React.createClass({
@@ -33,6 +34,8 @@ var NewJobPage = React.createClass({
       return <JobForm onFormChange={this.handleFormChange}/>
     } else if(this.state.form == "type") {
       return <JobType onCreate={this.handleFormChange.bind(this, "job")}/>
+    } else if(this.state.form == "contacts") {
+      return <ContactForm onCreate={this.handleFormChange.bind(this, "job")}/>
     } else {
       return <LocationForm onCreate={this.handleFormChange.bind(this, "job")}/>
     }
