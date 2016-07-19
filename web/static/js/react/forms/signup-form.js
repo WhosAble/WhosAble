@@ -69,8 +69,14 @@ var SignupForm = React.createClass({
     return(
       <form onSubmit={ this.signup }>
         <h1>Signup Form</h1>
-        <TextField label="First Name" value={ this.state.firstName } errors={ this.parseErrors("first_name") } onChange={ this.handleFieldChange.bind(this, "firstName") }/>
-        <TextField label="Last Name" value={ this.state.lastName } errors={ this.parseErrors("last_name") } onChange={ this.handleFieldChange.bind(this, "lastName") }/>
+        <div className="row">
+          <div className="col-xs-12 col-md-6">
+            <TextField label="First Name" value={ this.state.firstName } errors={ this.parseErrors("first_name") } onChange={ this.handleFieldChange.bind(this, "firstName") }/>
+          </div>
+          <div className="col-xs-12 col-md-6">
+            <TextField label="Last Name" value={ this.state.lastName } errors={ this.parseErrors("last_name") } onChange={ this.handleFieldChange.bind(this, "lastName") }/>
+          </div>
+        </div>
         <TextField label="Email" value={ this.state.email } errors={ this.parseErrors("email") } onChange={ this.handleFieldChange.bind(this, "email") }/>
         <PasswordField label="Password" value={ this.state.password } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "password") }/>
         <PasswordField label="Confirm Password" value={ this.state.confirmPassword } errors={ this.parseErrors("password") } onChange={ this.handleFieldChange.bind(this, "confirmPassword") }/>
