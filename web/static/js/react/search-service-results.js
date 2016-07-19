@@ -37,11 +37,15 @@ var SearchServiceResults = React.createClass({
     return this.matchesField(service.name);
   },
 
+  handleSelect(serviceID) {
+    this.props.onSelect(serviceID);
+  },
+
   renderList() {
     var self = this;
-    var list = _.compact(this.state.services.map(function(service, index) {
+    var list = _.compact(this.state.services.map((service, index) => {
       if(self.matchesService(service)) {
-        return(<Service key={index} service={service}/>);
+        return(<Service key={index} service={service} onSelect={this.handleSelect}/>);
       }
     }));
     if(_.isEmpty(list)) {
