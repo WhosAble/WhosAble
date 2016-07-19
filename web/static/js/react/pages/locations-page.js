@@ -3,7 +3,6 @@ var SearchLocationResults = require("../search-location-results");
 var LocationList = require("../location-list");
 import _ from "lodash";
 import {browserHistory, Link} from 'react-router';
-var LocationForm = require("../forms/location-form");
 
 var LocationsPage = React.createClass({
   getInitialState() {

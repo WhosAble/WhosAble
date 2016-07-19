@@ -1,9 +1,7 @@
-Location = require("./location");
-var Job = require("./location-list");
+var Location = require("./location");
 import _ from "lodash";
 
 var LocationList = React.createClass({
-
   render() {
      var locations = this.props.addresses.map(function(address, index) {
        return(<Location addresses={address}/>);

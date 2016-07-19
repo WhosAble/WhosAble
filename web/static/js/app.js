@@ -27,6 +27,8 @@ var Connect = require("./react/pages/connect");
 var Affordable = require("./react/pages/affordable");
 var LocationsPage = require("./react/pages/locations-page");
 var NewLocationsPage = require("./react/pages/new-locations-page");
+var ServicesPage = require("./react/pages/services-page");
+var NewServicePage = require("./react/pages/new-service-page");
 
 
 function ensureAuthenticated() {
@@ -62,6 +64,8 @@ ReactDOM.render(
       <Route path="jobs/new" component={NewJobPage}/>
       <Route path="locations" component={LocationsPage}/>
       <Route path="locations/new" component={NewLocationsPage}/>
+      <Route path="services" component={ServicesPage}/>
+      <Route path="services/new" component={NewServicePage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
   </Router>

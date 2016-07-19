@@ -1,4 +1,4 @@
-#LocationsPage
+#ServicesPage
   text-align: center
   display: inline-block
   width: 100%
@@ -9,31 +9,33 @@
     float: right
     color: $black
 
-  .location-list-header
+  .services-list-header
     width: 100%
     float: left
 
-  .locations
+  .services
     display: -webkit-flex
     display: flex
     flex-wrap: wrap
 
-    .location
-      background-color: lighten($turquoise, 50%)
-      border: 2px solid $turquoise
+    .service
+      background-color: lighten($concrete, 50%)
+      border: 2px solid $concrete
       border-top-left-radius: 15px
       border-top-right-radius: 15px
       border-bottom-left-radius: 15px
       border-bottom-right-radius: 15px
       margin: $margin
+      padding: 10px
+      font-weight: bold
 
       @media (min-width: 1141px)
-        width: calc(33% - (#{$margin} + 2px))
+        width: calc(20% - (#{$margin} + 9px))
 
-        &:nth-child(3n + 1)
+        &:nth-child(5n + 1)
           margin-left: 0px
 
-        &:nth-child(3n + 0)
+        &:nth-child(5n + 0)
           margin-right: 0px
 
       @media (min-width: 769px) and (max-width: 1140px)
@@ -48,13 +50,4 @@
       @media (max-width: 768px)
         margin: $margin 0px
         width: 100%
-
-      .location-address
-        padding: 10px 0px 0px 0px
-        width: calc(100% - (#{$margin}))
-        overflow: hidden
-
-      .location-citythruzip
-        padding: 0px 0px 10px 0px
-        width: calc(100% - (#{$margin}))
         overflow: hidden

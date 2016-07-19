@@ -74,6 +74,11 @@ var NavBar = React.createClass({
               </Link>
             </li>
             <li>
+              <Link to="/app/services">
+                <i className="fa fa-coffee fa-fw"/>Services
+              </Link>
+            </li>
+            <li>
               <Link to="/app/contacts">
                 <i className="fa fa-users fa-fw"/>Contacts
               </Link>
@@ -126,6 +131,11 @@ var NavBar = React.createClass({
           <li>
             <Link to="/app/jobs">
               <i className="fa fa-briefcase fa-fw"/>Jobs
+            </Link>
+          </li>
+          <li>
+            <Link to="/app/services">
+              <i className="fa fa-coffee fa-fw"/>Services
             </Link>
           </li>
           <li>
