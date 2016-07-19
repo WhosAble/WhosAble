@@ -5,70 +5,23 @@ import {browserHistory, Link} from 'react-router';
 var JobForm = React.createClass({
   getInitialState() {
     return {
-      services: null,
-      locations: null,
-      contacts: null,
-      serviceID: null,
-      locationID: null,
-      startTime: moment().add(1, 'day'),
-      endTime: moment().add(2, 'day'),
       startformopen: false,
       endformopen: false,
-      selectedContactIDs: [],
       allSelected: true
     };
-  },
-
-  componentDidMount() {
-    window.ServiceStore.subscribe(this.receiveServices);
-    window.AddressStore.subscribe(this.receiveLocations);
-    window.ContactsStore.subscribe(this.receiveContacts);
-  },
-
-  componentWillUnmount() {
-    window.ServiceStore.unsubscribe(this.receiveServices);
-    window.AddressStore.unsubscribe(this.receiveLocations);
-    window.ContactsStore.unsubscribe(this.receiveContacts);
-  },
-
-  receiveContacts(contacts) {
-    var newState = {contacts: contacts};
-    if(this.state.serviceID != null) {
-      newState.selectedContactIDs = this.allContactIDs();
-    }
-    this.setState(newState);
-  },
-
-  receiveLocations(locations) {
-    var newState = {locations: locations};
-    if(this.state.locationID == null && locations.length > 0) {
-      newState.locationID = locations[0].id;
-    }
-    this.setState(newState);
-  },
-
-  receiveServices(services) {
-    var newState = {services: services};
-    if(this.state.serviceID == null && services.length > 0) {
-      newState.serviceID = services[0].id;
-    }
-    if(this.state.contacts != null) {
-      newState.selectedContactIDs = this.allContactIDs();
-    }
-    this.setState(newState);
   },
 
   handleSubmit(e) {
     e.preventDefault();
     var job = {
-      service_id: this.state.serviceID,
-      address_id: this.state.locationID,
+      service_id: this.props.serviceID,
+      address_id: this.props.locationID,
       start: "2016/05/29 00:00:00",
       start: "2016-05-29T00:00:00Z",
       end: "2016-05-29T00:05:00Z"
     }
     var contacts = [];
-    this.state.contacts.forEach(function(contact) {
+    this.props.contacts.forEach(function(contact) {
       contacts.push(contact.id);
     });
     window.Dispatcher.createJob(job, contacts)
@@ -80,10 +33,9 @@ var JobForm = React.createClass({
   },
 
   getSelectedLocation() {
-    var self = this;
     var selectedLocation = null;
-    this.state.locations.forEach(function(location) {
-      if(location.id == self.state.locationID) {
+    this.props.locations.forEach((location) => {
+      if(location.id == this.props.locationID) {
         selectedLocation = location;
       }
     });
@@ -91,10 +43,9 @@ var JobForm = React.createClass({
   },
 
   getSelectedService() {
-    var self = this;
     var selectedService = null;
-    this.state.services.forEach(function(service) {
-      if(service.id == self.state.serviceID) {
+    this.props.services.forEach((service) => {
+      if(service.id == this.props.serviceID) {
         selectedService = service;
       }
     });
@@ -116,11 +67,19 @@ var JobForm = React.createClass({
   },
 
   switchToLocationForm() {
-    this.props.onFormChange("location");
+    if(this.props.locations.length == 0) {
+      this.props.onFormChange("new-location");
+    } else {
+      this.props.onFormChange("location");
+    }
   },
 
   switchToServiceTypeForm() {
-    this.props.onFormChange("type");
+    if(this.props.services.length == 0) {
+      this.props.onFormChange("new-type");
+    } else {
+      this.props.onFormChange("type");
+    }
   },
 
   switchToContactForm() {
@@ -136,25 +95,29 @@ var JobForm = React.createClass({
   },
 
   renderLocation() {
-    if(this.state.locations == null || this.state.locations.length <= 0) { return <noscript/> }
+    if(this.props.locations == null || this.props.locations.length <= 0) { return <noscript/> }
 
     var location = this.getSelectedLocation();
+    if(location == null) { return <noscript/>; }
+
     return(
       <div>{location.address}</div>
     );
   },
 
   renderServiceType() {
-    if(this.state.services == null || this.state.services.length == 0) { return <noscript/> }
+    if(this.props.services == null || this.props.services.length == 0) { return <noscript/> }
 
     var service = this.getSelectedService();
+    if(service == null) { return <noscript/>; }
+
     return(
       <div>{service.name}</div>
     );
   },
 
   checkTheBox(contactID) {
-    var newContactIDs = this.state.selectedContactIDs;
+    var newContactIDs = this.props.selectedContactIDs;
     newContactIDs.push(contactID);
     var allSelected = false;
     if(this.isAllContactIDs(newContactIDs)) {
@@ -164,7 +127,7 @@ var JobForm = React.createClass({
   },
 
   uncheckTheBox(contactID) {
-    var newContactIDs = this.state.selectedContactIDs;
+    var newContactIDs = this.props.selectedContactIDs;
     newContactIDs.splice(_.indexOf(newContactIDs, contactID), 1);
     var allSelected = false;
     if(this.isAllContactIDs(newContactIDs)) {
@@ -173,25 +136,15 @@ var JobForm = React.createClass({
     this.setState({allSelected: allSelected, selectedContactIDs: newContactIDs})
   },
 
-  allContactIDs() {
-   var filteredContactIDs = [];
-   this.state.contacts.forEach((contact) => {
-     if(contact.service_id == this.state.serviceID) {
-       filteredContactIDs.push(contact.id);
-     }
-   });
-   return filteredContactIDs;
-  },
-
   isAllContactIDs(contactIDs) {
-    return _.isEqual(this.allContactIDs().sort(), contactIDs.sort());
+    return _.isEqual(this.props.allContactIDs.sort(), contactIDs.sort());
   },
 
   selectAll() {
-   if(this.isAllContactIDs(this.state.selectedContactIDs)) {
+   if(this.isAllContactIDs(this.props.selectedContactIDs)) {
      this.setState({allSelected: false, selectedContactIDs: []});
    } else {
-     this.setState({allSelected: true, selectedContactIDs: this.allContactIDs()});
+     this.setState({allSelected: true, selectedContactIDs: this.props.allContactIDs});
    }
   },
 
@@ -204,7 +157,7 @@ var JobForm = React.createClass({
   },
 
   renderContactCB(contactID) {
-    if(_.indexOf(this.state.selectedContactIDs, contactID) != -1) {
+    if(_.indexOf(this.props.selectedContactIDs, contactID) != -1) {
       return(<input type="checkbox" checked={true} onClick={this.uncheckTheBox.bind(this, contactID)}/>);
     } else {
       return(<input type="checkbox" onClick={this.checkTheBox.bind(this, contactID)}/>);
@@ -212,10 +165,10 @@ var JobForm = React.createClass({
   },
 
   renderContacts() {
-   if(this.state.contacts == null || this.state.contacts.length == 0){return <noscript/>}
+   if(this.props.contacts == null || this.props.contacts.length == 0){return <noscript/>}
 
-   var filteredContacts = this.state.contacts.map((contact) => {
-     if(contact.service_id == this.state.serviceID) {
+   var filteredContacts = this.props.contacts.map((contact) => {
+     if(contact.service_id == this.props.serviceID) {
        return(
           <div className="job-form-contact" key={contact.id}>
             <div className="contact-checkbox">{this.renderContactCB(contact.id)}</div>
@@ -247,32 +200,30 @@ var JobForm = React.createClass({
     if(this.state.startformopen == false) {
       return(
         <div id="starttimediv" className="row">
-        <div className="col-xs-12 col-md-4">
-        <div className="job-form-section-title">3 Start Time</div>
-        </div>
-        <div id="enterstarttime" className="col-xs-12 col-md-4">
-        <div>{this.state.startTime.format('MMMM Do YYYY, h:mm a')}</div>
-        </div>
-        <div className="col-xs-12 col-md-4">
-        <div className="change" onClick={this.switchToStartFormOpen}>change</div>
-        </div>
-        <br/>
+          <div className="col-xs-12 col-md-4">
+            <div className="job-form-section-title">3 Start Time</div>
+          </div>
+          <div id="enterstarttime" className="col-xs-12 col-md-4">
+            <div>{this.props.startTime.format('MMMM Do YYYY, h:mm a')}</div>
+          </div>
+          <div className="col-xs-12 col-md-4">
+            <div className="change" onClick={this.switchToStartFormOpen}>change</div>
+          </div>
         </div>
       )
       } else {
         return(
           <div id="starttimediv" className="row">
-          <div className="col-xs-12 col-md-4">
-          <div className="job-form-section-title">3 Start Time</div>
-          </div>
-          <div id="enterstarttime" className="col-xs-12 col-md-4">
-          <input type="date" defaultValue={this.state.startTime.format("YYYY-MM-DD")} ref="startdate"/>
-          <input type="time" defaultValue={this.state.startTime.format("HH:mm")} ref="start_time"/>
-          </div>
-          <div className="col-xs-12 col-md-4">
-          <div className="change" onClick={this.setStartTime}>set</div>
-          </div>
-          <br/>
+            <div className="col-xs-12 col-md-4">
+              <div className="job-form-section-title">3 Start Time</div>
+            </div>
+            <div id="enterstarttime" className="col-xs-12 col-md-4">
+              <input type="date" defaultValue={this.props.startTime.format("YYYY-MM-DD")} ref="startdate"/>
+              <input type="time" defaultValue={this.props.startTime.format("HH:mm")} ref="start_time"/>
+            </div>
+            <div className="col-xs-12 col-md-4">
+              <div className="change" onClick={this.setStartTime}>set</div>
+            </div>
           </div>
         )
       }
@@ -286,7 +237,7 @@ var JobForm = React.createClass({
             <div className="job-form-section-title">3 End Time</div>
           </div>
           <div id="enterendtime" className="col-xs-12 col-md-4">
-            <div>{this.state.endTime.format('MMMM Do YYYY, h:mm a')}</div>
+            <div>{this.props.endTime.format('MMMM Do YYYY, h:mm a')}</div>
           </div>
           <div className="col-xs-12 col-md-4">
             <div className="change" onClick={this.switchToEndFormOpen}>change</div>
@@ -300,8 +251,8 @@ var JobForm = React.createClass({
               <div className="job-form-section-title">3 End Time</div>
             </div>
             <div id="enterendtime" className="col-xs-12 col-md-4">
-              <input type="date" defaultValue={this.state.endTime.format("YYYY-MM-DD")} ref="enddate"/>
-              <input type="time" defaultValue={this.state.endTime.format("HH:mm")} ref="end_time"/>
+              <input type="date" defaultValue={this.props.endTime.format("YYYY-MM-DD")} ref="enddate"/>
+              <input type="time" defaultValue={this.props.endTime.format("HH:mm")} ref="end_time"/>
             </div>
             <div className="col-xs-12 col-md-4">
               <div className="change" onClick={this.setEndTime}>set</div>
