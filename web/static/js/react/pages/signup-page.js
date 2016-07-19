@@ -12,13 +12,18 @@ var SignupPage = React.createClass({
         <NavBar/>
         <div className="container">
           <main role="main">
-            <SignupForm/>
+            <div className="row">
+              <div className="col-xs-12 col-md-3"></div>
+              <div className="col-xs-12 col-md-6">
+                <SignupForm/>
+                <div>
+                  <Link to="/login">
+                    <i className="fa fa-sign-in"/>Login
+                  </Link>
+                </div>
+              </div>
+            </div>
           </main>
-          <div>
-          <Link to="/login">
-            <i className="fa fa-sign-in"/>Login
-          </Link>
-          </div>
         </div>
       </div>
     );
