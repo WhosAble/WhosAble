@@ -67,7 +67,11 @@ var JobForm = React.createClass({
   },
 
   switchToLocationForm() {
-    this.props.onFormChange("location");
+    if(this.props.locations.length == 0) {
+      this.props.onFormChange("new-location");
+    } else {
+      this.props.onFormChange("location");
+    }
   },
 
   switchToServiceTypeForm() {
@@ -94,6 +98,8 @@ var JobForm = React.createClass({
     if(this.props.locations == null || this.props.locations.length <= 0) { return <noscript/> }
 
     var location = this.getSelectedLocation();
+    if(location == null) { return <noscript/>; }
+
     return(
       <div>{location.address}</div>
     );

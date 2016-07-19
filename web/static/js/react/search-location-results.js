@@ -37,11 +37,15 @@ var SearchLocationResults = React.createClass({
     return this.matchesField(addresses.address) || this.matchesField(addresses.city) || this.matchesField(addresses.state) || this.matchesField(addresses.zip);
   },
 
+  handleSelect(locationID) {
+    this.props.onSelect(locationID);
+  },
+
   renderList() {
     var self = this;
-    var list = _.compact(this.state.addresses.map(function(location, index) {
+    var list = _.compact(this.state.addresses.map((location, index) => {
       if(self.matchesLocation(location)) {
-        return(<Location key={index} addresses={location}/>);
+        return(<Location key={index} addresses={location} onSelect={this.handleSelect}/>);
       }
     }));
     if(_.isEmpty(list)) {

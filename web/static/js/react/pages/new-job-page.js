@@ -3,6 +3,7 @@ var JobType = require("../forms/jobtype");
 var LocationForm = require("../forms/location-form");
 var ContactForm = require("../forms/contact-form");
 var AllServices = require("../all-services");
+var AllLocations = require("../all-locations");
 import {browserHistory} from 'react-router';
 
 var NewJobPage = React.createClass({
@@ -95,6 +96,24 @@ var NewJobPage = React.createClass({
     });
   },
 
+  handleNewLocation() {
+    this.setState({form: "new-location"});
+  },
+
+  handleSelectLocation(locationID) {
+    this.setState({
+      locationID: locationID,
+      form: "job"
+    });
+  },
+
+  handleCreateLocation(locationID) {
+    this.setState({
+      locationID: locationID,
+      form: "job"
+    });
+  },
+
   allContactIDs() {
    var filteredContactIDs = [];
    this.state.contacts.forEach((contact) => {
@@ -118,8 +137,10 @@ var NewJobPage = React.createClass({
       return(<AllServices onNew={this.handleNewService} onSelect={this.handleSelectService}/>);
     } else if(this.state.form == "contacts") {
       return(<ContactForm onCreate={this.handleFormChange.bind(this, "job")}/>);
+    } else if(this.state.form == "new-location") {
+      return(<LocationForm onCreate={this.handleCreateLocation}/>);
     } else {
-      return(<LocationForm onCreate={this.handleFormChange.bind(this, "job")}/>);
+      return(<AllLocations onNew={this.handleNewLocation} onSelect={this.handleSelectLocation}/>);
     }
   }
 });

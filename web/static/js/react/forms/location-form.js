@@ -27,7 +27,7 @@ var LocationForm = React.createClass({
     }
     window.Dispatcher.createLocation(location)
       .receive("ok", (resp) => {
-        this.props.onCreate(resp.location_id);
+        this.props.onCreate(resp.address_id);
       }).receive("error", (resp) => {
         this.setState({errors: resp.errors});
       });
