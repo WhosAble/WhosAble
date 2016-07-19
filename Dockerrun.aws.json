@@ -1,0 +1,23 @@
+{
+  "AWSEBDockerrunVersion": 1,
+  "volumes": [
+    {
+      "name": "whosable/whosable",
+      "host": {
+        "sourcePath": "/app"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "whosable/whosable",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 4001
+        }
+      ]
+    }
+  ]
+}
