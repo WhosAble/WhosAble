@@ -12,13 +12,16 @@ var LoginPage = React.createClass({
         <NavBar/>
         <div className="container">
           <main role="main">
-            <LoginForm/>
+            <div className="row">
+              <div className="col-xs-12 col-md-3"></div>
+              <div className="col-xs-12 col-md-6">
+                <LoginForm/>
+                <Link to="/signup">
+                  <i className="fa fa-user-plus"/>Signup
+                </Link>
+              </div>
+            </div>
           </main>
-          <div>
-        <Link to="/signup">
-          <i className="fa fa-user-plus"/>Signup
-        </Link>
-          </div>
         </div>
       </div>
     );
