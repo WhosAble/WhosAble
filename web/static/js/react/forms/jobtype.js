@@ -34,16 +34,11 @@ var JobType = React.createClass({
 
   render() {
     return(
-      <div>
-        Service Type:
-        <br/>
-        <br/>
+      <div style={{marginTop: "50px"}}>
         <form onSubmit={ this.handleCreate }>
-          <TextField label="servicetype" value={ this.state.servicetype } errors={ this.parseErrors("name") } onChange={ this.handleFieldChange.bind(this, "servicetype") }/>
+          <TextField label="Service Type" value={ this.state.servicetype } errors={ this.parseErrors("name") } onChange={ this.handleFieldChange.bind(this, "servicetype") }/>
+          <button className="btn btn-primary" onClick={ this.handleCreate }>Save</button>
         </form>
-        <br/>
-        <br/>
-        <div className="btn btn-primary" onClick={ this.handleCreate }>Submit Service Type</div>
       </div>
     );
   }
